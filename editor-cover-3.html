@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Éditeur — Cover Variant 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-primary:   #4C1D95;
+    --color-secondary: #DDD6FE;
+    --color-image-bg: #DDD6FE;
+    --color-accent:    #F5C244;
+    --color-text-on-primary: #FFFFFF;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --font-size-title:    50px;
+    --font-size-subtitle: 19px;
+    --font-size-name:     16px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F5F4F1;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 300px;
+    background: #FFFFFF;
+    border-right: 1px solid #E4E2DD;
+    padding: 28px 24px;
+    overflow-y: auto;
+  }
+
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; }
+  .control-group { margin-bottom: 22px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
+
+  .swatch-row { display: flex; gap: 8px; align-items: center; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; font-family: monospace; }
+
+  select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] { flex: 1; }
+  .slider-row .val { font-size: 11px; color: #8A8781; font-family: monospace; width: 38px; text-align: right; }
+
+  hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+
+  /* ============ PREVIEW ============ */
+  .preview-area { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; }
+
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-primary);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+  }
+
+  .block-image-full { position: absolute; inset: 0; background: var(--color-image-bg); }
+  .image-placeholder-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-size: 14px; color: var(--color-primary); opacity: 0.55;
+  }
+
+  .overlay {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.45) 100%);
+  }
+
+  .frame { position: absolute; inset: 36px; border: 1px solid rgba(255,255,255,0.35); pointer-events: none; }
+
+  .block-text {
+    position: absolute; top: 50%; left: 0; right: 0;
+    transform: translateY(-50%); padding: 0 90px; text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--color-accent); margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--color-accent);
+  }
+
+  .title {
+    font-family: var(--font-heading); font-weight: 700; font-size: var(--font-size-title);
+    line-height: 1.1; color: var(--color-text-on-primary); margin: 0 0 20px 0;
+  }
+  .title .highlight { color: var(--color-accent); }
+
+  .subtitle {
+    font-family: var(--font-body); font-weight: 400; font-size: var(--font-size-subtitle);
+    line-height: 1.5; color: var(--color-secondary); margin: 0;
+  }
+
+  .block-footer { position: absolute; bottom: 56px; left: 0; right: 0; display: flex; justify-content: center; }
+
+  .name-pill {
+    background: transparent; border: 1px solid var(--color-accent); color: var(--color-text-on-primary);
+    font-family: var(--font-body); font-weight: 600; font-size: var(--font-size-name);
+    padding: 10px 26px; border-radius: 24px; outline: none;
+  }
+
+
+  .block-image, .block-image-full { cursor: pointer; }
+  .block-image:hover .image-placeholder-label,
+  .block-image-full:hover .image-placeholder-label { opacity: 0.85; }
+  .uploaded-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .overlay, .frame { pointer-events: none; }
+
+  .toolbar {
+    position: fixed; top: 0; left: 300px; right: 0; height: 52px;
+    background: #FFFFFF; border-bottom: 1px solid #E4E2DD;
+    display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100;
+  }
+  .toolbar button {
+    padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px;
+    background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer;
+  }
+  .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; margin-left: auto; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; }
+  .preview-area { padding-top: 92px; }
+
+  .uploaded-image {
+    position: relative;
+    cursor: grab;
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .uploaded-image.dragging { cursor: grabbing; }
+
+  .change-image-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    z-index: 5;
+    display: none;
+  }
+  .block-image.has-image .change-image-btn,
+  .block-image-full.has-image .change-image-btn { display: block; }
+
+  .toolbar .zoom-control {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #4A4842;
+  }
+  .toolbar .zoom-control.active { display: flex; }
+  .toolbar .zoom-control input[type="range"] { width: 120px; }
+
+  .toolbar .slider-mini {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #4A4842;
+  }
+  .toolbar .slider-mini.active { display: flex; }
+  .toolbar .slider-mini input[type="range"] { width: 100px; }
+  .toolbar .swatch-mini {
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  .toolbar .swatch-mini.active { display: flex; }
+  .toolbar .swatch-mini input[type="color"] {
+    width: 28px; height: 28px; border: 1px solid #E4E2DD; border-radius: 5px; padding: 0; cursor: pointer;
+  }
+  .toolbar .swatch-mini span { font-size: 11px; color: #8A8781; }
+
+  .name-pill.no-bg { background: transparent !important; }
+
+  .toolbar .name-bg-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #4A4842;
+  }
+  .toolbar .name-bg-toggle button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .toolbar .name-bg-toggle button.active {
+    background: #4C1D95;
+    color: #fff;
+    border-color: #4C1D95;
+  }
+
+  .toolbar .blur-mode-toggle {
+    display: none;
+    align-items: center;
+    gap: 4px;
+  }
+  .toolbar .blur-mode-toggle.active { display: flex; }
+  .toolbar .blur-mode-toggle button {
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+  .toolbar .blur-mode-toggle button.selected {
+    background: #4C1D95;
+    color: #fff;
+    border-color: #4C1D95;
+  }
+
+  .toolbar .zone-presets {
+    display: none;
+    align-items: center;
+    gap: 4px;
+  }
+  .toolbar .zone-presets.active { display: flex; }
+  .toolbar .zone-presets button { padding: 6px 8px; font-size: 11px; }
+
+  .blur-zone {
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, rgba(0,0,0,0.5) 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse at center, black 0%, rgba(0,0,0,0.5) 45%, transparent 100%);
+    position: absolute;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    cursor: move;
+    display: none;
+    box-sizing: border-box;
+    border: 1px dashed transparent;
+  }
+  .blur-zone.active { display: block; }
+  .blur-zone:hover, .blur-zone.dragging, .blur-zone.resizing {
+    border-color: rgba(255,255,255,0.8);
+  }
+  .blur-zone .resize-handle {
+    position: absolute;
+    right: -11px;
+    bottom: -11px;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border: 3px solid #4C1D95;
+    border-radius: 50%;
+    cursor: nwse-resize;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    transition: transform 0.1s ease;
+  }
+  .blur-zone .resize-handle:hover,
+  .blur-zone .resize-handle:active {
+    transform: scale(1.15);
+  }
+  .blur-zone .resize-handle::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 8px; height: 8px;
+    border-right: 2px solid #4C1D95;
+    border-bottom: 2px solid #4C1D95;
+    transform: translate(-65%, -65%) rotate(0deg);
+  }
+
+  .toolbar .zone-presets select {
+    padding: 6px 8px;
+    font-size: 12px;
+    border: 1px solid #E4E2DD;
+    border-radius: 6px;
+    background: #FAFAF8;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .name-pill-wrap { position: relative; display: inline-block; }
+  .name-bg-eye {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #E4E2DD;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 6;
+  }
+  .name-pill-wrap:hover .name-bg-eye,
+  .name-bg-eye:focus {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .name-bg-eye.hidden-state { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .name-bg-eye.hidden-state::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    right: 3px;
+    top: 50%;
+    height: 1px;
+    background: currentColor;
+    transform: rotate(-45deg);
+  }
+
+  .toolbar .zone-tint {
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  .toolbar .zone-tint.active { display: flex; }
+  .toolbar .zone-tint select {
+    padding: 6px 8px;
+    font-size: 12px;
+    border: 1px solid #E4E2DD;
+    border-radius: 6px;
+    background: #FAFAF8;
+    font-family: 'Inter', sans-serif;
+  }
+  .toolbar .zone-tint input[type="color"] {
+    width: 28px; height: 28px; border: 1px solid #E4E2DD; border-radius: 5px; padding: 0; cursor: pointer;
+  }
+
+  .toolbar .export-btn {
+    background: #1A1A1A;
+    color: #fff;
+    border-color: #1A1A1A;
+  }
+
+  @media print {
+    body { background: #fff !important; margin: 0; }
+    .sidebar, .toolbar { display: none !important; }
+    .preview-area { padding: 0 !important; display: block !important; }
+    .page {
+      zoom: 1 !important;
+      width: 8.5in !important;
+      height: 11in !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    .change-image-btn, .name-bg-eye, .resize-handle {
+      display: none !important;
+    }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+    <div class="zoom-control" id="zoomControl">
+      <span>Zoom image</span>
+      <input type="range" id="imageZoom" min="100" max="250" value="100">
+    </div>
+    <div class="slider-mini" id="opacityControl">
+      <span>Opacite</span>
+      <input type="range" id="imageOpacity" min="0" max="100" value="100">
+    </div>
+    <div class="slider-mini" id="blurControl">
+      <span>Flou</span>
+      <input type="range" id="imageBlur" min="0" max="20" value="0">
+    </div>
+    <div class="blur-mode-toggle" id="blurModeToggle">
+      <button type="button" id="blurModeGlobal" class="selected">Flou global</button>
+      <button type="button" id="blurModeZone">Flou par zone</button>
+    </div>
+    <div class="zone-presets" id="zonePresets">
+      <select id="zonePresetSelect">
+        <option value="" disabled selected>Zone...</option>
+        <option value="top">Haut</option>
+        <option value="bottom">Bas</option>
+        <option value="left">Gauche</option>
+        <option value="right">Droite</option>
+        <option value="center">Centre</option>
+      </select>
+    </div>
+    <div class="zone-tint" id="zoneTint">
+      <select id="zoneTintSelect">
+        <option value="none" selected>Sans teinte</option>
+        <option value="primary">Fond principal</option>
+        <option value="secondary">Secondaire</option>
+        <option value="accent">Accent</option>
+        <option value="custom">Personnalise...</option>
+      </select>
+      <input type="color" id="zoneTintCustom" value="#4C1D95" style="display:none;">
+    </div>
+    <div class="swatch-mini" id="bgColorControl">
+      <input type="color" id="colorImageBg" value="#DDD6FE">
+      <span>Fond image</span>
+    </div>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+
+
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe.</p>
+
+    <div class="control-group">
+      <label>Couleurs</label>
+      <div class="swatch-row" style="margin-bottom:8px;">
+        <input type="color" id="colorPrimary" value="#4C1D95">
+        <span>Fond principal</span>
+      </div>
+      <div class="swatch-row" style="margin-bottom:8px;">
+        <input type="color" id="colorSecondary" value="#DDD6FE">
+        <span>Texte secondaire</span>
+      </div>
+      <div class="swatch-row">
+        <input type="color" id="colorAccent" value="#F5C244">
+        <span>Accent</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Police — Titre</label>
+      <select id="fontHeading">
+        <option value="'Poppins', sans-serif" style="font-family: 'Poppins', sans-serif;">Poppins</option>
+        <option value="'Playfair Display', serif" style="font-family: 'Playfair Display', serif;">Playfair Display</option>
+        <option value="'Space Grotesk', sans-serif" style="font-family: 'Space Grotesk', sans-serif;">Space Grotesk</option>
+      <option value="'Montserrat', sans-serif" style="font-family: 'Montserrat', sans-serif;">Montserrat</option>
+      <option value="'Outfit', sans-serif" style="font-family: 'Outfit', sans-serif;">Outfit</option>
+      <option value="'Bricolage Grotesque', sans-serif" style="font-family: 'Bricolage Grotesque', sans-serif;">Bricolage Grotesque</option>
+      <option value="'DM Serif Display', serif" style="font-family: 'DM Serif Display', serif;">DM Serif Display</option>
+      <option value="'Cormorant Garamond', serif" style="font-family: 'Cormorant Garamond', serif;">Cormorant Garamond</option>
+      <option value="'Fraunces', serif" style="font-family: 'Fraunces', serif;">Fraunces</option>
+      <option value="'Marcellus', serif" style="font-family: 'Marcellus', serif;">Marcellus</option>
+      <option value="'Prata', serif" style="font-family: 'Prata', serif;">Prata</option>
+      <option value="'Italiana', serif" style="font-family: 'Italiana', serif;">Italiana</option>
+      <option value="'Abril Fatface', serif" style="font-family: 'Abril Fatface', serif;">Abril Fatface</option>
+      <option value="'Libre Baskerville', serif" style="font-family: 'Libre Baskerville', serif;">Libre Baskerville</option>
+      <option value="'Cinzel', serif" style="font-family: 'Cinzel', serif;">Cinzel</option>
+      <option value="'Great Vibes', cursive" style="font-family: 'Great Vibes', cursive;">Great Vibes (calligraphie)</option>
+      <option value="'Dancing Script', cursive" style="font-family: 'Dancing Script', cursive;">Dancing Script (calligraphie)</option>
+      <option value="'Parisienne', cursive" style="font-family: 'Parisienne', cursive;">Parisienne (calligraphie)</option>
+      <option value="'Alex Brush', cursive" style="font-family: 'Alex Brush', cursive;">Alex Brush (calligraphie)</option>
+      <option value="'Allura', cursive" style="font-family: 'Allura', cursive;">Allura (calligraphie)</option>
+      <option value="'Sacramento', cursive" style="font-family: 'Sacramento', cursive;">Sacramento (calligraphie)</option>
+      <option value="'Tangerine', cursive" style="font-family: 'Tangerine', cursive;">Tangerine (calligraphie)</option>
+      <option value="'Pinyon Script', cursive" style="font-family: 'Pinyon Script', cursive;">Pinyon Script (calligraphie)</option>
+
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label>Police — Corps</label>
+      <select id="fontBody">
+      <option value="'Inter', sans-serif" style="font-family: 'Inter', sans-serif;">Inter</option>
+      <option value="'Space Grotesk', sans-serif" style="font-family: 'Space Grotesk', sans-serif;">Space Grotesk</option>
+      <option value="'Montserrat', sans-serif" style="font-family: 'Montserrat', sans-serif;">Montserrat</option>
+      <option value="'Outfit', sans-serif" style="font-family: 'Outfit', sans-serif;">Outfit</option>
+      <option value="'Bricolage Grotesque', sans-serif" style="font-family: 'Bricolage Grotesque', sans-serif;">Bricolage Grotesque</option>
+      <option value="'DM Serif Display', serif" style="font-family: 'DM Serif Display', serif;">DM Serif Display</option>
+      <option value="'Cormorant Garamond', serif" style="font-family: 'Cormorant Garamond', serif;">Cormorant Garamond</option>
+      <option value="'Fraunces', serif" style="font-family: 'Fraunces', serif;">Fraunces</option>
+      <option value="'Marcellus', serif" style="font-family: 'Marcellus', serif;">Marcellus</option>
+      <option value="'Prata', serif" style="font-family: 'Prata', serif;">Prata</option>
+      <option value="'Italiana', serif" style="font-family: 'Italiana', serif;">Italiana</option>
+      <option value="'Abril Fatface', serif" style="font-family: 'Abril Fatface', serif;">Abril Fatface</option>
+      <option value="'Libre Baskerville', serif" style="font-family: 'Libre Baskerville', serif;">Libre Baskerville</option>
+      <option value="'Cinzel', serif" style="font-family: 'Cinzel', serif;">Cinzel</option>
+      <option value="'Great Vibes', cursive" style="font-family: 'Great Vibes', cursive;">Great Vibes (calligraphie)</option>
+      <option value="'Dancing Script', cursive" style="font-family: 'Dancing Script', cursive;">Dancing Script (calligraphie)</option>
+      <option value="'Parisienne', cursive" style="font-family: 'Parisienne', cursive;">Parisienne (calligraphie)</option>
+      <option value="'Alex Brush', cursive" style="font-family: 'Alex Brush', cursive;">Alex Brush (calligraphie)</option>
+      <option value="'Allura', cursive" style="font-family: 'Allura', cursive;">Allura (calligraphie)</option>
+      <option value="'Sacramento', cursive" style="font-family: 'Sacramento', cursive;">Sacramento (calligraphie)</option>
+      <option value="'Tangerine', cursive" style="font-family: 'Tangerine', cursive;">Tangerine (calligraphie)</option>
+      <option value="'Pinyon Script', cursive" style="font-family: 'Pinyon Script', cursive;">Pinyon Script (calligraphie)</option>
+    </select>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Taille du titre</label>
+      <div class="slider-row">
+        <input type="range" id="sizeTitle" min="32" max="66" value="50">
+        <span class="val" id="sizeTitleVal">50px</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Taille du sous-titre</label>
+      <div class="slider-row">
+        <input type="range" id="sizeSubtitle" min="14" max="28" value="19">
+        <span class="val" id="sizeSubtitleVal">19px</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-area">
+    <div class="page" id="cover-page-v3">
+      <div class="block-image-full">
+      <button type="button" class="change-image-btn" id="changeImageBtn">Changer</button>
+        <div class="image-placeholder-label">[ image plein cadre ]</div>
+      <div class="blur-zone" id="blurZone"><div class="resize-handle" id="blurZoneResize"></div></div>
+      </div>
+      <div class="overlay"></div>
+      <div class="frame"></div>
+
+      <div class="block-text">
+        <span class="eyebrow" contenteditable="true">EBOOK</span>
+        <h1 class="title" contenteditable="true">
+          The Ultimate <span class="highlight">Content Creator</span> Playbook
+        </h1>
+        <p class="subtitle" contenteditable="true">Plan. Create. Publish. Grow your impact.</p>
+      </div>
+
+      <div class="block-footer">
+        <div class="name-pill-wrap">
+          <span class="name-pill" contenteditable="true">Your Name</span>
+          <button type="button" class="name-bg-eye" id="nameBgToggle" title="Masquer/afficher le fond">&#128065;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement.style;
+
+    document.getElementById('colorPrimary').addEventListener('input', e => root.setProperty('--color-primary', e.target.value));
+    document.getElementById('colorSecondary').addEventListener('input', e => root.setProperty('--color-secondary', e.target.value));
+    document.getElementById('colorAccent').addEventListener('input', e => root.setProperty('--color-accent', e.target.value));
+
+    document.getElementById('fontHeading').addEventListener('change', e => root.setProperty('--font-heading', e.target.value));
+    document.getElementById('fontBody').addEventListener('change', e => root.setProperty('--font-body', e.target.value));
+
+    const sizeTitle = document.getElementById('sizeTitle');
+    const sizeTitleVal = document.getElementById('sizeTitleVal');
+    sizeTitle.addEventListener('input', e => {
+      root.setProperty('--font-size-title', e.target.value + 'px');
+      sizeTitleVal.textContent = e.target.value + 'px';
+    });
+
+    const sizeSubtitle = document.getElementById('sizeSubtitle');
+    const sizeSubtitleVal = document.getElementById('sizeSubtitleVal');
+    sizeSubtitle.addEventListener('input', e => {
+      root.setProperty('--font-size-subtitle', e.target.value + 'px');
+      sizeSubtitleVal.textContent = e.target.value + 'px';
+    });
+  
+  (function() {
+    const root = document.documentElement.style;
+    const imageBlock = document.querySelector('.block-image, .block-image-full');
+    const placeholderLabel = imageBlock ? imageBlock.querySelector('.image-placeholder-label') : null;
+    const fileInput = document.getElementById('imageUpload');
+    const titleEl = document.querySelector('.title');
+    const subtitleEl = document.querySelector('.subtitle');
+    const eyebrowEl = document.querySelector('.eyebrow');
+    const nameEl = document.querySelector('.name-pill');
+    const colorPrimaryEl = document.getElementById('colorPrimary');
+    const colorSecondaryEl = document.getElementById('colorSecondary');
+    const colorAccentEl = document.getElementById('colorAccent');
+    const fontHeadingEl = document.getElementById('fontHeading');
+    const fontBodyEl = document.getElementById('fontBody');
+    const sizeTitleEl = document.getElementById('sizeTitle');
+    const sizeSubtitleEl = document.getElementById('sizeSubtitle');
+
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+
+    let history = [];
+    let historyIndex = -1;
+    let suppressCapture = false;
+
+    function getImageDataUrl() {
+      const img = imageBlock ? imageBlock.querySelector('img.uploaded-image') : null;
+      return img ? img.src : null;
+    }
+
+    function captureState() {
+      return {
+        colorPrimary: colorPrimaryEl.value,
+        colorSecondary: colorSecondaryEl.value,
+        colorAccent: colorAccentEl.value,
+        fontHeading: fontHeadingEl.value,
+        fontBody: fontBodyEl.value,
+        sizeTitle: sizeTitleEl.value,
+        sizeSubtitle: sizeSubtitleEl.value,
+        title: titleEl ? titleEl.innerHTML : '',
+        subtitle: subtitleEl ? subtitleEl.innerHTML : '',
+        eyebrow: eyebrowEl ? eyebrowEl.innerHTML : '',
+        name: nameEl ? nameEl.innerHTML : '',
+        image: getImageDataUrl(),
+        imageTransform: (window.__joydeckGetImageTransform ? window.__joydeckGetImageTransform() : null),
+        imageFilters: (window.__joydeckGetImageFilters ? window.__joydeckGetImageFilters() : null),
+        colorImageBg: (document.getElementById('colorImageBg') ? document.getElementById('colorImageBg').value : null),
+        nameBgVisible: (window.__joydeckGetNameBg ? window.__joydeckGetNameBg() : true),
+        blurState: (window.__joydeckGetBlurState ? window.__joydeckGetBlurState() : null),
+        zoneTint: (window.__joydeckGetZoneTint ? window.__joydeckGetZoneTint() : null)
+      };
+    }
+
+    function applyState(state) {
+      if (!state) return;
+      suppressCapture = true;
+      root.setProperty('--color-primary', state.colorPrimary);
+      root.setProperty('--color-secondary', state.colorSecondary);
+      root.setProperty('--color-accent', state.colorAccent);
+      root.setProperty('--font-heading', state.fontHeading);
+      root.setProperty('--font-body', state.fontBody);
+      root.setProperty('--font-size-title', state.sizeTitle + 'px');
+      root.setProperty('--font-size-subtitle', state.sizeSubtitle + 'px');
+      colorPrimaryEl.value = state.colorPrimary;
+      colorSecondaryEl.value = state.colorSecondary;
+      colorAccentEl.value = state.colorAccent;
+      fontHeadingEl.value = state.fontHeading;
+      fontBodyEl.value = state.fontBody;
+      sizeTitleEl.value = state.sizeTitle;
+      sizeSubtitleEl.value = state.sizeSubtitle;
+      document.getElementById('sizeTitleVal').textContent = state.sizeTitle + 'px';
+      document.getElementById('sizeSubtitleVal').textContent = state.sizeSubtitle + 'px';
+      if (titleEl) titleEl.innerHTML = state.title;
+      if (subtitleEl) subtitleEl.innerHTML = state.subtitle;
+      if (eyebrowEl) eyebrowEl.innerHTML = state.eyebrow;
+      if (nameEl) nameEl.innerHTML = state.name;
+      if (state.image) { setImage(state.image, false); }
+      if (state.imageTransform && window.__joydeckSetImageTransform) {
+        window.__joydeckSetImageTransform(state.imageTransform.scale, state.imageTransform.offsetX, state.imageTransform.offsetY);
+      }
+      if (state.imageFilters && window.__joydeckSetImageFilters) {
+        window.__joydeckSetImageFilters(state.imageFilters.opacity, state.imageFilters.blur);
+      }
+      if (state.colorImageBg) {
+        root.setProperty('--color-image-bg', state.colorImageBg);
+        const bgInput = document.getElementById('colorImageBg');
+        if (bgInput) bgInput.value = state.colorImageBg;
+      }
+      if (window.__joydeckSetNameBg && typeof state.nameBgVisible !== 'undefined') {
+        window.__joydeckSetNameBg(state.nameBgVisible);
+      }
+      if (window.__joydeckSetBlurState && state.blurState) {
+        window.__joydeckSetBlurState(state.blurState);
+      }
+      if (window.__joydeckSetZoneTint && state.zoneTint) {
+        window.__joydeckSetZoneTint(state.zoneTint.choice, state.zoneTint.customHex);
+      }
+      suppressCapture = false;
+    }
+
+    function pushHistory() {
+      if (suppressCapture) return;
+      const state = captureState();
+      history = history.slice(0, historyIndex + 1);
+      history.push(state);
+      historyIndex = history.length - 1;
+      updateButtons();
+    }
+    window.joydeckPushHistory = pushHistory;
+
+    function updateButtons() {
+      document.getElementById('undoBtn').disabled = historyIndex <= 0;
+      document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+    }
+
+    function setImage(dataUrl, capture) {
+      if (!imageBlock) return;
+      let img = imageBlock.querySelector('img.uploaded-image');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'uploaded-image';
+        imageBlock.insertBefore(img, imageBlock.firstChild);
+      }
+      img.src = dataUrl;
+      if (placeholderLabel) placeholderLabel.style.display = 'none';
+      if (capture) pushHistory();
+    }
+
+    if (imageBlock && fileInput) {
+      imageBlock.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => setImage(ev.target.result, true);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    [colorPrimaryEl, colorSecondaryEl, colorAccentEl].forEach(el => {
+      el && el.addEventListener('change', () => pushHistory());
+    });
+    [fontHeadingEl, fontBodyEl].forEach(el => {
+      el && el.addEventListener('change', () => pushHistory());
+    });
+    [sizeTitleEl, sizeSubtitleEl].forEach(el => {
+      el && el.addEventListener('change', () => pushHistory());
+    });
+    [titleEl, subtitleEl, eyebrowEl, nameEl].forEach(el => {
+      el && el.addEventListener('blur', () => pushHistory());
+    });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (historyIndex > 0) {
+        historyIndex--;
+        applyState(history[historyIndex]);
+        updateButtons();
+      }
+    });
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      if (historyIndex < history.length - 1) {
+        historyIndex++;
+        applyState(history[historyIndex]);
+        updateButtons();
+      }
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+      const status = document.getElementById('saveStatus');
+      status.textContent = 'Enregistre \u2713';
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    });
+
+    setTimeout(function() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try { applyState(JSON.parse(saved)); } catch(e) {}
+      }
+      pushHistory();
+      updateButtons();
+    }, 0);
+  })();
+
+  (function() {
+    const imageBlock = document.querySelector('.block-image, .block-image-full');
+    const fileInput = document.getElementById('imageUpload');
+    const zoomControl = document.getElementById('zoomControl');
+    const zoomSlider = document.getElementById('imageZoom');
+    const changeBtn = document.getElementById('changeImageBtn');
+
+    let imgScale = 1;
+    let imgOffsetX = 0;
+    let imgOffsetY = 0;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragStartOffsetX = 0;
+    let dragStartOffsetY = 0;
+
+    function getUploadedImg() {
+      return imageBlock ? imageBlock.querySelector('img.uploaded-image') : null;
+    }
+
+    function applyTransform() {
+      const img = getUploadedImg();
+      if (!img) return;
+      img.style.transform = 'translate(' + imgOffsetX + 'px, ' + imgOffsetY + 'px) scale(' + imgScale + ')';
+    }
+
+    window.__joydeckSetImageTransform = function(scale, offsetX, offsetY) {
+      imgScale = scale || 1;
+      imgOffsetX = offsetX || 0;
+      imgOffsetY = offsetY || 0;
+      if (zoomSlider) zoomSlider.value = Math.round(imgScale * 100);
+      applyTransform();
+    };
+
+    window.__joydeckGetImageTransform = function() {
+      return { scale: imgScale, offsetX: imgOffsetX, offsetY: imgOffsetY };
+    };
+
+    function enableImageControls() {
+      if (imageBlock) imageBlock.classList.add('has-image');
+      if (zoomControl) zoomControl.classList.add('active');
+    }
+
+    if (imageBlock) {
+      const observer = new MutationObserver(() => {
+        const img = getUploadedImg();
+        if (img) {
+          enableImageControls();
+          attachDragHandlers(img);
+          applyTransform();
+        }
+      });
+      observer.observe(imageBlock, { childList: true });
+    }
+
+    function attachDragHandlers(img) {
+      if (img.dataset.dragBound) return;
+      img.dataset.dragBound = '1';
+
+      img.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        img.classList.add('dragging');
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        dragStartOffsetX = imgOffsetX;
+        dragStartOffsetY = imgOffsetY;
+        img.setPointerCapture(e.pointerId);
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      img.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        imgOffsetX = dragStartOffsetX + (e.clientX - dragStartX);
+        imgOffsetY = dragStartOffsetY + (e.clientY - dragStartY);
+        applyTransform();
+      });
+
+      img.addEventListener('pointerup', () => {
+        if (!dragging) return;
+        dragging = false;
+        img.classList.remove('dragging');
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (zoomSlider) {
+      zoomSlider.addEventListener('input', (e) => {
+        imgScale = parseInt(e.target.value, 10) / 100;
+        applyTransform();
+      });
+      zoomSlider.addEventListener('change', () => {
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (changeBtn && fileInput) {
+      changeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.click();
+      });
+    }
+
+    if (imageBlock) {
+      imageBlock.addEventListener('click', (e) => {
+        if (imageBlock.classList.contains('has-image') && !(changeBtn && changeBtn.contains(e.target))) {
+          e.stopPropagation();
+        }
+      }, true);
+    }
+  })();
+
+  (function() {
+    const imageBlock = document.querySelector('.block-image, .block-image-full');
+    const opacitySlider = document.getElementById('imageOpacity');
+    const blurSlider = document.getElementById('imageBlur');
+    const opacityControl = document.getElementById('opacityControl');
+    const blurControl = document.getElementById('blurControl');
+    const bgColorControl = document.getElementById('bgColorControl');
+    const colorImageBg = document.getElementById('colorImageBg');
+    const root = document.documentElement.style;
+
+    let imgOpacity = 100;
+    let imgBlur = 0;
+
+    function getUploadedImg() {
+      return imageBlock ? imageBlock.querySelector('img.uploaded-image') : null;
+    }
+
+    function applyFilters() {
+      const img = getUploadedImg();
+      if (!img) return;
+      img.style.opacity = (imgOpacity / 100);
+    }
+
+    window.__joydeckSetImageFilters = function(opacity, blur) {
+      imgOpacity = (opacity === undefined || opacity === null) ? 100 : opacity;
+      imgBlur = (blur === undefined || blur === null) ? 0 : blur;
+      if (opacitySlider) opacitySlider.value = imgOpacity;
+      if (blurSlider) blurSlider.value = imgBlur;
+      applyFilters();
+    };
+
+    window.__joydeckGetImageFilters = function() {
+      return { opacity: imgOpacity, blur: imgBlur };
+    };
+
+    function enableFilterControls() {
+      if (opacityControl) opacityControl.classList.add('active');
+      if (blurControl) blurControl.classList.add('active');
+      if (bgColorControl) bgColorControl.classList.add('active');
+    }
+
+    if (imageBlock) {
+      const observer = new MutationObserver(() => {
+        const img = getUploadedImg();
+        if (img) {
+          enableFilterControls();
+          applyFilters();
+        }
+      });
+      observer.observe(imageBlock, { childList: true });
+      if (imageBlock.classList.contains('has-image')) enableFilterControls();
+    }
+
+    if (opacitySlider) {
+      opacitySlider.addEventListener('input', (e) => {
+        imgOpacity = parseInt(e.target.value, 10);
+        applyFilters();
+      });
+      opacitySlider.addEventListener('change', () => {
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (colorImageBg) {
+      colorImageBg.addEventListener('input', (e) => {
+        root.setProperty('--color-image-bg', e.target.value);
+      });
+      colorImageBg.addEventListener('change', () => {
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+  })();
+
+  (function() {
+    const nameEl = document.querySelector('.name-pill');
+    const nameBgToggle = document.getElementById('nameBgToggle');
+
+    let nameBgVisible = true;
+
+    window.__joydeckSetNameBg = function(visible) {
+      nameBgVisible = (visible !== false);
+      if (nameEl) nameEl.classList.toggle('no-bg', !nameBgVisible);
+      if (nameBgToggle) {
+        nameBgToggle.classList.toggle('hidden-state', !nameBgVisible);
+      }
+    };
+    window.__joydeckGetNameBg = function() { return nameBgVisible; };
+
+    if (nameBgToggle) {
+      nameBgToggle.addEventListener('click', () => {
+        window.__joydeckSetNameBg(!nameBgVisible);
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+  })();
+
+  (function() {
+    const imageBlock = document.querySelector('.block-image, .block-image-full');
+    const blurSlider = document.getElementById('imageBlur');
+    const blurModeToggle = document.getElementById('blurModeToggle');
+    const blurModeGlobalBtn = document.getElementById('blurModeGlobal');
+    const blurModeZoneBtn = document.getElementById('blurModeZone');
+    const zonePresetsWrap = document.getElementById('zonePresets');
+    const blurZone = document.getElementById('blurZone');
+    const blurZoneResize = document.getElementById('blurZoneResize');
+
+    let blurMode = 'global';
+    let globalBlurAmount = 0;
+    let zoneBlurAmount = 0;
+    let zoneRect = { x: 25, y: 25, w: 50, h: 50 };
+    let zoneDragging = false;
+    let zoneResizing = false;
+    let dragStart = { x: 0, y: 0, rectX: 0, rectY: 0 };
+    let resizeStart = { x: 0, y: 0, rectW: 0, rectH: 0 };
+
+    function getUploadedImg() {
+      return imageBlock ? imageBlock.querySelector('img.uploaded-image') : null;
+    }
+
+    function applyZoneRectToDom() {
+      if (!blurZone) return;
+      blurZone.style.left = zoneRect.x + '%';
+      blurZone.style.top = zoneRect.y + '%';
+      blurZone.style.width = zoneRect.w + '%';
+      blurZone.style.height = zoneRect.h + '%';
+    }
+
+    function applyBlurState() {
+      const img = getUploadedImg();
+      if (blurMode === 'global') {
+        if (blurZone) blurZone.classList.remove('active');
+        if (img) { img.style.filter = 'blur(' + globalBlurAmount + 'px)'; }
+      } else {
+        if (img) img.style.filter = 'blur(0px)';
+        if (blurZone) {
+          blurZone.classList.add('active');
+          blurZone.style.backdropFilter = 'blur(' + zoneBlurAmount + 'px)';
+          blurZone.style.webkitBackdropFilter = 'blur(' + zoneBlurAmount + 'px)';
+        }
+      }
+    }
+
+    window.__joydeckSetBlurState = function(state) {
+      if (!state) return;
+      blurMode = state.mode || 'global';
+      globalBlurAmount = state.globalAmount || 0;
+      zoneBlurAmount = state.zoneAmount || 0;
+      zoneRect = state.zoneRect || zoneRect;
+      if (blurSlider) blurSlider.value = (blurMode === 'global') ? globalBlurAmount : zoneBlurAmount;
+      if (blurModeGlobalBtn) blurModeGlobalBtn.classList.toggle('selected', blurMode === 'global');
+      if (blurModeZoneBtn) blurModeZoneBtn.classList.toggle('selected', blurMode === 'zone');
+      if (zonePresetsWrap) zonePresetsWrap.classList.toggle('active', blurMode === 'zone');
+      applyZoneRectToDom();
+      applyBlurState();
+    };
+
+    window.__joydeckGetBlurState = function() {
+      return { mode: blurMode, globalAmount: globalBlurAmount, zoneAmount: zoneBlurAmount, zoneRect: zoneRect };
+    };
+
+    function enableBlurModeControls() {
+      if (blurModeToggle) blurModeToggle.classList.add('active');
+    }
+
+    if (imageBlock) {
+      const observer = new MutationObserver(() => {
+        if (getUploadedImg()) enableBlurModeControls();
+      });
+      observer.observe(imageBlock, { childList: true });
+    }
+
+    if (blurModeGlobalBtn) {
+      blurModeGlobalBtn.addEventListener('click', () => {
+        blurMode = 'global';
+        blurModeGlobalBtn.classList.add('selected');
+        if (blurModeZoneBtn) blurModeZoneBtn.classList.remove('selected');
+        if (zonePresetsWrap) zonePresetsWrap.classList.remove('active');
+        if (blurSlider) blurSlider.value = globalBlurAmount;
+        applyBlurState();
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (blurModeZoneBtn) {
+      blurModeZoneBtn.addEventListener('click', () => {
+        blurMode = 'zone';
+        blurModeZoneBtn.classList.add('selected');
+        if (blurModeGlobalBtn) blurModeGlobalBtn.classList.remove('selected');
+        if (zonePresetsWrap) zonePresetsWrap.classList.add('active');
+        if (blurSlider) blurSlider.value = zoneBlurAmount;
+        applyBlurState();
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    const zonePresetSelect = document.getElementById('zonePresetSelect');
+    if (zonePresetSelect) {
+      zonePresetSelect.addEventListener('change', (e) => {
+        const zone = e.target.value;
+        if (zone === 'top') zoneRect = { x: 0, y: 0, w: 100, h: 50 };
+        if (zone === 'bottom') zoneRect = { x: 0, y: 50, w: 100, h: 50 };
+        if (zone === 'left') zoneRect = { x: 0, y: 0, w: 50, h: 100 };
+        if (zone === 'right') zoneRect = { x: 50, y: 0, w: 50, h: 100 };
+        if (zone === 'center') zoneRect = { x: 25, y: 25, w: 50, h: 50 };
+        applyZoneRectToDom();
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (blurSlider) {
+      blurSlider.addEventListener('input', (e) => {
+        const v = parseInt(e.target.value, 10);
+        if (blurMode === 'global') { globalBlurAmount = v; } else { zoneBlurAmount = v; }
+        applyBlurState();
+      });
+      blurSlider.addEventListener('change', () => {
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (blurZone) {
+      blurZone.addEventListener('pointerdown', (e) => {
+        if (e.target === blurZoneResize) return;
+        zoneDragging = true;
+        blurZone.classList.add('dragging');
+        const parentRect = imageBlock.getBoundingClientRect();
+        dragStart = { x: e.clientX, y: e.clientY, rectX: zoneRect.x, rectY: zoneRect.y, pw: parentRect.width, ph: parentRect.height };
+        blurZone.setPointerCapture(e.pointerId);
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      blurZone.addEventListener('pointermove', (e) => {
+        if (!zoneDragging) return;
+        const dxPct = ((e.clientX - dragStart.x) / dragStart.pw) * 100;
+        const dyPct = ((e.clientY - dragStart.y) / dragStart.ph) * 100;
+        let newX = dragStart.rectX + dxPct;
+        let newY = dragStart.rectY + dyPct;
+        newX = Math.max(0, Math.min(100 - zoneRect.w, newX));
+        newY = Math.max(0, Math.min(100 - zoneRect.h, newY));
+        zoneRect.x = newX;
+        zoneRect.y = newY;
+        applyZoneRectToDom();
+      });
+      blurZone.addEventListener('pointerup', () => {
+        if (!zoneDragging) return;
+        zoneDragging = false;
+        blurZone.classList.remove('dragging');
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (blurZoneResize) {
+      blurZoneResize.addEventListener('pointerdown', (e) => {
+        zoneResizing = true;
+        blurZone.classList.add('resizing');
+        const parentRect = imageBlock.getBoundingClientRect();
+        resizeStart = { x: e.clientX, y: e.clientY, rectW: zoneRect.w, rectH: zoneRect.h, pw: parentRect.width, ph: parentRect.height };
+        blurZoneResize.setPointerCapture(e.pointerId);
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      blurZoneResize.addEventListener('pointermove', (e) => {
+        if (!zoneResizing) return;
+        const dwPct = ((e.clientX - resizeStart.x) / resizeStart.pw) * 100;
+        const dhPct = ((e.clientY - resizeStart.y) / resizeStart.ph) * 100;
+        let newW = Math.max(10, Math.min(100 - zoneRect.x, resizeStart.rectW + dwPct));
+        let newH = Math.max(10, Math.min(100 - zoneRect.y, resizeStart.rectH + dhPct));
+        zoneRect.w = newW;
+        zoneRect.h = newH;
+        applyZoneRectToDom();
+      });
+      blurZoneResize.addEventListener('pointerup', () => {
+        if (!zoneResizing) return;
+        zoneResizing = false;
+        blurZone.classList.remove('resizing');
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    applyZoneRectToDom();
+  })();
+
+  (function() {
+    const zoneTintWrap = document.getElementById('zoneTint');
+    const zoneTintSelect = document.getElementById('zoneTintSelect');
+    const zoneTintCustom = document.getElementById('zoneTintCustom');
+    const blurZone = document.getElementById('blurZone');
+    const zonePresetsWrap = document.getElementById('zonePresets');
+
+    let tintChoice = 'none';
+    let tintCustomHex = '#4C1D95';
+
+    function hexToRgba(hex, alpha) {
+      hex = (hex || '#000000').replace('#', '').trim();
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    }
+
+    function resolveTintColor() {
+      if (tintChoice === 'none') return null;
+      if (tintChoice === 'custom') return tintCustomHex;
+      const varMap = { primary: '--color-primary', secondary: '--color-secondary', accent: '--color-accent' };
+      const cssVar = varMap[tintChoice];
+      if (!cssVar) return null;
+      const val = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+      return val || null;
+    }
+
+    function applyTint() {
+      if (!blurZone) return;
+      const hex = resolveTintColor();
+      blurZone.style.backgroundColor = hex ? hexToRgba(hex, 0.35) : 'transparent';
+    }
+
+    window.__joydeckSetZoneTint = function(choice, customHex) {
+      tintChoice = choice || 'none';
+      tintCustomHex = customHex || tintCustomHex;
+      if (zoneTintSelect) zoneTintSelect.value = tintChoice;
+      if (zoneTintCustom) {
+        zoneTintCustom.value = tintCustomHex;
+        zoneTintCustom.style.display = (tintChoice === 'custom') ? 'inline-block' : 'none';
+      }
+      applyTint();
+    };
+
+    window.__joydeckGetZoneTint = function() {
+      return { choice: tintChoice, customHex: tintCustomHex };
+    };
+
+    if (zonePresetsWrap) {
+      const observerTint = new MutationObserver(() => {
+        if (zonePresetsWrap.classList.contains('active')) {
+          if (zoneTintWrap) zoneTintWrap.classList.add('active');
+        } else {
+          if (zoneTintWrap) zoneTintWrap.classList.remove('active');
+        }
+      });
+      observerTint.observe(zonePresetsWrap, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    if (zoneTintSelect) {
+      zoneTintSelect.addEventListener('change', (e) => {
+        tintChoice = e.target.value;
+        if (zoneTintCustom) zoneTintCustom.style.display = (tintChoice === 'custom') ? 'inline-block' : 'none';
+        applyTint();
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+
+    if (zoneTintCustom) {
+      zoneTintCustom.addEventListener('input', (e) => {
+        tintCustomHex = e.target.value;
+        applyTint();
+      });
+      zoneTintCustom.addEventListener('change', () => {
+        if (window.joydeckPushHistory) window.joydeckPushHistory();
+      });
+    }
+  })();
+
+  (function() {
+    const exportBtn = document.getElementById('exportPdfBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        window.print();
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

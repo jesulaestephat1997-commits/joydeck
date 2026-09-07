@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cover Page Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================
+     TEMPLATE VARIABLES — everything editable
+     lives here. Nothing below should hardcode
+     a color, font, or size.
+  ============================================ */
+  :root {
+    --color-primary:   #4C1D95;
+    --color-secondary: #DDD6FE;
+    --color-accent:    #F5C244;
+    --color-text-on-primary: #FFFFFF;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --font-size-title:    48px;
+    --font-size-subtitle: 20px;
+    --font-size-name:     16px;
+
+    /* min/max ranges used by the size sliders — read by JS, not by CSS */
+    --font-size-title-min: 32px;
+    --font-size-title-max: 64px;
+    --font-size-subtitle-min: 14px;
+    --font-size-subtitle-max: 28px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  /* ============================================
+     PAGE — fixed size (A5-ish ratio), fixed
+     block positions. Only content/style inside
+     each block is editable.
+  ============================================ */
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-primary);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* decorative corner mark — fixed, not editable */
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    width: 22px;
+    height: 22px;
+    border-top: 2px solid var(--color-accent);
+    border-left: 2px solid var(--color-accent);
+    opacity: 0.9;
+  }
+
+  .block-heading {
+    padding: 76px 32px 0 32px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin-bottom: 14px;
+  }
+
+  .title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--font-size-title);
+    line-height: 1.08;
+    color: var(--color-text-on-primary);
+    margin: 0 0 18px 0;
+  }
+
+  .title .highlight {
+    color: var(--color-accent);
+  }
+
+  .subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--font-size-subtitle);
+    line-height: 1.45;
+    color: var(--color-secondary);
+    margin: 0;
+    max-width: 90%;
+  }
+
+  .block-image {
+    flex: 1;
+    margin: 28px 24px 0 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    background: var(--color-secondary);
+  }
+
+  .block-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-placeholder-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-primary);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .block-footer {
+    padding: 22px 32px 30px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .name-pill {
+    background: var(--color-accent);
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--font-size-name);
+    padding: 9px 20px;
+    border-radius: 20px;
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="page" id="cover-page">
+    <div class="block-heading">
+      <span class="eyebrow" contenteditable="true">EBOOK</span>
+      <h1 class="title" contenteditable="true">
+        The Ultimate <span class="highlight">Content Creator</span> Playbook
+      </h1>
+      <p class="subtitle" contenteditable="true">Plan. Create. Publish. Grow your impact.</p>
+    </div>
+
+    <div class="block-image">
+      <div class="image-placeholder-label">[ image de couverture ]</div>
+      <!-- <img src="user-uploaded-image.jpg" alt=""> -->
+    </div>
+
+    <div class="block-footer">
+      <span class="name-pill" contenteditable="true">Your Name</span>
+    </div>
+  </div>
+
+</body>
+</html>

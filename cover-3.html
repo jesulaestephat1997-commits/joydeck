@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cover Template — Variant 3 (Full Image, Framed)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-primary:   #4C1D95;
+    --color-secondary: #DDD6FE;
+    --color-accent:    #F5C244;
+    --color-text-on-primary: #FFFFFF;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --font-size-title:    50px;
+    --font-size-subtitle: 19px;
+    --font-size-name:     16px;
+
+    --font-size-title-min: 32px;
+    --font-size-title-max: 66px;
+    --font-size-subtitle-min: 14px;
+    --font-size-subtitle-max: 28px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-primary);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+  }
+
+  .block-image-full {
+    position: absolute;
+    inset: 0;
+    background: var(--color-secondary);
+  }
+
+  .block-image-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-placeholder-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-primary);
+    opacity: 0.55;
+  }
+
+  /* even, centered darkening so text is legible dead-center — fixed */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.25) 45%,
+      rgba(0,0,0,0.45) 100%
+    );
+  }
+
+  /* thin inset frame — fixed decorative element */
+  .frame {
+    position: absolute;
+    inset: 36px;
+    border: 1px solid rgba(255,255,255,0.35);
+    pointer-events: none;
+  }
+
+  /* text block — true vertical/horizontal center of page, fixed position */
+  .block-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 0 90px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-accent);
+  }
+
+  .title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--font-size-title);
+    line-height: 1.1;
+    color: var(--color-text-on-primary);
+    margin: 0 0 20px 0;
+  }
+
+  .title .highlight { color: var(--color-accent); }
+
+  .subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--font-size-subtitle);
+    line-height: 1.5;
+    color: var(--color-secondary);
+    margin: 0;
+  }
+
+  /* author name — fixed at bottom center */
+  .block-footer {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name-pill {
+    background: transparent;
+    border: 1px solid var(--color-accent);
+    color: var(--color-text-on-primary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--font-size-name);
+    padding: 10px 26px;
+    border-radius: 24px;
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="page" id="cover-page-v3">
+    <div class="block-image-full">
+      <div class="image-placeholder-label">[ image plein cadre ]</div>
+      <!-- <img src="user-uploaded-image.jpg" alt=""> -->
+    </div>
+    <div class="overlay"></div>
+    <div class="frame"></div>
+
+    <div class="block-text">
+      <span class="eyebrow" contenteditable="true">EBOOK</span>
+      <h1 class="title" contenteditable="true">
+        The Ultimate <span class="highlight">Content Creator</span> Playbook
+      </h1>
+      <p class="subtitle" contenteditable="true">Plan. Create. Publish. Grow your impact.</p>
+    </div>
+
+    <div class="block-footer">
+      <span class="name-pill" contenteditable="true">Your Name</span>
+    </div>
+  </div>
+
+</body>
+</html>

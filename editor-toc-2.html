@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Éditeur — Sommaire Variant 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-bg: #FBF3E7;
+    --color-band: #A9CBA4;
+    --color-badge: #37475A;
+    --color-badge-text: #FFFFFF;
+    --color-band-text: #37475A;
+    --color-title-text: #FBF3E7;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+
+    --font-size-title: 30px;
+    --font-size-entry: 17px;
+    --font-size-badge: 20px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+  }
+
+  /* ============ top banner — fixed shape ============ */
+  .title-band-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 148px;
+    background: var(--color-band);
+  }
+
+  .title-banner {
+    position: absolute;
+    top: 22px;
+    left: 218px;
+    width: 380px;
+    height: 118px;
+    background: var(--color-badge);
+    clip-path: polygon(0 0, 100% 0, 100% 68%, 50% 100%, 0 68%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title-text {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: var(--font-size-title);
+    letter-spacing: 0.08em;
+    color: var(--color-title-text);
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: 18px;
+  }
+
+  /* ============ entry rows — fixed positions, alternating badge side ============ */
+  .entries-wrap {
+    position: absolute;
+    top: 210px;
+    left: 62px;
+    right: 62px;
+  }
+
+  .entry-row {
+    position: relative;
+    height: 76px;
+    margin-bottom: 34px;
+  }
+
+  .entry-bar {
+    position: absolute;
+    top: 12px;
+    height: 52px;
+    background: var(--color-band);
+    display: flex;
+    align-items: center;
+  }
+
+  .entry-row.badge-left .entry-bar {
+    left: 38px;
+    right: 0;
+    justify-content: center;
+    padding-left: 46px;
+    border-top-left-radius: 26px;
+    border-bottom-left-radius: 26px;
+  }
+  .entry-row.badge-right .entry-bar {
+    left: 0;
+    right: 38px;
+    justify-content: center;
+    padding-right: 46px;
+    border-top-right-radius: 26px;
+    border-bottom-right-radius: 26px;
+  }
+
+  .entry-label {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--font-size-entry);
+    color: var(--color-band-text);
+    text-align: center;
+  }
+
+  .entry-badge {
+    position: absolute;
+    top: 0;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: var(--color-badge);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+  }
+  .entry-row.badge-left .entry-badge { left: 0; }
+  .entry-row.badge-right .entry-badge { right: 0; }
+
+  .entry-number {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: var(--font-size-badge);
+    color: var(--color-badge-text);
+  }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,0.35); outline-offset: 2px; }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    position: fixed; top: 0; left: 300px; right: 0; height: 52px;
+    background: #FFFFFF; border-bottom: 1px solid #E4E2DD;
+    display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100;
+    overflow-x: auto;
+  }
+  .toolbar button {
+    padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px;
+    background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 300px;
+    background: #FFFFFF;
+    border-right: 1px solid #E4E2DD;
+    padding: 28px 24px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+  }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; }
+  .control-group { margin-bottom: 22px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
+  hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+
+  .preview-area {
+    margin-left: 300px;
+    padding: 92px 40px 40px 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page {
+      zoom: 1 !important;
+      width: 8.5in !important;
+      height: 11in !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe.</p>
+
+    <div class="control-group">
+      <label>Couleurs</label>
+      <div class="swatch-row"><input type="color" id="colorBand" value="#A9CBA4"><span>Bandes</span></div>
+      <div class="swatch-row"><input type="color" id="colorBadge" value="#37475A"><span>Badges / bannière</span></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Police</label>
+      <select class="font-select" id="fontHeading">
+        <option value="'Poppins', sans-serif">Poppins</option>
+        <option value="'Playfair Display', serif">Playfair Display</option>
+        <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+        <option value="'Outfit', sans-serif">Outfit</option>
+        <option value="'Bricolage Grotesque', sans-serif">Bricolage Grotesque</option>
+        <option value="'DM Serif Display', serif">DM Serif Display</option>
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Fraunces', serif">Fraunces</option>
+        <option value="'Marcellus', serif">Marcellus</option>
+        <option value="'Prata', serif">Prata</option>
+        <option value="'Italiana', serif">Italiana</option>
+        <option value="'Abril Fatface', serif">Abril Fatface</option>
+        <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+        <option value="'Cinzel', serif">Cinzel</option>
+        <option value="'Great Vibes', cursive">Great Vibes (calligraphie)</option>
+        <option value="'Dancing Script', cursive">Dancing Script (calligraphie)</option>
+        <option value="'Parisienne', cursive">Parisienne (calligraphie)</option>
+        <option value="'Alex Brush', cursive">Alex Brush (calligraphie)</option>
+        <option value="'Allura', cursive">Allura (calligraphie)</option>
+        <option value="'Sacramento', cursive">Sacramento (calligraphie)</option>
+        <option value="'Tangerine', cursive">Tangerine (calligraphie)</option>
+        <option value="'Pinyon Script', cursive">Pinyon Script (calligraphie)</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Taille du titre</label>
+      <input type="range" id="sizeTitle" min="18" max="44" value="30" style="width:100%;">
+    </div>
+    <div class="control-group">
+      <label>Taille des entrées</label>
+      <input type="range" id="sizeEntry" min="12" max="24" value="17" style="width:100%;">
+    </div>
+    <div class="control-group">
+      <label>Taille des numéros</label>
+      <input type="range" id="sizeBadge" min="14" max="28" value="20" style="width:100%;">
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <div class="preview-area">
+    <div class="page" id="toc-page-2">
+
+      <div class="title-band-bg"></div>
+      <div class="title-banner">
+        <p class="title-text" contenteditable="true">Sommaire</p>
+      </div>
+
+      <div class="entries-wrap">
+
+        <div class="entry-row badge-left">
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">01.</span></div>
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Introduction</span></div>
+        </div>
+
+        <div class="entry-row badge-right">
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Contexte et Cadre du Stage</span></div>
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">02.</span></div>
+        </div>
+
+        <div class="entry-row badge-left">
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">03.</span></div>
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Mission et Tâches</span></div>
+        </div>
+
+        <div class="entry-row badge-right">
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Réalisations et Contributions</span></div>
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">04.</span></div>
+        </div>
+
+        <div class="entry-row badge-left">
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">05.</span></div>
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Compétences Acquises</span></div>
+        </div>
+
+        <div class="entry-row badge-right">
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Difficultés Rencontrées</span></div>
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">06.</span></div>
+        </div>
+
+        <div class="entry-row badge-left">
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">07.</span></div>
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Perspectives et Recommandations</span></div>
+        </div>
+
+        <div class="entry-row badge-right">
+          <div class="entry-bar"><span class="entry-label" contenteditable="true">Conclusion</span></div>
+          <div class="entry-badge"><span class="entry-number" contenteditable="true">08.</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement.style;
+
+    document.getElementById('colorBand').addEventListener('input', e => root.setProperty('--color-band', e.target.value));
+    document.getElementById('colorBadge').addEventListener('input', e => {
+      root.setProperty('--color-badge', e.target.value);
+    });
+
+    document.getElementById('fontHeading').addEventListener('change', e => {
+      root.setProperty('--font-heading', e.target.value);
+      root.setProperty('--font-body', e.target.value);
+    });
+
+    document.querySelectorAll('.font-select option').forEach(opt => { opt.style.fontFamily = opt.value; });
+
+    document.getElementById('sizeTitle').addEventListener('input', e => root.setProperty('--font-size-title', e.target.value + 'px'));
+    document.getElementById('sizeEntry').addEventListener('input', e => root.setProperty('--font-size-entry', e.target.value + 'px'));
+    document.getElementById('sizeBadge').addEventListener('input', e => root.setProperty('--font-size-badge', e.target.value + 'px'));
+
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [];
+    let historyIndex = -1;
+    let suppressCapture = false;
+
+    const colorBand = document.getElementById('colorBand');
+    const colorBadge = document.getElementById('colorBadge');
+    const fontHeading = document.getElementById('fontHeading');
+    const sizeTitle = document.getElementById('sizeTitle');
+    const sizeEntry = document.getElementById('sizeEntry');
+    const sizeBadge = document.getElementById('sizeBadge');
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+
+    function captureState() {
+      return {
+        colorBand: colorBand.value,
+        colorBadge: colorBadge.value,
+        fontHeading: fontHeading.value,
+        sizeTitle: sizeTitle.value,
+        sizeEntry: sizeEntry.value,
+        sizeBadge: sizeBadge.value,
+        editableContent: editableEls.map(el => el.innerHTML)
+      };
+    }
+
+    function applyState(state) {
+      if (!state) return;
+      suppressCapture = true;
+      root.setProperty('--color-band', state.colorBand);
+      root.setProperty('--color-badge', state.colorBadge);
+      root.setProperty('--font-heading', state.fontHeading);
+      root.setProperty('--font-body', state.fontHeading);
+      root.setProperty('--font-size-title', state.sizeTitle + 'px');
+      root.setProperty('--font-size-entry', state.sizeEntry + 'px');
+      root.setProperty('--font-size-badge', state.sizeBadge + 'px');
+      colorBand.value = state.colorBand;
+      colorBadge.value = state.colorBadge;
+      fontHeading.value = state.fontHeading;
+      sizeTitle.value = state.sizeTitle;
+      sizeEntry.value = state.sizeEntry;
+      sizeBadge.value = state.sizeBadge;
+      if (state.editableContent) {
+        state.editableContent.forEach((html, i) => { if (editableEls[i]) editableEls[i].innerHTML = html; });
+      }
+      suppressCapture = false;
+    }
+
+    function pushHistory() {
+      if (suppressCapture) return;
+      const state = captureState();
+      history = history.slice(0, historyIndex + 1);
+      history.push(state);
+      historyIndex = history.length - 1;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      document.getElementById('undoBtn').disabled = historyIndex <= 0;
+      document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+    }
+
+    [colorBand, colorBadge, fontHeading, sizeTitle, sizeEntry, sizeBadge].forEach(el => {
+      el.addEventListener('change', () => pushHistory());
+    });
+    editableEls.forEach(el => { el.addEventListener('blur', () => pushHistory()); });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); }
+    });
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); }
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+      const status = document.getElementById('saveStatus');
+      status.textContent = 'Enregistre \u2713';
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    });
+
+    document.getElementById('exportPdfBtn').addEventListener('click', () => { window.print(); });
+
+    setTimeout(function() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch(e) {} }
+      pushHistory();
+      updateButtons();
+    }, 0);
+  </script>
+
+</body>
+</html>

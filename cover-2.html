@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cover Template — Variant 2 (Full Image)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-primary:   #4C1D95;
+    --color-secondary: #DDD6FE;
+    --color-accent:    #F5C244;
+    --color-text-on-primary: #FFFFFF;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --font-size-title:    52px;
+    --font-size-subtitle: 20px;
+    --font-size-name:     16px;
+
+    --font-size-title-min: 32px;
+    --font-size-title-max: 68px;
+    --font-size-subtitle-min: 14px;
+    --font-size-subtitle-max: 28px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  /* ============================================
+     PAGE — full-bleed image background, fixed
+     block positions. Only content/style inside
+     each block is editable.
+  ============================================ */
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-primary);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+  }
+
+  /* full-page image block — fixed position/size, not draggable */
+  .block-image-full {
+    position: absolute;
+    inset: 0;
+    background: var(--color-secondary);
+  }
+
+  .block-image-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-placeholder-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-primary);
+    opacity: 0.55;
+  }
+
+  /* dark gradient overlay so text stays readable over any photo — fixed */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.05) 38%,
+      rgba(0,0,0,0.35) 62%,
+      rgba(0,0,0,0.72) 100%
+    );
+  }
+
+  /* text block — sits mid-lower page over the image, fixed position */
+  .block-text {
+    position: absolute;
+    top: 52%;
+    left: 0;
+    right: 0;
+    padding: 0 72px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin-bottom: 18px;
+  }
+
+  .title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--font-size-title);
+    line-height: 1.1;
+    color: var(--color-text-on-primary);
+    margin: 0 0 20px 0;
+  }
+
+  .title .highlight { color: var(--color-accent); }
+
+  .subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--font-size-subtitle);
+    line-height: 1.5;
+    color: var(--color-secondary);
+    margin: 0;
+  }
+
+  /* author name — fixed at bottom center */
+  .block-footer {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name-pill {
+    background: var(--color-accent);
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--font-size-name);
+    padding: 10px 26px;
+    border-radius: 24px;
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="page" id="cover-page-v2">
+    <div class="block-image-full">
+      <div class="image-placeholder-label">[ image plein cadre ]</div>
+      <!-- <img src="user-uploaded-image.jpg" alt=""> -->
+    </div>
+    <div class="overlay"></div>
+
+    <div class="block-text">
+      <span class="eyebrow" contenteditable="true">EBOOK</span>
+      <h1 class="title" contenteditable="true">
+        The Ultimate <span class="highlight">Content Creator</span> Playbook
+      </h1>
+      <p class="subtitle" contenteditable="true">Plan. Create. Publish. Grow your impact.</p>
+    </div>
+
+    <div class="block-footer">
+      <span class="name-pill" contenteditable="true">Your Name</span>
+    </div>
+  </div>
+
+</body>
+</html>
