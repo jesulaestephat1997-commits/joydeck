@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+
 <meta charset="UTF-8">
-<title>Éditeur — Page Texte (1 & 2 colonnes)</title>
+<title>Éditeur — Page 2 Colonnes (fond sombre)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
 
   :root {
-    --color-bg: #FFFFFF;
-    --color-accent: #4C1D95;
-    --color-title: #1A1A1A;
-    --color-text: #4A4A4A;
-    --color-tip-bg: #F3EEFB;
-    --color-tip-text: #4C1D95;
+    --color-bg: #37475A;
+    --color-title: #FFFFFF;
+    --color-label: #F5C244;
+    --color-text: #C7CDD4;
 
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
 
     --font-size-title: 30px;
-    --font-size-body: 15px;
+    --font-size-body: 13px;
   }
 
   * { box-sizing: border-box; }
@@ -40,53 +62,34 @@
     overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,0.18);
     zoom: 0.65;
-    padding: 76px 64px;
-    display: none;
-  }
-  .page.active { display: block; }
-
-  .eyebrow-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
+    padding: 80px 64px;
   }
 
-  .chapter-label {
+  .page-label {
     font-family: var(--font-body);
-    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-
-  .page-number {
-    font-family: var(--font-body);
     font-size: 12px;
-    color: #999;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-label);
+    display: block;
+    margin-bottom: 14px;
   }
 
   .page-title {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 800;
     font-size: var(--font-size-title);
     color: var(--color-title);
-    margin: 0 0 12px 0;
-    line-height: 1.2;
+    margin: 0 0 44px 0;
+    line-height: 1.25;
   }
 
-  .title-underline {
-    width: 56px;
-    height: 4px;
-    background: var(--color-accent);
-    border-radius: 2px;
-    margin-bottom: 28px;
+  .col-wrap {
+    display: flex;
+    gap: 48px;
   }
-
-  .col-wrap-1 { display: block; }
-  .col-wrap-2 { display: flex; gap: 40px; }
-  .col-wrap-2 .col { flex: 1; }
+  .col-wrap .col { flex: 1; }
 
   .body-text {
     font-family: var(--font-body);
@@ -94,57 +97,12 @@
     color: var(--color-text);
     line-height: 1.75;
   }
-  .body-text p { margin: 0 0 16px 0; }
+  .body-text p { margin: 0 0 18px 0; }
   .body-text p:last-child { margin-bottom: 0; }
 
-  .tip-box {
-    margin-top: 28px;
-    background: var(--color-tip-bg);
-    border-radius: 10px;
-    padding: 18px 22px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .tip-icon {
-    font-size: 18px;
-    line-height: 1.4;
-  }
-  .tip-text {
-    font-family: var(--font-body);
-    font-size: 13px;
-    color: var(--color-tip-text);
-    line-height: 1.5;
-  }
-  .tip-text strong { font-weight: 700; }
-
-
-  .page.content-overflow {
-    outline: 3px dashed #DC2626;
-    outline-offset: -3px;
-  }
-  .content-clip {
-    overflow: hidden;
-  }
-  .overflow-badge {
-    position: absolute;
-    bottom: 14px;
-    right: 14px;
-    background: #DC2626;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 7px 12px;
-    border-radius: 6px;
-    display: none;
-    z-index: 50;
-  }
-  .page.content-overflow .overflow-badge { display: block; }
-
   [contenteditable="true"] { outline: none; }
-  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
-  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,0.35); outline-offset: 2px; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(255,255,255,0.25); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(255,255,255,0.5); outline-offset: 2px; }
 
   /* ============ TOOLBAR ============ */
   .toolbar {
@@ -161,7 +119,6 @@
   .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
   .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
   .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
-  .toolbar button.layout-btn.selected { background: #4C1D95; color: #fff; border-color: #4C1D95; }
   .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
 
   /* ============ SIDEBAR ============ */
@@ -184,22 +141,6 @@
   select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
   hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
 
-  .sidebar button.layout-btn {
-    padding: 8px 14px;
-    border: 1px solid #E4E2DD;
-    border-radius: 6px;
-    background: #FAFAF8;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    margin-right: 8px;
-  }
-  .sidebar button.layout-btn.selected {
-    background: #4C1D95;
-    color: #fff;
-    border-color: #4C1D95;
-  }
-
   .preview-area {
     margin-left: 300px;
     padding: 92px 40px 40px 40px;
@@ -210,8 +151,6 @@
   @media print {
     body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
     .sidebar, .toolbar { display: none !important; }
-    .overflow-badge, .page.content-overflow { outline: none !important; }
-    .overflow-badge { display: none !important; }
     .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
     .page {
       zoom: 1 !important;
@@ -232,18 +171,11 @@
     <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe.</p>
 
     <div class="control-group">
-      <label>Mise en page</label>
-      <button type="button" class="layout-btn selected" id="layout1Btn">1 colonne</button>
-      <button type="button" class="layout-btn" id="layout2Btn">2 colonnes</button>
-    </div>
-
-    <hr>
-
-    <div class="control-group">
       <label>Couleurs</label>
-      <div class="swatch-row"><input type="color" id="colorAccent" value="#4C1D95"><span>Accent</span></div>
-      <div class="swatch-row"><input type="color" id="colorTitle" value="#1A1A1A"><span>Titre</span></div>
-      <div class="swatch-row"><input type="color" id="colorText" value="#4A4A4A"><span>Texte</span></div>
+      <div class="swatch-row"><input type="color" id="colorBg" value="#37475A"><span>Fond</span></div>
+      <div class="swatch-row"><input type="color" id="colorTitle" value="#FFFFFF"><span>Titre</span></div>
+      <div class="swatch-row"><input type="color" id="colorLabel" value="#F5C244"><span>Label</span></div>
+      <div class="swatch-row"><input type="color" id="colorText" value="#C7CDD4"><span>Texte</span></div>
     </div>
 
     <hr>
@@ -294,11 +226,11 @@
 
     <div class="control-group">
       <label>Taille du titre</label>
-      <input type="range" id="sizeTitle" min="18" max="48" value="30" style="width:100%;">
+      <input type="range" id="sizeTitle" min="18" max="46" value="30" style="width:100%;">
     </div>
     <div class="control-group">
       <label>Taille du texte</label>
-      <input type="range" id="sizeBody" min="11" max="22" value="15" style="width:100%;">
+      <input type="range" id="sizeBody" min="10" max="20" value="13" style="width:100%;">
     </div>
   </div>
 
@@ -311,118 +243,40 @@
   </div>
 
   <div class="preview-area">
-
-    <!-- ============ 1-COLUMN LAYOUT ============ -->
-    <div class="page active" id="page-1col">
-      <div class="eyebrow-row">
-        <span class="chapter-label" contenteditable="true">CHAPITRE 01</span>
-        <span class="page-number">05</span>
-      </div>
-      <h2 class="page-title" contenteditable="true">The Power of Consistent Content</h2>
-      <div class="title-underline"></div>
-      <div class="content-clip">
-        <div class="col-wrap-1">
+    <div class="page" id="twocol-page">
+      <span class="page-label" contenteditable="true">A Simple Description</span>
+      <h2 class="page-title" contenteditable="true">A Simple Title</h2>
+      <div class="col-wrap">
+        <div class="col">
           <div class="body-text" contenteditable="true">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor.</p>
-            <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus.</p>
+            <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu.</p>
           </div>
         </div>
-        <div class="tip-box">
-          <span class="tip-icon">💡</span>
-          <span class="tip-text" contenteditable="true"><strong>Pro Tip:</strong> Consistent content builds trust, and trust builds a loyal community.</span>
+        <div class="col">
+          <div class="body-text" contenteditable="true">
+            <p>Ad litora torquent per conubia nostra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus.</p>
+            <p>Mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas.</p>
+          </div>
         </div>
       </div>
-      <div class="overflow-badge">Contenu trop long — depasse la page</div>
     </div>
-
-    <!-- ============ 2-COLUMN LAYOUT ============ -->
-    <div class="page" id="page-2col">
-      <div class="eyebrow-row">
-        <span class="chapter-label" contenteditable="true">CHAPITRE 01</span>
-        <span class="page-number">06</span>
-      </div>
-      <h2 class="page-title" contenteditable="true">Why Content Matters</h2>
-      <div class="title-underline"></div>
-      <div class="content-clip">
-        <div class="col-wrap-2">
-          <div class="col">
-            <div class="body-text" contenteditable="true">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.</p>
-              <p>In id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor.</p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="body-text" contenteditable="true">
-              <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer.</p>
-              <p>Nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent.</p>
-            </div>
-          </div>
-        </div>
-        <div class="tip-box">
-          <span class="tip-icon">💬</span>
-          <span class="tip-text" contenteditable="true">Great content solves problems and creates transformation.</span>
-        </div>
-      </div>
-      <div class="overflow-badge">Contenu trop long — depasse la page</div>
-    </div>
-
   </div>
 
   <script>
     const root = document.documentElement.style;
 
-    // ---- layout switcher ----
-    const layout1Btn = document.getElementById('layout1Btn');
-    const layout2Btn = document.getElementById('layout2Btn');
-    const page1col = document.getElementById('page-1col');
-    const page2col = document.getElementById('page-2col');
-    let activeLayout = '1col';
-
-    function setLayout(layout, capture) {
-      activeLayout = layout;
-      page1col.classList.toggle('active', layout === '1col');
-      page2col.classList.toggle('active', layout === '2col');
-      layout1Btn.classList.toggle('selected', layout === '1col');
-      layout2Btn.classList.toggle('selected', layout === '2col');
-      if (capture) pushHistory();
-      checkOverflow();
-    }
-
-    layout1Btn.addEventListener('click', () => setLayout('1col', true));
-    layout2Btn.addEventListener('click', () => setLayout('2col', true));
-
-    function checkOverflow() {
-      document.querySelectorAll('.page').forEach(pageEl => {
-        const clipEl = pageEl.querySelector('.content-clip');
-        if (!clipEl) return;
-        const paddingBottom = parseFloat(getComputedStyle(pageEl).paddingBottom);
-        const limit = pageEl.clientHeight - paddingBottom;
-        const availableForClip = limit - clipEl.offsetTop;
-        clipEl.style.maxHeight = Math.max(0, availableForClip) + 'px';
-        const naturalHeight = clipEl.scrollHeight;
-        pageEl.classList.toggle('content-overflow', naturalHeight > availableForClip + 1);
-      });
-    }
-
-    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-      el.addEventListener('input', checkOverflow);
-    });
-
-    const overflowObserver = new MutationObserver(() => checkOverflow());
-    document.querySelectorAll('.page').forEach(pageEl => {
-      overflowObserver.observe(pageEl, { childList: true, subtree: true, characterData: true });
-    });
-
-    document.getElementById('colorAccent').addEventListener('input', e => root.setProperty('--color-accent', e.target.value));
+    document.getElementById('colorBg').addEventListener('input', e => root.setProperty('--color-bg', e.target.value));
     document.getElementById('colorTitle').addEventListener('input', e => root.setProperty('--color-title', e.target.value));
+    document.getElementById('colorLabel').addEventListener('input', e => root.setProperty('--color-label', e.target.value));
     document.getElementById('colorText').addEventListener('input', e => root.setProperty('--color-text', e.target.value));
 
     document.getElementById('fontHeading').addEventListener('change', e => root.setProperty('--font-heading', e.target.value));
     document.getElementById('fontBody').addEventListener('change', e => root.setProperty('--font-body', e.target.value));
     document.querySelectorAll('.font-select option').forEach(opt => { opt.style.fontFamily = opt.value; });
 
-    document.getElementById('sizeTitle').addEventListener('input', e => { root.setProperty('--font-size-title', e.target.value + 'px'); checkOverflow(); });
-    document.getElementById('sizeBody').addEventListener('input', e => { root.setProperty('--font-size-body', e.target.value + 'px'); checkOverflow(); });
+    document.getElementById('sizeTitle').addEventListener('input', e => root.setProperty('--font-size-title', e.target.value + 'px'));
+    document.getElementById('sizeBody').addEventListener('input', e => root.setProperty('--font-size-body', e.target.value + 'px'));
 
     // ============ undo/redo/save system ============
     const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
@@ -430,8 +284,9 @@
     let historyIndex = -1;
     let suppressCapture = false;
 
-    const colorAccent = document.getElementById('colorAccent');
+    const colorBg = document.getElementById('colorBg');
     const colorTitle = document.getElementById('colorTitle');
+    const colorLabel = document.getElementById('colorLabel');
     const colorText = document.getElementById('colorText');
     const fontHeading = document.getElementById('fontHeading');
     const fontBody = document.getElementById('fontBody');
@@ -441,9 +296,9 @@
 
     function captureState() {
       return {
-        layout: activeLayout,
-        colorAccent: colorAccent.value,
+        colorBg: colorBg.value,
         colorTitle: colorTitle.value,
+        colorLabel: colorLabel.value,
         colorText: colorText.value,
         fontHeading: fontHeading.value,
         fontBody: fontBody.value,
@@ -456,16 +311,17 @@
     function applyState(state) {
       if (!state) return;
       suppressCapture = true;
-      setLayout(state.layout, false);
-      root.setProperty('--color-accent', state.colorAccent);
+      root.setProperty('--color-bg', state.colorBg);
       root.setProperty('--color-title', state.colorTitle);
+      root.setProperty('--color-label', state.colorLabel);
       root.setProperty('--color-text', state.colorText);
       root.setProperty('--font-heading', state.fontHeading);
       root.setProperty('--font-body', state.fontBody);
       root.setProperty('--font-size-title', state.sizeTitle + 'px');
       root.setProperty('--font-size-body', state.sizeBody + 'px');
-      colorAccent.value = state.colorAccent;
+      colorBg.value = state.colorBg;
       colorTitle.value = state.colorTitle;
+      colorLabel.value = state.colorLabel;
       colorText.value = state.colorText;
       fontHeading.value = state.fontHeading;
       fontBody.value = state.fontBody;
@@ -491,7 +347,7 @@
       document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
     }
 
-    [colorAccent, colorTitle, colorText, fontHeading, fontBody, sizeTitle, sizeBody].forEach(el => {
+    [colorBg, colorTitle, colorLabel, colorText, fontHeading, fontBody, sizeTitle, sizeBody].forEach(el => {
       el.addEventListener('change', () => pushHistory());
     });
     editableEls.forEach(el => { el.addEventListener('blur', () => pushHistory()); });
@@ -517,7 +373,6 @@
       if (saved) { try { applyState(JSON.parse(saved)); } catch(e) {} }
       pushHistory();
       updateButtons();
-      checkOverflow();
     }, 0);
   </script>
 

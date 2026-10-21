@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+
+<meta charset="UTF-8">
+<title>Éditeur — Page Comparaison</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-bg: #FFFFFF;
+    --color-title: #1A1A1A;
+    --color-col-a-bg: #F3EEFB;
+    --color-col-a-text: #4C1D95;
+    --color-col-b-bg: #F5C244;
+    --color-col-b-text: #4C1D95;
+    --color-row-label: #4A4A4A;
+    --color-footer-bg: #F3EEFB;
+    --color-footer-text: #4C1D95;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --font-size-title: 26px;
+    --font-size-body: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+    padding: 64px;
+  }
+
+  .page-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--font-size-title);
+    color: var(--color-title);
+    margin: 0 0 32px 0;
+    line-height: 1.25;
+  }
+
+  .compare-table {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #EEEDE9;
+  }
+
+  .compare-header {
+    display: flex;
+  }
+  .compare-header .spacer { width: 40%; }
+  .compare-header .col-a, .compare-header .col-b {
+    flex: 1;
+    padding: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--font-size-body);
+  }
+  .compare-header .col-a { background: var(--color-col-a-bg); color: var(--color-col-a-text); }
+  .compare-header .col-b { background: var(--color-col-b-bg); color: var(--color-col-b-text); }
+
+  .compare-row {
+    display: flex;
+    border-top: 1px solid #EEEDE9;
+  }
+  .compare-row .row-label {
+    width: 40%;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-row-label);
+    display: flex;
+    align-items: center;
+  }
+  .compare-row .cell {
+    flex: 1;
+    padding: 14px 16px;
+    text-align: center;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--font-size-body);
+    color: var(--color-title);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .compare-footer {
+    margin-top: 28px;
+    background: var(--color-footer-bg);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .compare-footer .icon { font-size: 18px; }
+  .compare-footer .text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-footer-text);
+    line-height: 1.5;
+  }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,0.35); outline-offset: 2px; }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    position: fixed; top: 0; left: 300px; right: 0; height: 52px;
+    background: #FFFFFF; border-bottom: 1px solid #E4E2DD;
+    display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100;
+    overflow-x: auto;
+  }
+  .toolbar button {
+    padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px;
+    background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 300px;
+    background: #FFFFFF;
+    border-right: 1px solid #E4E2DD;
+    padding: 28px 24px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+  }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; }
+  .control-group { margin-bottom: 22px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
+  hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+
+  .preview-area {
+    margin-left: 300px;
+    padding: 92px 40px 40px 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page {
+      zoom: 1 !important;
+      width: 8.5in !important;
+      height: 11in !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe.</p>
+
+    <div class="control-group">
+      <label>Couleurs</label>
+      <div class="swatch-row"><input type="color" id="colorColA" value="#F3EEFB"><span>Colonne A (fond)</span></div>
+      <div class="swatch-row"><input type="color" id="colorColB" value="#F5C244"><span>Colonne B (fond)</span></div>
+      <div class="swatch-row"><input type="color" id="colorFooter" value="#F3EEFB"><span>Encadré bas</span></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Police</label>
+      <select class="font-select" id="fontHeading">
+        <option value="'Poppins', sans-serif">Poppins</option>
+        <option value="'Playfair Display', serif">Playfair Display</option>
+        <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+        <option value="'Outfit', sans-serif">Outfit</option>
+        <option value="'Bricolage Grotesque', sans-serif">Bricolage Grotesque</option>
+        <option value="'DM Serif Display', serif">DM Serif Display</option>
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Fraunces', serif">Fraunces</option>
+        <option value="'Marcellus', serif">Marcellus</option>
+        <option value="'Prata', serif">Prata</option>
+        <option value="'Italiana', serif">Italiana</option>
+        <option value="'Abril Fatface', serif">Abril Fatface</option>
+        <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+        <option value="'Cinzel', serif">Cinzel</option>
+        <option value="'Great Vibes', cursive">Great Vibes (calligraphie)</option>
+        <option value="'Dancing Script', cursive">Dancing Script (calligraphie)</option>
+        <option value="'Parisienne', cursive">Parisienne (calligraphie)</option>
+        <option value="'Alex Brush', cursive">Alex Brush (calligraphie)</option>
+        <option value="'Allura', cursive">Allura (calligraphie)</option>
+        <option value="'Sacramento', cursive">Sacramento (calligraphie)</option>
+        <option value="'Tangerine', cursive">Tangerine (calligraphie)</option>
+        <option value="'Pinyon Script', cursive">Pinyon Script (calligraphie)</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Taille du titre</label>
+      <input type="range" id="sizeTitle" min="18" max="42" value="26" style="width:100%;">
+    </div>
+    <div class="control-group">
+      <label>Taille du texte</label>
+      <input type="range" id="sizeBody" min="10" max="20" value="14" style="width:100%;">
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <div class="preview-area">
+    <div class="page" id="compare-page">
+
+      <h2 class="page-title" contenteditable="true">Choose the Best Path for You</h2>
+
+      <div class="compare-table">
+        <div class="compare-header">
+          <div class="spacer"></div>
+          <div class="col-a" contenteditable="true">DIY Approach</div>
+          <div class="col-b" contenteditable="true">Guided Approach</div>
+        </div>
+
+        <div class="compare-row">
+          <div class="row-label" contenteditable="true">Cost</div>
+          <div class="cell" contenteditable="true">Low Cost</div>
+          <div class="cell" contenteditable="true">Higher Investment</div>
+        </div>
+        <div class="compare-row">
+          <div class="row-label" contenteditable="true">Time</div>
+          <div class="cell" contenteditable="true">More Time</div>
+          <div class="cell" contenteditable="true">Saves Time</div>
+        </div>
+        <div class="compare-row">
+          <div class="row-label" contenteditable="true">Learning</div>
+          <div class="cell" contenteditable="true">Learning Curve</div>
+          <div class="cell" contenteditable="true">Expert Guidance</div>
+        </div>
+        <div class="compare-row">
+          <div class="row-label" contenteditable="true">Process</div>
+          <div class="cell" contenteditable="true">Trial & Error</div>
+          <div class="cell" contenteditable="true">Proven Framework</div>
+        </div>
+        <div class="compare-row">
+          <div class="row-label" contenteditable="true">Outcome</div>
+          <div class="cell" contenteditable="true">Unpredictable Results</div>
+          <div class="cell" contenteditable="true">Faster Results</div>
+        </div>
+      </div>
+
+      <div class="compare-footer">
+        <span class="icon">💡</span>
+        <span class="text" contenteditable="true">Invest in guidance, save time, and get results faster.</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement.style;
+
+    document.getElementById('colorColA').addEventListener('input', e => root.setProperty('--color-col-a-bg', e.target.value));
+    document.getElementById('colorColB').addEventListener('input', e => root.setProperty('--color-col-b-bg', e.target.value));
+    document.getElementById('colorFooter').addEventListener('input', e => root.setProperty('--color-footer-bg', e.target.value));
+
+    document.getElementById('fontHeading').addEventListener('change', e => root.setProperty('--font-heading', e.target.value));
+    document.querySelectorAll('.font-select option').forEach(opt => { opt.style.fontFamily = opt.value; });
+
+    document.getElementById('sizeTitle').addEventListener('input', e => root.setProperty('--font-size-title', e.target.value + 'px'));
+    document.getElementById('sizeBody').addEventListener('input', e => root.setProperty('--font-size-body', e.target.value + 'px'));
+
+    // ============ undo/redo/save system ============
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [];
+    let historyIndex = -1;
+    let suppressCapture = false;
+
+    const colorColA = document.getElementById('colorColA');
+    const colorColB = document.getElementById('colorColB');
+    const colorFooter = document.getElementById('colorFooter');
+    const fontHeading = document.getElementById('fontHeading');
+    const sizeTitle = document.getElementById('sizeTitle');
+    const sizeBody = document.getElementById('sizeBody');
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+
+    function captureState() {
+      return {
+        colorColA: colorColA.value,
+        colorColB: colorColB.value,
+        colorFooter: colorFooter.value,
+        fontHeading: fontHeading.value,
+        sizeTitle: sizeTitle.value,
+        sizeBody: sizeBody.value,
+        editableContent: editableEls.map(el => el.innerHTML)
+      };
+    }
+
+    function applyState(state) {
+      if (!state) return;
+      suppressCapture = true;
+      root.setProperty('--color-col-a-bg', state.colorColA);
+      root.setProperty('--color-col-b-bg', state.colorColB);
+      root.setProperty('--color-footer-bg', state.colorFooter);
+      root.setProperty('--font-heading', state.fontHeading);
+      root.setProperty('--font-size-title', state.sizeTitle + 'px');
+      root.setProperty('--font-size-body', state.sizeBody + 'px');
+      colorColA.value = state.colorColA;
+      colorColB.value = state.colorColB;
+      colorFooter.value = state.colorFooter;
+      fontHeading.value = state.fontHeading;
+      sizeTitle.value = state.sizeTitle;
+      sizeBody.value = state.sizeBody;
+      if (state.editableContent) {
+        state.editableContent.forEach((html, i) => { if (editableEls[i]) editableEls[i].innerHTML = html; });
+      }
+      suppressCapture = false;
+    }
+
+    function pushHistory() {
+      if (suppressCapture) return;
+      const state = captureState();
+      history = history.slice(0, historyIndex + 1);
+      history.push(state);
+      historyIndex = history.length - 1;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      document.getElementById('undoBtn').disabled = historyIndex <= 0;
+      document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+    }
+
+    [colorColA, colorColB, colorFooter, fontHeading, sizeTitle, sizeBody].forEach(el => {
+      el.addEventListener('change', () => pushHistory());
+    });
+    editableEls.forEach(el => { el.addEventListener('blur', () => pushHistory()); });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); }
+    });
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); }
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+      const status = document.getElementById('saveStatus');
+      status.textContent = 'Enregistre \u2713';
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    });
+
+    document.getElementById('exportPdfBtn').addEventListener('click', () => { window.print(); });
+
+    setTimeout(function() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch(e) {} }
+      pushHistory();
+      updateButtons();
+    }, 0);
+  </script>
+
+</body>
+</html>

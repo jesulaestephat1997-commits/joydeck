@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JoyDeck — Builder</title>
+<style>
+  :root{
+    --bg:#f4f1ec; --panel:#fff; --ink:#1f2a24; --muted:#7a857e; --line:#e3ded5;
+    --accent:#2f6b4f; --accent-d:#245640; --danger:#c0392b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink)}
+  button{font:inherit;cursor:pointer}
+
+  #app{display:flex;flex-direction:column;height:100vh}
+  header.top{display:flex;align-items:center;gap:16px;padding:10px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+  .logo{font-weight:800;font-size:20px;letter-spacing:.5px;color:var(--accent)}
+  .logo small{font-weight:600;color:var(--muted);font-size:12px;margin-left:6px}
+  #title{flex:1;max-width:380px;border:1px solid transparent;border-radius:8px;padding:7px 10px;font-weight:600;font-size:15px;font-family:inherit;background:transparent;color:var(--ink)}
+  #title:hover,#title:focus{border-color:var(--line);background:#fff;outline:none}
+  .count{color:var(--muted);font-size:13px}
+  .spacer{flex:1}
+  .btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 14px;font-weight:600;color:var(--ink)}
+  .btn:hover{background:#f7f5f0}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent-d)}
+
+  main{flex:1;display:flex;min-height:0}
+  aside#lib{width:340px;background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;padding:14px 16px 30px}
+  aside#lib h2{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  aside#lib p.hint{margin:0 0 14px;font-size:12.5px;color:var(--muted)}
+  .cat{margin-top:16px}
+  .cat h3{font-size:14px;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center}
+  .cat h3 span{font-weight:500;color:var(--muted);font-size:12px}
+  .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tcard{border:1px solid var(--line);border-radius:10px;padding:6px;background:#faf9f6;cursor:grab;position:relative}
+  .tcard:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .tcard .tn{font-size:12px;font-weight:600;margin:6px 2px 4px;text-align:center}
+  .tcard .add{display:block;width:100%;border:0;background:var(--accent);color:#fff;border-radius:6px;padding:5px 0;font-size:12px;font-weight:700}
+  .tcard .add:hover{background:var(--accent-d)}
+
+  .thumb{position:relative;overflow:hidden;background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+  .thumb iframe{position:absolute;left:0;top:0;width:816px;height:1056px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+  .tcard .thumb{width:145px;height:188px;margin:0 auto}
+  .tcard .thumb iframe{transform:scale(.1777)}
+
+  section#book{flex:1;overflow-y:auto;padding:26px 30px 60px}
+  .book-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+  .book-head h2{margin:0;font-size:18px}
+  .book-head span{color:var(--muted);font-size:13px}
+  #strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px 18px;min-height:200px;
+    padding:6px;border:2px dashed transparent;border-radius:14px}
+  #strip.dragover-empty{border-color:var(--accent);background:rgba(47,107,79,.05)}
+  .pcard{position:relative;display:flex;flex-direction:column;align-items:center;cursor:grab}
+  .pcard .thumb{width:204px;height:264px}
+  .pcard .thumb iframe{transform:scale(.25)}
+  .pcard.dragging{opacity:.35}
+  .pcard.drop-before::before,.pcard.drop-after::after{content:"";position:absolute;top:0;bottom:30px;width:4px;background:var(--accent);border-radius:2px}
+  .pcard.drop-before::before{left:-12px}
+  .pcard.drop-after::after{right:-12px}
+  .pnum{position:absolute;top:8px;left:8px;background:rgba(31,42,36,.85);color:#fff;font-size:12px;font-weight:700;border-radius:999px;min-width:24px;height:24px;display:flex;align-items:center;justify-content:center;z-index:3;padding:0 6px}
+  .pbar{display:flex;gap:4px;margin-top:8px;width:204px;justify-content:center;align-items:center}
+  .pbar .pname{flex:1;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ibtn{border:1px solid var(--line);background:#fff;border-radius:6px;width:28px;height:28px;font-size:14px;line-height:1;color:var(--ink)}
+  .ibtn:hover{background:#f0ede6}
+  .ibtn.del:hover{background:#fbe9e7;color:var(--danger);border-color:#f1b9b1}
+  .pcard .open{position:absolute;inset:0 0 38px 0;border:0;background:transparent;z-index:2;border-radius:4px}
+  .pcard:hover .thumb{box-shadow:0 0 0 3px var(--accent),0 4px 14px rgba(0,0,0,.2)}
+  .pcard .editlabel{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;border-radius:999px;font-size:12px;font-weight:700;padding:4px 12px;opacity:0;transition:.15s;pointer-events:none;z-index:3}
+  .pcard:hover .editlabel{opacity:1}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 10px}
+  .empty b{display:block;font-size:17px;color:var(--ink);margin-bottom:6px}
+
+  /* Editing view */
+  #editor{display:none;flex:1;flex-direction:column;min-height:0}
+  body.editing #editor{display:flex}
+  body.editing main{display:none}
+  #editor .ebar{display:flex;align-items:center;gap:10px;padding:8px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+  #editor .ebar b{font-size:14px}
+  #editor iframe{flex:1;border:0;width:100%;background:#ddd}
+  body.editing #title{pointer-events:none}
+
+  /* PDF export */
+  #printRoot{position:fixed;left:-99999px;top:0;width:816px}
+  #printRoot iframe{display:block;width:816px;height:1056px;border:0}
+  #busy{display:none;position:fixed;inset:0;background:rgba(31,42,36,.55);z-index:99;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700}
+  #busy.on{display:flex}
+
+  @media print{
+    @page{size:8.5in 11in;margin:0}
+    html,body{height:auto;background:#fff}
+    #app,#busy{display:none!important}
+    #printRoot{position:static;left:auto;width:8.5in}
+    #printRoot iframe{width:8.5in;height:11in;page-break-after:always;break-after:page}
+    #printRoot iframe:last-child{page-break-after:auto;break-after:auto}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="logo">JoyDeck<small>Builder</small></div>
+    <input id="title" value="Mon ebook" aria-label="Titre du projet">
+    <span class="count" id="count"></span>
+    <span class="spacer"></span>
+    <button class="btn" id="resetBtn">Nouveau projet</button>
+    <button class="btn primary" id="exportBtn">Exporter l'ebook en PDF</button>
+  </header>
+
+  <main>
+    <aside id="lib">
+      <h2>Bibliothèque</h2>
+      <p class="hint">Clique sur « Ajouter » ou glisse un modèle dans ton livre.</p>
+      <div id="libList"></div>
+    </aside>
+    <section id="book">
+      <div class="book-head"><h2>Mon livre</h2><span>Glisse les pages pour changer l'ordre · clique sur une page pour la modifier</span></div>
+      <div id="strip"></div>
+    </section>
+  </main>
+
+  <div id="editor">
+    <div class="ebar">
+      <button class="btn" id="backBtn">← Retour au livre</button>
+      <button class="ibtn" id="prevBtn" title="Page précédente">‹</button>
+      <b id="eTitle"></b>
+      <button class="ibtn" id="nextBtn" title="Page suivante">›</button>
+      <span class="count">Les modifications sont enregistrées automatiquement.</span>
+    </div>
+    <iframe id="eFrame" title="Éditeur de page"></iframe>
+  </div>
+</div>
+
+<div id="printRoot"></div>
+<div id="busy">Préparation du PDF…</div>
+
+<script>
+(function(){
+  // ---------- Catalogue des modèles (fichiers dans le même dossier que builder.html) ----------
+  const CATALOG = [
+    {cat:'Couvertures', items:[
+      {id:'cover-1', code:'CV-01', file:'CV-01-couverture-classique.html', old:'editor-test.html', name:'Couverture classique'},
+      {id:'cover-2', code:'CV-02', file:'CV-02-couverture-photo-2.html', old:'editor-cover-2.html', name:'Couverture photo 2'},
+      {id:'cover-3', code:'CV-03', file:'CV-03-couverture-photo-3.html', old:'editor-cover-3.html', name:'Couverture photo 3'},
+    {id:'cover-company', code:'CV-04', file:'CV-04-couverture-entreprise.html', name:'Couverture entreprise'}]},
+    {cat:'Sommaires', items:[
+      {id:'toc-1', code:'SM-01', file:'SM-01-sommaire-cercles.html', old:'editor-toc-1.html', name:'Sommaire cercles'},
+      {id:'toc-2', code:'SM-02', file:'SM-02-sommaire-bandes.html', old:'editor-toc-2.html', name:'Sommaire bandes'},
+      {id:'toc-3', code:'SM-03', file:'SM-03-sommaire-photos.html', old:'editor-toc-3.html', name:'Sommaire photos'}]},
+    {cat:'Chapitres', items:[
+      {id:'chapter', code:'CH-01', file:'CH-01-chapitre-numerote.html', old:'editor-chapter.html', name:'Chapitre numéroté'},
+      {id:'literary', code:'CH-02', file:'CH-02-chapitre-litteraire.html', old:'editor-literary-chapter.html', name:'Chapitre littéraire'}]},
+    {cat:'Pages de contenu', items:[
+      {id:'text', code:'PG-01', file:'PG-01-texte-1-2-colonnes.html', old:'editor-text-page.html', name:'Texte 1 / 2 colonnes'},
+      {id:'image-text', code:'PG-02', file:'PG-02-image-texte.html', old:'editor-image-text.html', name:'Image + texte'},
+      {id:'twocol', code:'PG-03', file:'PG-03-2-colonnes-sombre.html', old:'editor-twocol-dark.html', name:'2 colonnes sombre'},
+      {id:'checklist', code:'PG-04', file:'PG-04-checklist.html', old:'editor-checklist.html', name:'Checklist'},
+      {id:'comparison', code:'PG-05', file:'PG-05-comparaison.html', old:'editor-comparison.html', name:'Comparaison'},
+      {id:'book', code:'PG-06', file:'PG-06-page-de-roman.html', old:'editor-book-page.html', name:'Page de roman'},
+      {id:'photo2col', code:'PG-07', file:'PG-07-photo-2-colonnes.html', name:'Photo + 2 colonnes'},
+    {id:'photo-text', code:'PG-08', file:'PG-08-photo-texte-chapitre.html', name:'Photo + texte chapitre'},
+    {id:'text-2photos', code:'PG-09', file:'PG-09-texte-2-photos.html', name:'Texte + 2 photos'},
+    {id:'company', code:'PG-10', file:'PG-10-apercu-entreprise.html', name:'Aperçu entreprise'},
+    {id:'objective', code:'PG-11', file:'PG-11-objectif-message.html', name:'Objectif et message'},
+    {id:'strategy', code:'PG-12', file:'PG-12-strategie-entreprise.html', name:"Stratégie d'entreprise"},
+    {id:'swot', code:'PG-13', file:'PG-13-analyse-swot.html', name:'Analyse SWOT'},
+    {id:'history', code:'PG-14', file:'PG-14-notre-histoire.html', name:'Notre histoire'},
+    {id:'values', code:'PG-15', file:'PG-15-nos-valeurs.html', name:'Nos valeurs'},
+    {id:'team', code:'PG-16', file:'PG-16-equipe.html', name:'Équipe'},
+    {id:'market', code:'PG-17', file:'PG-17-marche-industrie.html', name:'Marché et industrie'},
+    {id:'company-history', code:'PG-18', file:'PG-18-histoire-entreprise.html', name:"Histoire de l'entreprise"},
+    {id:'services', code:'PG-19', file:'PG-19-services-marque.html', name:'Services de la marque'},
+    {id:'achievement', code:'PG-20', file:'PG-20-realisations.html', name:'Réalisations'},
+    {id:'case-study', code:'PG-21', file:'PG-21-etude-de-cas.html', name:'Étude de cas'},
+    {id:'feedback', code:'PG-22', file:'PG-22-avis-clients.html', name:'Avis clients'},
+    {id:'terms', code:'PG-23', file:'PG-23-conditions.html', name:'Conditions générales'},
+    {id:'cv-05', code:'CV-05', file:'CV-05-couverture-blog.html', name:'Couverture blog'},
+    {id:'ct-02', code:'CT-02', file:'CT-02-citation-tissu.html', name:'Citation sur photo'},
+    {id:'pg-24', code:'PG-24', file:'PG-24-elle-etait-la.html', name:'Elle était là'},
+    {id:'pg-25', code:'PG-25', file:'PG-25-trois-conseils.html', name:'3 conseils en or'},
+    {id:'pg-26', code:'PG-26', file:'PG-26-moment-niche.html', name:'Moment et niche'},
+    {id:'pg-27', code:'PG-27', file:'PG-27-planche-inspiration.html', name:'Planche inspiration'},
+    {id:'pg-28', code:'PG-28', file:'PG-28-guide-liste-email.html', name:'Guide liste email'},
+    {id:'pg-29', code:'PG-29', file:'PG-29-esprit-calme.html', name:'Esprit calme'},
+    {id:'pg-30', code:'PG-30', file:'PG-30-planche-ambiance.html', name:'Planche ambiance'},
+    {id:'pg-31', code:'PG-31', file:'PG-31-moment-objectif.html', name:'Moment et objectif'},
+    {id:'pg-32', code:'PG-32', file:'PG-32-geants-3-colonnes.html', name:'Inspirés par les géants (3 colonnes)'},
+    {id:'pg-33', code:'PG-33', file:'PG-33-geants-liste.html', name:'Inspirés par les géants (liste)'}]},
+    {cat:'Citations', items:[
+      {id:'quote', code:'CT-01', file:'CT-01-citation.html', old:'editor-quote.html', name:'Citation'}]},
+    {cat:'Pages finales', items:[
+      {id:'final-note', code:'FN-01', file:'FN-01-note-finale.html', name:'Note finale'},
+    {id:'thanks', code:'FN-03', file:'FN-03-merci.html', name:'Merci'}]}
+  ];
+  const TPL = {};
+  CATALOG.forEach(c => c.items.forEach(t => TPL[t.id] = t));
+
+  // ---------- Etat du projet ----------
+  const KEY = 'joydeckbuilder_project';
+  const uid = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const mk = tpl => ({id: uid(), tpl, rev: 0});
+  function defaultProject(){
+    return {title:'Mon ebook', pages:['cover-1','toc-1','chapter','text','quote'].map(mk)};
+  }
+  let project;
+  try { project = JSON.parse(localStorage.getItem(KEY)); } catch(e){}
+  if (!project || !Array.isArray(project.pages)) project = defaultProject();
+  project.pages = project.pages.filter(p => TPL[p.tpl]);
+  // anciennes sauvegardes (avant renommage des fichiers)
+  project.pages.forEach(p => { const t = TPL[p.tpl]; if (!t.old) return; try {
+    const o = 'joydeck_' + t.old + '@' + p.id, n = 'joydeck_' + t.file + '@' + p.id;
+    if (localStorage.getItem(o) !== null && localStorage.getItem(n) === null) localStorage.setItem(n, localStorage.getItem(o));
+  } catch(e){} });
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(project)); } catch(e){} };
+
+  const $ = id => document.getElementById(id);
+  const stateKey = p => 'joydeck_' + TPL[p.tpl].file + '@' + p.id;
+  const src = (p, mode) => TPL[p.tpl].file + '?slot=' + encodeURIComponent(p.id) + (mode === 'edit' ? '' : '&embed=1') + '&v=' + (p.rev || 0);
+
+  // ---------- Bibliothèque ----------
+  function buildLibrary(){
+    const root = $('libList');
+    root.innerHTML = '';
+    CATALOG.forEach(c => {
+      const sec = document.createElement('div');
+      sec.className = 'cat';
+      sec.innerHTML = '<h3>' + c.cat + '<span>' + c.items.length + ' modèle' + (c.items.length > 1 ? 's' : '') + '</span></h3>';
+      const grid = document.createElement('div');
+      grid.className = 'tgrid';
+      c.items.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'tcard';
+        card.draggable = true;
+        card.innerHTML = '<div class="thumb"><iframe loading="lazy" tabindex="-1" src="' + t.file + '?slot=__lib&embed=1"></iframe></div>' +
+                         '<div class="tn">' + t.code + ' · ' + t.name + '</div><button class="add">+ Ajouter</button>';
+        card.querySelector('.add').addEventListener('click', () => addPage(t.id));
+        card.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', 'tpl:' + t.id); e.dataTransfer.effectAllowed = 'copy'; });
+        grid.appendChild(card);
+      });
+      sec.appendChild(grid);
+      root.appendChild(sec);
+    });
+  }
+
+  // ---------- Livre ----------
+  const strip = $('strip');
+  function renderBook(){
+    $('title').value = project.title;
+    $('count').textContent = project.pages.length + ' page' + (project.pages.length > 1 ? 's' : '');
+    strip.innerHTML = '';
+    if (!project.pages.length){
+      strip.innerHTML = '<div class="empty"><b>Ton livre est vide</b>Ajoute un modèle depuis la bibliothèque à gauche.</div>';
+      return;
+    }
+    project.pages.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'pcard';
+      card.draggable = true;
+      card.dataset.id = p.id;
+      card.innerHTML =
+        '<div class="pnum">' + (i + 1) + '</div>' +
+        '<div class="thumb"><iframe tabindex="-1" src="' + src(p) + '"></iframe></div>' +
+        '<button class="open" title="Modifier cette page"></button><div class="editlabel">Modifier</div>' +
+        '<div class="pbar"><button class="ibtn" data-a="left" title="Reculer">←</button>' +
+        '<span class="pname">' + TPL[p.tpl].code + ' · ' + TPL[p.tpl].name + '</span>' +
+        '<button class="ibtn" data-a="dup" title="Dupliquer">⧉</button>' +
+        '<button class="ibtn del" data-a="del" title="Supprimer">✕</button>' +
+        '<button class="ibtn" data-a="right" title="Avancer">→</button></div>';
+      card.querySelector('.open').addEventListener('click', () => openEditor(p.id));
+      card.querySelectorAll('[data-a]').forEach(b => b.addEventListener('click', e => {
+        e.stopPropagation();
+        const a = b.dataset.a;
+        if (a === 'del') removePage(p.id);
+        else if (a === 'dup') duplicatePage(p.id);
+        else movePage(p.id, a === 'left' ? -1 : 1);
+      }));
+      card.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', 'page:' + p.id); e.dataTransfer.effectAllowed = 'move'; card.classList.add('dragging'); });
+      card.addEventListener('dragend', () => { card.classList.remove('dragging'); clearMarks(); });
+      strip.appendChild(card);
+    });
+  }
+
+  function addPage(tplId, index){
+    const p = mk(tplId);
+    if (index == null || index > project.pages.length) project.pages.push(p);
+    else project.pages.splice(index, 0, p);
+    persist(); renderBook();
+    const el = strip.querySelector('[data-id="' + p.id + '"]');
+    if (el && index == null) el.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+  function removePage(id){
+    const p = project.pages.find(x => x.id === id);
+    if (!p || !confirm('Supprimer cette page ?')) return;
+    try { localStorage.removeItem(stateKey(p)); } catch(e){}
+    project.pages = project.pages.filter(x => x.id !== id);
+    persist(); renderBook();
+  }
+  function duplicatePage(id){
+    const i = project.pages.findIndex(x => x.id === id);
+    if (i < 0) return;
+    const src0 = project.pages[i], copy = mk(src0.tpl);
+    try {
+      const data = localStorage.getItem(stateKey(src0));
+      if (data) localStorage.setItem(stateKey(copy), data);
+    } catch(e){}
+    project.pages.splice(i + 1, 0, copy);
+    persist(); renderBook();
+  }
+  function movePage(id, d){
+    const i = project.pages.findIndex(x => x.id === id), j = i + d;
+    if (i < 0 || j < 0 || j >= project.pages.length) return;
+    const [p] = project.pages.splice(i, 1);
+    project.pages.splice(j, 0, p);
+    persist(); renderBook();
+  }
+
+  // ---------- Glisser-déposer ----------
+  function clearMarks(){
+    strip.classList.remove('dragover-empty');
+    strip.querySelectorAll('.drop-before,.drop-after').forEach(el => el.classList.remove('drop-before', 'drop-after'));
+  }
+  function dropIndex(e){
+    const cards = [...strip.querySelectorAll('.pcard')];
+    for (let i = 0; i < cards.length; i++){
+      const r = cards[i].getBoundingClientRect();
+      if (e.clientY >= r.top && e.clientY <= r.bottom + 40 && e.clientX >= r.left - 9 && e.clientX <= r.right + 9){
+        return {index: e.clientX < r.left + r.width / 2 ? i : i + 1, ref: cards[i], before: e.clientX < r.left + r.width / 2};
+      }
+    }
+    // pas sur une carte : choisir la carte la plus proche en lecture (ligne puis x)
+    let idx = cards.length;
+    for (let i = 0; i < cards.length; i++){
+      const r = cards[i].getBoundingClientRect();
+      if (e.clientY < r.top || (e.clientY <= r.bottom && e.clientX < r.left)){ idx = i; break; }
+    }
+    return {index: idx, ref: cards[idx] || cards[cards.length - 1], before: idx < cards.length};
+  }
+  strip.addEventListener('dragover', e => {
+    e.preventDefault();
+    clearMarks();
+    if (!project.pages.length){ strip.classList.add('dragover-empty'); return; }
+    const d = dropIndex(e);
+    if (d.ref) d.ref.classList.add(d.before ? 'drop-before' : 'drop-after');
+  });
+  strip.addEventListener('dragleave', e => { if (!strip.contains(e.relatedTarget)) clearMarks(); });
+  strip.addEventListener('drop', e => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text/plain') || '';
+    const d = project.pages.length ? dropIndex(e) : {index: 0};
+    clearMarks();
+    if (data.startsWith('tpl:')) addPage(data.slice(4), d.index);
+    else if (data.startsWith('page:')){
+      const id = data.slice(5), from = project.pages.findIndex(x => x.id === id);
+      if (from < 0) return;
+      const [p] = project.pages.splice(from, 1);
+      let to = d.index; if (from < to) to--;
+      project.pages.splice(to, 0, p);
+      persist(); renderBook();
+    }
+  });
+
+  // ---------- Edition d'une page ----------
+  let editingId = null;
+  function openEditor(id){
+    const i = project.pages.findIndex(x => x.id === id);
+    if (i < 0) return;
+    editingId = id;
+    const p = project.pages[i];
+    $('eTitle').textContent = 'Page ' + (i + 1) + ' / ' + project.pages.length + ' — ' + TPL[p.tpl].code + ' · ' + TPL[p.tpl].name;
+    $('eFrame').src = src(p, 'edit');
+    document.body.classList.add('editing');
+  }
+  function closeEditor(){
+    // laisse l'autosave de l'éditeur se terminer, puis rafraîchit la vignette
+    const p = project.pages.find(x => x.id === editingId);
+    try { const w = $('eFrame').contentWindow, b = w.document.getElementById('saveBtn'); if (b) b.click(); } catch(e){}
+    setTimeout(() => {
+      if (p) p.rev = (p.rev || 0) + 1;
+      document.body.classList.remove('editing');
+      $('eFrame').src = 'about:blank';
+      persist(); renderBook();
+      editingId = null;
+    }, 150);
+  }
+  function stepEditor(d){
+    const i = project.pages.findIndex(x => x.id === editingId), j = i + d;
+    if (j < 0 || j >= project.pages.length) return;
+    try { const b = $('eFrame').contentWindow.document.getElementById('saveBtn'); if (b) b.click(); } catch(e){}
+    const prev = project.pages[i]; prev.rev = (prev.rev || 0) + 1;
+    setTimeout(() => openEditor(project.pages[j].id), 150);
+  }
+  $('backBtn').addEventListener('click', closeEditor);
+  $('prevBtn').addEventListener('click', () => stepEditor(-1));
+  $('nextBtn').addEventListener('click', () => stepEditor(1));
+
+  // ---------- Titre / nouveau projet ----------
+  $('title').addEventListener('input', e => { project.title = e.target.value; persist(); });
+  $('resetBtn').addEventListener('click', () => {
+    if (!confirm('Démarrer un nouveau projet ? Les pages actuelles seront supprimées.')) return;
+    project.pages.forEach(p => { try { localStorage.removeItem(stateKey(p)); } catch(e){} });
+    project = defaultProject();
+    persist(); renderBook();
+  });
+
+  // ---------- Export PDF de tout l'ebook ----------
+  $('exportBtn').addEventListener('click', () => {
+    if (!project.pages.length){ alert('Ajoute au moins une page.'); return; }
+    const root = $('printRoot'), busy = $('busy');
+    root.innerHTML = '';
+    busy.classList.add('on');
+    let pending = project.pages.length;
+    const done = () => {
+      if (--pending > 0) return;
+      setTimeout(() => {
+        busy.classList.remove('on');
+        const old = document.title;
+        document.title = (project.title || 'ebook').replace(/[\\/:*?"<>|]/g, '');
+        window.print();
+        document.title = old;
+      }, 1500); // laisse le temps aux polices de charger
+    };
+    project.pages.forEach(p => {
+      const f = document.createElement('iframe');
+      f.onload = done;
+      f.src = src(p);
+      root.appendChild(f);
+    });
+  });
+  window.addEventListener('afterprint', () => { $('printRoot').innerHTML = ''; });
+
+  // ---------- Init ----------
+  buildLibrary();
+  renderBook();
+  persist();
+})();
+</script>
+</body>
+</html>

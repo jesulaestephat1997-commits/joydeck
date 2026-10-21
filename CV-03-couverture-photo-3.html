@@ -1,8 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+
 <meta charset="UTF-8">
-<title>Éditeur — Test Cover Page</title>
+<title>Éditeur — Cover Variant 3</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
 
@@ -16,8 +40,8 @@
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    --font-size-title:    48px;
-    --font-size-subtitle: 20px;
+    --font-size-title:    50px;
+    --font-size-subtitle: 19px;
     --font-size-name:     16px;
   }
 
@@ -31,7 +55,7 @@
     min-height: 100vh;
   }
 
-  /* ============ SIDEBAR (test controls) ============ */
+  /* ============ SIDEBAR ============ */
   .sidebar {
     width: 300px;
     background: #FFFFFF;
@@ -40,192 +64,78 @@
     overflow-y: auto;
   }
 
-  .sidebar h2 {
-    font-size: 15px;
-    font-weight: 700;
-    margin: 0 0 4px 0;
-    color: #1A1A1A;
-  }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; }
+  .control-group { margin-bottom: 22px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
 
-  .sidebar .sub {
-    font-size: 12px;
-    color: #8A8781;
-    margin: 0 0 24px 0;
-  }
+  .swatch-row { display: flex; gap: 8px; align-items: center; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; font-family: monospace; }
 
-  .control-group {
-    margin-bottom: 22px;
-  }
+  select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
 
-  .control-group label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4A4842;
-    margin-bottom: 8px;
-  }
+  .slider-row { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] { flex: 1; }
+  .slider-row .val { font-size: 11px; color: #8A8781; font-family: monospace; width: 38px; text-align: right; }
 
-  .swatch-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+  hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
 
-  .swatch-row input[type="color"] {
-    width: 36px;
-    height: 36px;
-    border: 1px solid #E4E2DD;
-    border-radius: 6px;
-    padding: 0;
-    cursor: pointer;
-  }
+  /* ============ PREVIEW ============ */
+  .preview-area { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; }
 
-  .swatch-row span {
-    font-size: 11px;
-    color: #8A8781;
-    font-family: monospace;
-  }
-
-  select {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #E4E2DD;
-    border-radius: 6px;
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    background: #FAFAF8;
-  }
-
-  .slider-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  input[type="range"] {
-    flex: 1;
-  }
-
-  .slider-row .val {
-    font-size: 11px;
-    color: #8A8781;
-    font-family: monospace;
-    width: 38px;
-    text-align: right;
-  }
-
-  hr {
-    border: none;
-    border-top: 1px solid #EEEDE9;
-    margin: 20px 0;
-  }
-
-  /* ============ PREVIEW AREA ============ */
-  .preview-area {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-  }
-
-  /* ---- the template itself (same as cover-template.html) ---- */
   .page {
     width: 816px;
     height: 1056px;
     background: var(--color-primary);
-    border-radius: 4px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,0.18);
     zoom: 0.65;
-    display: flex;
-    flex-direction: column;
-    transition: background 0.15s ease;
   }
 
-  .page::before {
-    content: '';
-    position: absolute;
-    top: 28px;
-    left: 28px;
-    width: 22px;
-    height: 22px;
-    border-top: 2px solid var(--color-accent);
-    border-left: 2px solid var(--color-accent);
-    opacity: 0.9;
+  .block-image-full { position: absolute; inset: 0; background: var(--color-image-bg); }
+  .image-placeholder-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-size: 14px; color: var(--color-primary); opacity: 0.55;
   }
 
-  .block-heading { padding: 76px 32px 0 32px; }
+  .overlay {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.45) 100%);
+  }
+
+  .frame { position: absolute; inset: 36px; border: 1px solid rgba(255,255,255,0.35); pointer-events: none; }
+
+  .block-text {
+    position: absolute; top: 50%; left: 0; right: 0;
+    transform: translateY(-50%); padding: 0 90px; text-align: center;
+  }
 
   .eyebrow {
-    display: inline-block;
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--color-accent);
-    margin-bottom: 14px;
+    display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--color-accent); margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--color-accent);
   }
 
   .title {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: var(--font-size-title);
-    line-height: 1.08;
-    color: var(--color-text-on-primary);
-    margin: 0 0 18px 0;
+    font-family: var(--font-heading); font-weight: 700; font-size: var(--font-size-title);
+    line-height: 1.1; color: var(--color-text-on-primary); margin: 0 0 20px 0;
   }
-
   .title .highlight { color: var(--color-accent); }
 
   .subtitle {
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: var(--font-size-subtitle);
-    line-height: 1.45;
-    color: var(--color-secondary);
-    margin: 0;
-    max-width: 90%;
+    font-family: var(--font-body); font-weight: 400; font-size: var(--font-size-subtitle);
+    line-height: 1.5; color: var(--color-secondary); margin: 0;
   }
 
-  .block-image {
-    flex: 1;
-    margin: 28px 24px 0 24px;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    background: var(--color-image-bg);
-  }
-
-  .image-placeholder-label {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-body);
-    font-size: 13px;
-    color: var(--color-primary);
-    opacity: 0.55;
-  }
-
-  .block-footer {
-    padding: 22px 32px 30px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .block-footer { position: absolute; bottom: 56px; left: 0; right: 0; display: flex; justify-content: center; }
 
   .name-pill {
-    background: var(--color-accent);
-    color: var(--color-primary);
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: var(--font-size-name);
-    padding: 9px 20px;
-    border-radius: 20px;
-    outline: none;
+    background: transparent; border: 1px solid var(--color-accent); color: var(--color-text-on-primary);
+    font-family: var(--font-body); font-weight: 600; font-size: var(--font-size-name);
+    padding: 10px 26px; border-radius: 24px; outline: none;
   }
 
 
@@ -618,34 +528,36 @@
     <div class="control-group">
       <label>Taille du titre</label>
       <div class="slider-row">
-        <input type="range" id="sizeTitle" min="32" max="64" value="48">
-        <span class="val" id="sizeTitleVal">48px</span>
+        <input type="range" id="sizeTitle" min="32" max="66" value="50">
+        <span class="val" id="sizeTitleVal">50px</span>
       </div>
     </div>
 
     <div class="control-group">
       <label>Taille du sous-titre</label>
       <div class="slider-row">
-        <input type="range" id="sizeSubtitle" min="14" max="28" value="20">
-        <span class="val" id="sizeSubtitleVal">20px</span>
+        <input type="range" id="sizeSubtitle" min="14" max="28" value="19">
+        <span class="val" id="sizeSubtitleVal">19px</span>
       </div>
     </div>
   </div>
 
   <div class="preview-area">
-    <div class="page" id="cover-page">
-      <div class="block-heading">
+    <div class="page" id="cover-page-v3">
+      <div class="block-image-full">
+      <button type="button" class="change-image-btn" id="changeImageBtn">Changer</button>
+        <div class="image-placeholder-label">[ image plein cadre ]</div>
+      <div class="blur-zone" id="blurZone"><div class="resize-handle" id="blurZoneResize"></div></div>
+      </div>
+      <div class="overlay"></div>
+      <div class="frame"></div>
+
+      <div class="block-text">
         <span class="eyebrow" contenteditable="true">EBOOK</span>
         <h1 class="title" contenteditable="true">
           The Ultimate <span class="highlight">Content Creator</span> Playbook
         </h1>
         <p class="subtitle" contenteditable="true">Plan. Create. Publish. Grow your impact.</p>
-      </div>
-
-      <div class="block-image">
-      <button type="button" class="change-image-btn" id="changeImageBtn">Changer</button>
-        <div class="image-placeholder-label">[ image de couverture ]</div>
-      <div class="blur-zone" id="blurZone"><div class="resize-handle" id="blurZoneResize"></div></div>
       </div>
 
       <div class="block-footer">
@@ -660,22 +572,12 @@
   <script>
     const root = document.documentElement.style;
 
-    document.getElementById('colorPrimary').addEventListener('input', e => {
-      root.setProperty('--color-primary', e.target.value);
-    });
-    document.getElementById('colorSecondary').addEventListener('input', e => {
-      root.setProperty('--color-secondary', e.target.value);
-    });
-    document.getElementById('colorAccent').addEventListener('input', e => {
-      root.setProperty('--color-accent', e.target.value);
-    });
+    document.getElementById('colorPrimary').addEventListener('input', e => root.setProperty('--color-primary', e.target.value));
+    document.getElementById('colorSecondary').addEventListener('input', e => root.setProperty('--color-secondary', e.target.value));
+    document.getElementById('colorAccent').addEventListener('input', e => root.setProperty('--color-accent', e.target.value));
 
-    document.getElementById('fontHeading').addEventListener('change', e => {
-      root.setProperty('--font-heading', e.target.value);
-    });
-    document.getElementById('fontBody').addEventListener('change', e => {
-      root.setProperty('--font-body', e.target.value);
-    });
+    document.getElementById('fontHeading').addEventListener('change', e => root.setProperty('--font-heading', e.target.value));
+    document.getElementById('fontBody').addEventListener('change', e => root.setProperty('--font-body', e.target.value));
 
     const sizeTitle = document.getElementById('sizeTitle');
     const sizeTitleVal = document.getElementById('sizeTitleVal');

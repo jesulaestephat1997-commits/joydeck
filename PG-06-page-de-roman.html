@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+<title>Éditeur — Page de roman</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #FFFFFF;
+    --color-title: #1F1B16;
+    --color-text: #1F1B16;
+    --color-dropcap: #1F1B16;
+    --color-rule: #8A8378;
+    --font-heading: 'EB Garamond', serif;
+    --font-body: 'EB Garamond', serif;
+    --font-size-title: 22px;
+    --font-size-body: 18px;
+    --line-height-body: 1.42;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #EDEBE6; font-family: var(--font-body); display: flex; justify-content: center; padding: 40px 20px; }
+
+  .page {
+    width: 816px; height: 1056px; background: var(--color-bg);
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+    padding: 90px 104px 0 104px;
+  }
+  .page.content-overflow { outline: 3px dashed #D64545; outline-offset: -3px; }
+  .overflow-badge {
+    display: none; position: absolute; top: 14px; right: 14px; z-index: 20;
+    background: #D64545; color: #fff; font: 600 14px 'Inter', sans-serif;
+    padding: 6px 12px; border-radius: 6px;
+  }
+  .page.content-overflow .overflow-badge { display: block; }
+
+  /* Ouverture de chapitre : en-tête descendu */
+  .chapter-head { text-align: center; margin: 165px 0 72px 0; }
+  .page.flat .chapter-head { display: none; }
+  .chapter-title {
+    font-family: var(--font-heading); font-size: var(--font-size-title);
+    color: var(--color-title); margin: 0; font-weight: 400; letter-spacing: 0.02em;
+  }
+  .chapter-rule { width: 190px; height: 1px; background: var(--color-rule); margin: 8px auto 12px auto; }
+  .chapter-subtitle {
+    font-family: var(--font-heading); font-style: italic; font-size: calc(var(--font-size-title) * 0.82);
+    color: var(--color-title); margin: 0; font-weight: 400;
+  }
+
+  .content-clip { overflow: hidden; overflow: clip; }
+  .body-text {
+    font-family: var(--font-body); font-size: var(--font-size-body);
+    line-height: var(--line-height-body); color: var(--color-text);
+    text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+  }
+  .body-text p { margin: 0; text-indent: 1.5em; }
+  .body-text p:first-of-type { text-indent: 0; }
+  .body-text p:first-of-type::first-letter {
+    font-family: var(--font-heading); font-size: 3.5em; float: left;
+    line-height: 0.78; padding: 4px 8px 0 0; color: var(--color-dropcap);
+  }
+  .page.no-dropcap .body-text p:first-of-type::first-letter {
+    font-family: inherit; font-size: inherit; float: none; line-height: inherit; padding: 0; color: inherit;
+  }
+  .page.no-dropcap .body-text p:first-of-type { text-indent: 1.5em; }
+  .page.flat.no-dropcap .body-text p:first-of-type { text-indent: 0; }
+
+  .page-footer {
+    position: absolute; left: 0; right: 0; bottom: 58px;
+    display: flex; justify-content: center; align-items: center; gap: 14px;
+    font-family: var(--font-body); font-size: 18px; color: var(--color-text);
+  }
+  .page-footer .orn { font-size: 22px; opacity: .85; }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,0.35); outline-offset: 2px; }
+
+  .toolbar { position: fixed; top: 0; left: 300px; right: 0; height: 52px; background: #FFF; border-bottom: 1px solid #E4E2DD; display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100; overflow-x: auto; }
+  .toolbar button { padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer; white-space: nowrap; }
+  .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  .sidebar { width: 300px; background: #FFF; border-right: 1px solid #E4E2DD; padding: 28px 24px; overflow-y: auto; position: fixed; top: 0; bottom: 0; left: 0; }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; font-family: 'Inter', sans-serif; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; font-family: 'Inter', sans-serif; }
+  .control-group { margin-bottom: 22px; font-family: 'Inter', sans-serif; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 14px; background: #FAFAF8; }
+  .sidebar button.layout-btn { width: 100%; padding: 9px 10px; margin-bottom: 6px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font-size: 13px; cursor: pointer; text-align: left; }
+  .sidebar button.layout-btn.selected { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .check-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4A4842; }
+  .sidebar hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+
+  .preview-area { margin-left: 300px; padding: 92px 40px 40px 40px; display: flex; justify-content: center; }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar, .overflow-badge { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page { zoom: 1 !important; width: 8.5in !important; height: 11in !important; box-shadow: none !important; margin: 0 !important; outline: none !important; }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Couleurs, polices et tailles sont modifiables. La structure reste fixe.</p>
+
+    <div class="control-group">
+      <label>Type de page</label>
+      <button type="button" class="layout-btn selected" id="layoutOpen">Ouverture de chapitre</button>
+      <button type="button" class="layout-btn" id="layoutFlat">Page courante (texte en haut)</button>
+    </div>
+
+    <div class="control-group">
+      <div class="check-row"><input type="checkbox" id="dropcapToggle" checked><label for="dropcapToggle" style="margin:0;font-weight:500;">Lettrine</label></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Couleurs</label>
+      <div class="swatch-row"><input type="color" id="colorBg" value="#FFFFFF"><span>Fond de page</span></div>
+      <div class="swatch-row"><input type="color" id="colorTitle" value="#1F1B16"><span>Titre / lettrine</span></div>
+      <div class="swatch-row"><input type="color" id="colorText" value="#1F1B16"><span>Texte / numéro de page</span></div>
+      <div class="swatch-row"><input type="color" id="colorRule" value="#8A8378"><span>Filet sous le titre</span></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group"><label>Police — Titre</label><select class="font-select" id="fontHeading"></select></div>
+    <div class="control-group"><label>Police — Corps</label><select class="font-select" id="fontBody"></select></div>
+
+    <hr>
+
+    <div class="control-group"><label>Taille du titre</label><input type="range" id="sizeTitle" min="14" max="44" value="22" style="width:100%;"></div>
+    <div class="control-group"><label>Taille du texte</label><input type="range" id="sizeBody" min="13" max="26" value="18" style="width:100%;"></div>
+    <div class="control-group"><label>Interligne</label><input type="range" id="lineHeight" min="1.15" max="2" step="0.01" value="1.42" style="width:100%;"></div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <div class="preview-area">
+    <div class="page" id="book-page">
+      <div class="overflow-badge">Contenu trop long</div>
+
+      <div class="chapter-head">
+        <h1 class="chapter-title" contenteditable="true">Chapter One</h1>
+        <div class="chapter-rule"></div>
+        <p class="chapter-subtitle" contenteditable="true">Down the Rabbit Hole</p>
+      </div>
+
+      <div class="content-clip">
+        <div class="body-text" contenteditable="true">
+          <p>Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, ‘and what is the use of a book,’ thought Alice ‘without pictures or conversation?’</p>
+          <p>So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.</p>
+          <p>There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, ‘Oh dear! Oh dear! I shall be late!’ (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.</p>
+          <p>In another moment down went Alice after it, never once considering how in the world she was to get out again.</p>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="orn" contenteditable="true">&#10086;</span>
+        <span class="pnum" contenteditable="true">1</span>
+        <span class="orn" contenteditable="true">&#10087;</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FONTS = [["'EB Garamond', serif", "EB Garamond"], ["'Cormorant Garamond', serif", "Cormorant Garamond"], ["'Libre Baskerville', serif", "Libre Baskerville"], ["'Playfair Display', serif", "Playfair Display"], ["'Fraunces', serif", "Fraunces"], ["'Marcellus', serif", "Marcellus"], ["'Prata', serif", "Prata"], ["'Italiana', serif", "Italiana"], ["'DM Serif Display', serif", "DM Serif Display"], ["'Abril Fatface', serif", "Abril Fatface"], ["'Cinzel', serif", "Cinzel"], ["'Poppins', sans-serif", "Poppins"], ["'Inter', sans-serif", "Inter"], ["'Montserrat', sans-serif", "Montserrat"], ["'Space Grotesk', sans-serif", "Space Grotesk"], ["'Outfit', sans-serif", "Outfit"], ["'Bricolage Grotesque', sans-serif", "Bricolage Grotesque"], ["'Great Vibes', cursive", "Great Vibes"], ["'Dancing Script', cursive", "Dancing Script"], ["'Parisienne', cursive", "Parisienne"], ["'Alex Brush', cursive", "Alex Brush"], ["'Allura', cursive", "Allura"], ["'Sacramento', cursive", "Sacramento"], ["'Tangerine', cursive", "Tangerine"], ["'Pinyon Script', cursive", "Pinyon Script"]];
+    const root = document.documentElement.style;
+    const $ = id => document.getElementById(id);
+
+    ['fontHeading', 'fontBody'].forEach(id => {
+      FONTS.forEach(([val, name]) => {
+        const o = document.createElement('option');
+        o.value = val; o.textContent = name; o.style.fontFamily = val;
+        $(id).appendChild(o);
+      });
+    });
+    $('fontHeading').value = "'EB Garamond', serif";
+    $('fontBody').value = "'EB Garamond', serif";
+
+    const pageEl = $('book-page');
+    const clipEl = pageEl.querySelector('.content-clip');
+    const footerEl = pageEl.querySelector('.page-footer');
+
+    // ---- layout / dropcap ----
+    let layout = 'open';
+    function setLayout(l) {
+      layout = l;
+      pageEl.classList.toggle('flat', l === 'flat');
+      $('layoutOpen').classList.toggle('selected', l === 'open');
+      $('layoutFlat').classList.toggle('selected', l === 'flat');
+      checkOverflow();
+    }
+    $('layoutOpen').addEventListener('click', () => { setLayout('open'); pushHistory(); });
+    $('layoutFlat').addEventListener('click', () => { setLayout('flat'); pushHistory(); });
+    $('dropcapToggle').addEventListener('change', e => { pageEl.classList.toggle('no-dropcap', !e.target.checked); checkOverflow(); });
+
+    // ---- style controls ----
+    $('colorBg').addEventListener('input', e => root.setProperty('--color-bg', e.target.value));
+    $('colorTitle').addEventListener('input', e => { root.setProperty('--color-title', e.target.value); root.setProperty('--color-dropcap', e.target.value); });
+    $('colorText').addEventListener('input', e => root.setProperty('--color-text', e.target.value));
+    $('colorRule').addEventListener('input', e => root.setProperty('--color-rule', e.target.value));
+    $('fontHeading').addEventListener('change', e => { root.setProperty('--font-heading', e.target.value); checkOverflow(); });
+    $('fontBody').addEventListener('change', e => { root.setProperty('--font-body', e.target.value); checkOverflow(); });
+    $('sizeTitle').addEventListener('input', e => { root.setProperty('--font-size-title', e.target.value + 'px'); checkOverflow(); });
+    $('sizeBody').addEventListener('input', e => { root.setProperty('--font-size-body', e.target.value + 'px'); checkOverflow(); });
+    $('lineHeight').addEventListener('input', e => { root.setProperty('--line-height-body', e.target.value); checkOverflow(); });
+
+    // ---- overflow: coupe automatiquement ce qui dépasse ----
+    function checkOverflow() {
+      const limit = footerEl.offsetTop - 26;
+      let avail = Math.max(0, limit - clipEl.offsetTop);
+      const lh = parseFloat(getComputedStyle(clipEl.firstElementChild).lineHeight);
+      if (lh > 0) avail = Math.floor(avail / lh) * lh; // ne montre que des lignes entieres
+      clipEl.style.maxHeight = avail + 'px';
+      pageEl.classList.toggle('content-overflow', clipEl.scrollHeight > avail + 1);
+      clipEl.scrollTop = 0;
+    }
+    pageEl.addEventListener('input', checkOverflow);
+    new MutationObserver(checkOverflow).observe(clipEl, { childList: true, subtree: true, characterData: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(checkOverflow);
+
+    // ---- undo / redo / save ----
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [], historyIndex = -1, suppressCapture = false;
+    const inputs = ['colorBg','colorTitle','colorText','colorRule','fontHeading','fontBody','sizeTitle','sizeBody','lineHeight'].map($);
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+
+    function captureState() {
+      return {
+        colorBg: $('colorBg').value, colorTitle: $('colorTitle').value, colorText: $('colorText').value, colorRule: $('colorRule').value,
+        fontHeading: $('fontHeading').value, fontBody: $('fontBody').value,
+        sizeTitle: $('sizeTitle').value, sizeBody: $('sizeBody').value, lineHeight: $('lineHeight').value,
+        layout, dropcap: $('dropcapToggle').checked,
+        editableContent: editableEls.map(el => el.innerHTML)
+      };
+    }
+    function applyState(s) {
+      if (!s) return;
+      suppressCapture = true;
+      const set = (id, v) => { if (v !== undefined) $(id).value = v; };
+      ['colorBg','colorTitle','colorText','colorRule','fontHeading','fontBody','sizeTitle','sizeBody','lineHeight'].forEach(id => set(id, s[id]));
+      root.setProperty('--color-bg', $('colorBg').value);
+      root.setProperty('--color-title', $('colorTitle').value);
+      root.setProperty('--color-dropcap', $('colorTitle').value);
+      root.setProperty('--color-text', $('colorText').value);
+      root.setProperty('--color-rule', $('colorRule').value);
+      root.setProperty('--font-heading', $('fontHeading').value);
+      root.setProperty('--font-body', $('fontBody').value);
+      root.setProperty('--font-size-title', $('sizeTitle').value + 'px');
+      root.setProperty('--font-size-body', $('sizeBody').value + 'px');
+      root.setProperty('--line-height-body', $('lineHeight').value);
+      $('dropcapToggle').checked = s.dropcap !== false;
+      pageEl.classList.toggle('no-dropcap', s.dropcap === false);
+      setLayout(s.layout || 'open');
+      if (s.editableContent) s.editableContent.forEach((h, i) => { if (editableEls[i]) editableEls[i].innerHTML = h; });
+      suppressCapture = false;
+      checkOverflow();
+    }
+    function pushHistory() {
+      if (suppressCapture) return;
+      history = history.slice(0, historyIndex + 1);
+      history.push(captureState());
+      historyIndex = history.length - 1;
+      updateButtons();
+    }
+    function updateButtons() {
+      $('undoBtn').disabled = historyIndex <= 0;
+      $('redoBtn').disabled = historyIndex >= history.length - 1;
+    }
+    inputs.forEach(el => el.addEventListener('change', pushHistory));
+    $('dropcapToggle').addEventListener('change', pushHistory);
+    editableEls.forEach(el => el.addEventListener('blur', pushHistory));
+
+    $('undoBtn').addEventListener('click', () => { if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); } });
+    $('redoBtn').addEventListener('click', () => { if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); } });
+    $('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+      const st = $('saveStatus'); st.textContent = 'Enregistre ✓';
+      setTimeout(() => { st.textContent = ''; }, 2000);
+    });
+    $('exportPdfBtn').addEventListener('click', () => window.print());
+
+    setTimeout(function () {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch (e) {} }
+      checkOverflow();
+      pushHistory();
+      updateButtons();
+    }, 0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+
+<meta charset="UTF-8">
+<title>Éditeur — Page Chapitre Littéraire</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@400;700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-bg: #FFFFFF;
+    --color-header: #1A1A1A;
+    --color-title: #1A1A1A;
+    --color-text: #2A2A2A;
+    --color-dropcap: #1A1A1A;
+    --color-illustration-bg: #F5F4F1;
+
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Cormorant Garamond', serif;
+
+    --font-size-title: 34px;
+    --font-size-body: 17px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+    padding: 56px 90px;
+  }
+
+  .running-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-header);
+    padding-bottom: 14px;
+    border-bottom: 1px solid #E4E2DD;
+    margin-bottom: 50px;
+  }
+
+  .illustration-block {
+    width: 100%;
+    height: 140px;
+    margin: 0 auto 40px auto;
+    background: var(--color-illustration-bg);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .illustration-block img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .illustration-block .placeholder-label {
+    font-family: var(--font-body); font-size: 12px; color: #999; text-align: center;
+  }
+  .illustration-block .change-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,0.55); color: #fff; border: none; border-radius: 6px;
+    padding: 5px 9px; font-family: 'Inter', sans-serif; font-size: 10px; cursor: pointer;
+    z-index: 5; display: none;
+  }
+  .illustration-block.has-image .change-btn { display: block; }
+
+  .chapter-title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: var(--font-size-title);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-title);
+    text-align: center;
+    margin: 0 0 44px 0;
+  }
+
+  .content-clip { overflow: hidden; overflow: clip; }
+
+  .page.content-overflow { outline: 3px dashed #DC2626; outline-offset: -3px; }
+  .overflow-badge {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: #DC2626;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: 6px;
+    display: none;
+    z-index: 50;
+  }
+  .page.content-overflow .overflow-badge { display: block; }
+
+  .body-text {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text);
+    line-height: 1.8;
+    text-align: justify;
+  }
+  .body-text p { margin: 0 0 18px 0; }
+  .body-text p:first-of-type::first-letter {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.85;
+    padding-right: 8px;
+    padding-top: 4px;
+    color: var(--color-dropcap);
+  }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,0.35); outline-offset: 2px; }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    position: fixed; top: 0; left: 300px; right: 0; height: 52px;
+    background: #FFFFFF; border-bottom: 1px solid #E4E2DD;
+    display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100;
+    overflow-x: auto;
+  }
+  .toolbar button {
+    padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px;
+    background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 300px;
+    background: #FFFFFF;
+    border-right: 1px solid #E4E2DD;
+    padding: 28px 24px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+  }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; }
+  .control-group { margin-bottom: 22px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
+  hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+
+  .preview-area {
+    margin-left: 300px;
+    padding: 92px 40px 40px 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar { display: none !important; }
+    .overflow-badge, .page.content-overflow { outline: none !important; }
+    .overflow-badge { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page {
+      zoom: 1 !important;
+      width: 8.5in !important;
+      height: 11in !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    .change-btn { display: none !important; }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe. Clique sur l'illustration pour l'uploader.</p>
+
+    <div class="control-group">
+      <label>Couleurs</label>
+      <div class="swatch-row"><input type="color" id="colorTitle" value="#1A1A1A"><span>Titre / lettrine</span></div>
+      <div class="swatch-row"><input type="color" id="colorText" value="#2A2A2A"><span>Texte</span></div>
+      <div class="swatch-row"><input type="color" id="colorIllustrationBg" value="#F5F4F1"><span>Fond illustration</span></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Police — Titre</label>
+      <select class="font-select" id="fontHeading">
+        <option value="'Playfair Display', serif">Playfair Display</option>
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Marcellus', serif">Marcellus</option>
+        <option value="'Prata', serif">Prata</option>
+        <option value="'Italiana', serif">Italiana</option>
+        <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+        <option value="'Cinzel', serif">Cinzel</option>
+        <option value="'Fraunces', serif">Fraunces</option>
+        <option value="'Abril Fatface', serif">Abril Fatface</option>
+        <option value="'DM Serif Display', serif">DM Serif Display</option>
+        <option value="'Poppins', sans-serif">Poppins</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label>Police — Corps</label>
+      <select class="font-select" id="fontBody">
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+        <option value="'Inter', sans-serif">Inter</option>
+        <option value="'Fraunces', serif">Fraunces</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Taille du titre</label>
+      <input type="range" id="sizeTitle" min="20" max="54" value="34" style="width:100%;">
+    </div>
+    <div class="control-group">
+      <label>Taille du texte</label>
+      <input type="range" id="sizeBody" min="12" max="26" value="17" style="width:100%;">
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+
+  <div class="preview-area">
+    <div class="page" id="literary-page">
+
+      <div class="running-header">
+        <span contenteditable="true">Parenting Challenges</span>
+        <span contenteditable="true">55</span>
+      </div>
+
+      <div class="illustration-block">
+        <div class="placeholder-label">Cliquer pour uploader<br>une illustration</div>
+        <button type="button" class="change-btn">Changer</button>
+      </div>
+
+      <h1 class="chapter-title" contenteditable="true">Parenting Challenges</h1>
+
+      <div class="content-clip">
+        <div class="body-text" contenteditable="true">
+          <p>I was a 30-year old woman raising my 12-year-old daughter and 14-year-old son without any financial or emotional support. Parenting is instinctively based on our upbringing and, to a greater extent, our education. I was a high school dropout who learned how to code—that was my only claim to success. I admit I did not know how to parent my children, but it was my maternal instinct, love, and commitment to protecting them that became my guiding principles for parenting. When all else failed, love was my guiding light. I had suffered as a child; I did not want my children to suffer. Providing food, shelter, and care was imperative.</p>
+        </div>
+      </div>
+      <div class="overflow-badge">Contenu trop long — depasse la page</div>
+
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement.style;
+
+    document.getElementById('colorTitle').addEventListener('input', e => {
+      root.setProperty('--color-title', e.target.value);
+      root.setProperty('--color-dropcap', e.target.value);
+    });
+    document.getElementById('colorText').addEventListener('input', e => root.setProperty('--color-text', e.target.value));
+    document.getElementById('colorIllustrationBg').addEventListener('input', e => root.setProperty('--color-illustration-bg', e.target.value));
+
+    document.getElementById('fontHeading').addEventListener('change', e => root.setProperty('--font-heading', e.target.value));
+    document.getElementById('fontBody').addEventListener('change', e => root.setProperty('--font-body', e.target.value));
+    document.querySelectorAll('.font-select option').forEach(opt => { opt.style.fontFamily = opt.value; });
+
+    document.getElementById('sizeTitle').addEventListener('input', e => root.setProperty('--font-size-title', e.target.value + 'px'));
+    document.getElementById('sizeBody').addEventListener('input', e => root.setProperty('--font-size-body', e.target.value + 'px'));
+
+    // ============ image upload ============
+    const fileInput = document.getElementById('imageUpload');
+    const illustrationBlock = document.querySelector('.illustration-block');
+
+    illustrationBlock.addEventListener('click', (e) => {
+      if (illustrationBlock.classList.contains('has-image') && e.target.closest('.change-btn') === null) return;
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        let img = illustrationBlock.querySelector('img');
+        if (!img) { img = document.createElement('img'); illustrationBlock.insertBefore(img, illustrationBlock.firstChild); }
+        img.src = ev.target.result;
+        illustrationBlock.classList.add('has-image');
+        const label = illustrationBlock.querySelector('.placeholder-label');
+        if (label) label.style.display = 'none';
+        pushHistory();
+      };
+      reader.readAsDataURL(file);
+      fileInput.value = '';
+    });
+
+    function getImageData() {
+      const img = illustrationBlock.querySelector('img');
+      return img ? img.src : null;
+    }
+    function applyImageData(src) {
+      const existingImg = illustrationBlock.querySelector('img');
+      const label = illustrationBlock.querySelector('.placeholder-label');
+      if (src) {
+        let img = existingImg;
+        if (!img) { img = document.createElement('img'); illustrationBlock.insertBefore(img, illustrationBlock.firstChild); }
+        img.src = src;
+        illustrationBlock.classList.add('has-image');
+        if (label) label.style.display = 'none';
+      } else {
+        if (existingImg) existingImg.remove();
+        illustrationBlock.classList.remove('has-image');
+        if (label) label.style.display = 'block';
+      }
+    }
+
+    // ============ undo/redo/save system ============
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [];
+    let historyIndex = -1;
+    let suppressCapture = false;
+
+    const colorTitle = document.getElementById('colorTitle');
+    const colorText = document.getElementById('colorText');
+    const colorIllustrationBg = document.getElementById('colorIllustrationBg');
+    const fontHeading = document.getElementById('fontHeading');
+    const fontBody = document.getElementById('fontBody');
+    const sizeTitle = document.getElementById('sizeTitle');
+    const sizeBody = document.getElementById('sizeBody');
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+
+    function checkOverflow() {
+      const pageEl = document.getElementById('literary-page');
+      const clipEl = pageEl.querySelector('.content-clip');
+      if (!clipEl) return;
+      const paddingBottom = parseFloat(getComputedStyle(pageEl).paddingBottom);
+      const limit = pageEl.clientHeight - paddingBottom;
+      const availableForClip = limit - clipEl.offsetTop;
+      clipEl.style.maxHeight = Math.max(0, availableForClip) + 'px';
+      const naturalHeight = clipEl.scrollHeight;
+      pageEl.classList.toggle('content-overflow', naturalHeight > availableForClip + 1);
+      clipEl.scrollTop = 0;
+    }
+
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.addEventListener('input', checkOverflow);
+    });
+
+    const overflowObserver = new MutationObserver(() => checkOverflow());
+    overflowObserver.observe(document.getElementById('literary-page'), { childList: true, subtree: true, characterData: true });
+
+    function captureState() {
+      return {
+        colorTitle: colorTitle.value,
+        colorText: colorText.value,
+        colorIllustrationBg: colorIllustrationBg.value,
+        fontHeading: fontHeading.value,
+        fontBody: fontBody.value,
+        sizeTitle: sizeTitle.value,
+        sizeBody: sizeBody.value,
+        editableContent: editableEls.map(el => el.innerHTML),
+        image: getImageData()
+      };
+    }
+
+    function applyState(state) {
+      if (!state) return;
+      suppressCapture = true;
+      root.setProperty('--color-title', state.colorTitle);
+      root.setProperty('--color-dropcap', state.colorTitle);
+      root.setProperty('--color-text', state.colorText);
+      root.setProperty('--color-illustration-bg', state.colorIllustrationBg);
+      root.setProperty('--font-heading', state.fontHeading);
+      root.setProperty('--font-body', state.fontBody);
+      root.setProperty('--font-size-title', state.sizeTitle + 'px');
+      root.setProperty('--font-size-body', state.sizeBody + 'px');
+      colorTitle.value = state.colorTitle;
+      colorText.value = state.colorText;
+      colorIllustrationBg.value = state.colorIllustrationBg;
+      fontHeading.value = state.fontHeading;
+      fontBody.value = state.fontBody;
+      sizeTitle.value = state.sizeTitle;
+      sizeBody.value = state.sizeBody;
+      if (state.editableContent) {
+        state.editableContent.forEach((html, i) => { if (editableEls[i]) editableEls[i].innerHTML = html; });
+      }
+      applyImageData(state.image);
+      suppressCapture = false;
+      checkOverflow();
+    }
+
+    function pushHistory() {
+      if (suppressCapture) return;
+      const state = captureState();
+      history = history.slice(0, historyIndex + 1);
+      history.push(state);
+      historyIndex = history.length - 1;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      document.getElementById('undoBtn').disabled = historyIndex <= 0;
+      document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+    }
+
+    [colorTitle, colorText, colorIllustrationBg, fontHeading, fontBody, sizeTitle, sizeBody].forEach(el => {
+      el.addEventListener('change', () => pushHistory());
+    });
+    editableEls.forEach(el => { el.addEventListener('blur', () => pushHistory()); });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); }
+    });
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); }
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+      const status = document.getElementById('saveStatus');
+      status.textContent = 'Enregistre \u2713';
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    });
+
+    document.getElementById('exportPdfBtn').addEventListener('click', () => { window.print(); });
+
+    setTimeout(function() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch(e) {} }
+      pushHistory();
+      updateButtons();
+      checkOverflow();
+    }, 0);
+  </script>
+
+</body>
+</html>

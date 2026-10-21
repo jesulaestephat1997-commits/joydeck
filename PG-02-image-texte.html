@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+
 <meta charset="UTF-8">
-<title>Éditeur — Sommaire Variant 3</title>
+<title>Éditeur — Page Image + Texte</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
 
   :root {
-    --color-bg: #E9EAE8;
+    --color-bg: #FFFFFF;
+    --color-accent: #4C1D95;
     --color-title: #1A1A1A;
-    --color-number: #1A1A1A;
-    --color-text: #2A2A2A;
+    --color-text: #4A4A4A;
     --color-image-bg: #D9D9D6;
+    --color-check: #4C1D95;
 
-    --font-heading: 'Playfair Display', serif;
+    --font-heading: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    --font-size-page-title: 66px;
-    --font-size-entry-title: 30px;
-    --font-size-number: 62px;
+    --font-size-title: 28px;
     --font-size-body: 14px;
   }
 
@@ -41,76 +64,87 @@
     overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,0.18);
     zoom: 0.65;
-    padding: 60px 64px;
+    padding: 64px;
+    display: none;
+  }
+  .page.active { display: block; }
+
+  .chapter-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 14px;
   }
 
   .page-title {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: var(--font-size-page-title);
-    letter-spacing: 0.08em;
-    text-align: center;
+    font-size: var(--font-size-title);
     color: var(--color-title);
-    margin: 0 0 40px 0;
+    margin: 0 0 24px 0;
+    line-height: 1.25;
   }
 
-  .entry-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin-bottom: 34px;
-  }
-
-  .entry-image {
-    width: 190px;
-    height: 190px;
-    flex-shrink: 0;
-    background: var(--color-image-bg);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .entry-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .entry-image .placeholder-label {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-body); font-size: 12px; color: #8A8781; text-align: center; padding: 10px;
-  }
-  .entry-image:hover .placeholder-label { opacity: 0.7; }
-
-  .entry-body { flex: 1; padding-top: 6px; }
-
-  .entry-heading-row {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 10px;
-  }
-
-  .entry-number {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: var(--font-size-number);
-    color: var(--color-number);
-    line-height: 1;
-  }
-
-  .entry-title {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: var(--font-size-entry-title);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--color-title);
-  }
-
-  .entry-desc {
+  .body-text {
     font-family: var(--font-body);
     font-size: var(--font-size-body);
     color: var(--color-text);
     line-height: 1.7;
-    text-align: justify;
+    margin-bottom: 20px;
   }
+
+  .check-list { list-style: none; margin: 0; padding: 0; }
+  .check-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-title);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .check-list .check-icon {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--color-check);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check-list .check-icon svg { width: 11px; height: 11px; }
+
+  /* ---- side-by-side layout ---- */
+  .layout-side .text-col { flex: 1; padding-top: 6px; }
+  .layout-side .image-col { width: 300px; flex-shrink: 0; }
+  .layout-side .image-block { width: 100%; height: 380px; }
+
+  /* ---- stacked layout ---- */
+  .layout-stack .image-block { width: 100%; height: 300px; margin-bottom: 28px; }
+
+  .image-block {
+    position: relative;
+    background: var(--color-image-bg);
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .image-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .image-block .placeholder-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-size: 12px; color: #8A8781; text-align: center; padding: 10px;
+  }
+  .image-block .change-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(0,0,0,0.55); color: #fff; border: none; border-radius: 6px;
+    padding: 5px 9px; font-family: 'Inter', sans-serif; font-size: 10px; cursor: pointer;
+    z-index: 5; display: none;
+  }
+  .image-block.has-image .change-btn { display: block; }
 
   [contenteditable="true"] { outline: none; }
   [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
@@ -152,6 +186,8 @@
   .swatch-row span { font-size: 11px; color: #8A8781; }
   select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
   hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+  .sidebar button.layout-btn { padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer; margin-right: 8px; }
+  .sidebar button.layout-btn.selected { background: #4C1D95; color: #fff; border-color: #4C1D95; }
 
   .preview-area {
     margin-left: 300px;
@@ -171,6 +207,7 @@
       box-shadow: none !important;
       margin: 0 !important;
     }
+    .change-btn { display: none !important; }
     @page { size: 8.5in 11in; margin: 0; }
   }
 
@@ -180,22 +217,31 @@
 
   <div class="sidebar">
     <h2>Personnaliser</h2>
-    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe. Clique sur une photo pour l'uploader.</p>
+    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe. Clique sur l'image pour l'uploader.</p>
 
     <div class="control-group">
-      <label>Couleurs</label>
-      <div class="swatch-row"><input type="color" id="colorTitle" value="#1A1A1A"><span>Titres / numéros</span></div>
-      <div class="swatch-row"><input type="color" id="colorText" value="#2A2A2A"><span>Texte</span></div>
-      <div class="swatch-row"><input type="color" id="colorImageBg" value="#D9D9D6"><span>Fond des photos</span></div>
+      <label>Mise en page</label>
+      <button type="button" class="layout-btn selected" id="layoutSideBtn">Côte à côte</button>
+      <button type="button" class="layout-btn" id="layoutStackBtn">Empilé</button>
     </div>
 
     <hr>
 
     <div class="control-group">
-      <label>Police — Titres</label>
+      <label>Couleurs</label>
+      <div class="swatch-row"><input type="color" id="colorAccent" value="#4C1D95"><span>Accent</span></div>
+      <div class="swatch-row"><input type="color" id="colorTitle" value="#1A1A1A"><span>Titre</span></div>
+      <div class="swatch-row"><input type="color" id="colorText" value="#4A4A4A"><span>Texte</span></div>
+      <div class="swatch-row"><input type="color" id="colorImageBg" value="#D9D9D6"><span>Fond image</span></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Police — Titre</label>
       <select class="font-select" id="fontHeading">
-        <option value="'Playfair Display', serif">Playfair Display</option>
         <option value="'Poppins', sans-serif">Poppins</option>
+        <option value="'Playfair Display', serif">Playfair Display</option>
         <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
         <option value="'Montserrat', sans-serif">Montserrat</option>
         <option value="'Outfit', sans-serif">Outfit</option>
@@ -236,16 +282,12 @@
     <hr>
 
     <div class="control-group">
-      <label>Taille du titre de page</label>
-      <input type="range" id="sizePageTitle" min="36" max="86" value="66" style="width:100%;">
+      <label>Taille du titre</label>
+      <input type="range" id="sizeTitle" min="18" max="46" value="28" style="width:100%;">
     </div>
     <div class="control-group">
-      <label>Taille des titres d'entrée</label>
-      <input type="range" id="sizeEntryTitle" min="18" max="42" value="30" style="width:100%;">
-    </div>
-    <div class="control-group">
-      <label>Taille des numéros</label>
-      <input type="range" id="sizeNumber" min="30" max="80" value="62" style="width:100%;">
+      <label>Taille du texte</label>
+      <input type="range" id="sizeBody" min="11" max="20" value="14" style="width:100%;">
     </div>
   </div>
 
@@ -260,72 +302,72 @@
   <input type="file" id="sharedImageUpload" accept="image/*" style="display:none;">
 
   <div class="preview-area">
-    <div class="page" id="toc-page-3">
 
-      <h1 class="page-title" contenteditable="true">Sommaire</h1>
-
-      <div class="entry-row">
-        <div class="entry-image" data-entry="1">
-          <div class="placeholder-label">Cliquer pour uploader</div>
+    <!-- ============ SIDE-BY-SIDE LAYOUT ============ -->
+    <div class="page layout-side active" id="page-side">
+      <span class="chapter-label">CHAPITRE 03</span>
+      <div style="display:flex; gap:40px; align-items:flex-start;">
+        <div class="text-col">
+          <h2 class="page-title" contenteditable="true">Design Content That Connects</h2>
+          <p class="body-text" contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus.</p>
+          <ul class="check-list">
+            <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Know your audience</span></li>
+            <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Deliver value</span></li>
+            <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Be consistent</span></li>
+            <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Encourage action</span></li>
+          </ul>
         </div>
-        <div class="entry-body">
-          <div class="entry-heading-row">
-            <span class="entry-number" contenteditable="true">01.</span>
-            <span class="entry-title" contenteditable="true">Introduction</span>
+        <div class="image-col">
+          <div class="image-block" data-slot="side">
+            <div class="placeholder-label">Cliquer pour uploader</div>
+            <button type="button" class="change-btn">Changer</button>
           </div>
-          <p class="entry-desc" contenteditable="true">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus.</p>
         </div>
       </div>
-
-      <div class="entry-row">
-        <div class="entry-image" data-entry="2">
-          <div class="placeholder-label">Cliquer pour uploader</div>
-        </div>
-        <div class="entry-body">
-          <div class="entry-heading-row">
-            <span class="entry-number" contenteditable="true">02.</span>
-            <span class="entry-title" contenteditable="true">Notre Histoire</span>
-          </div>
-          <p class="entry-desc" contenteditable="true">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus.</p>
-        </div>
-      </div>
-
-      <div class="entry-row">
-        <div class="entry-image" data-entry="3">
-          <div class="placeholder-label">Cliquer pour uploader</div>
-        </div>
-        <div class="entry-body">
-          <div class="entry-heading-row">
-            <span class="entry-number" contenteditable="true">03.</span>
-            <span class="entry-title" contenteditable="true">Nos Objectifs</span>
-          </div>
-          <p class="entry-desc" contenteditable="true">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus.</p>
-        </div>
-      </div>
-
-      <div class="entry-row">
-        <div class="entry-image" data-entry="4">
-          <div class="placeholder-label">Cliquer pour uploader</div>
-        </div>
-        <div class="entry-body">
-          <div class="entry-heading-row">
-            <span class="entry-number" contenteditable="true">04.</span>
-            <span class="entry-title" contenteditable="true">Nos Projets</span>
-          </div>
-          <p class="entry-desc" contenteditable="true">Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus.</p>
-        </div>
-      </div>
-
     </div>
+
+    <!-- ============ STACKED LAYOUT ============ -->
+    <div class="page layout-stack" id="page-stack">
+      <span class="chapter-label">CHAPITRE 03</span>
+      <div class="image-block" data-slot="stack">
+        <div class="placeholder-label">Cliquer pour uploader</div>
+        <button type="button" class="change-btn">Changer</button>
+      </div>
+      <h2 class="page-title" contenteditable="true">Tools That Make Creation Easier</h2>
+      <p class="body-text" contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus.</p>
+      <ul class="check-list">
+        <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Plan</span></li>
+        <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Create</span></li>
+        <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Design</span></li>
+        <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></span><span contenteditable="true">Publish</span></li>
+      </ul>
+    </div>
+
   </div>
 
   <script>
     const root = document.documentElement.style;
 
-    document.getElementById('colorTitle').addEventListener('input', e => {
-      root.setProperty('--color-title', e.target.value);
-      root.setProperty('--color-number', e.target.value);
-    });
+    // ---- layout switcher ----
+    const layoutSideBtn = document.getElementById('layoutSideBtn');
+    const layoutStackBtn = document.getElementById('layoutStackBtn');
+    const pageSide = document.getElementById('page-side');
+    const pageStack = document.getElementById('page-stack');
+    let activeLayout = 'side';
+
+    function setLayout(layout, capture) {
+      activeLayout = layout;
+      pageSide.classList.toggle('active', layout === 'side');
+      pageStack.classList.toggle('active', layout === 'stack');
+      layoutSideBtn.classList.toggle('selected', layout === 'side');
+      layoutStackBtn.classList.toggle('selected', layout === 'stack');
+      if (capture) pushHistory();
+    }
+    layoutSideBtn.addEventListener('click', () => setLayout('side', true));
+    layoutStackBtn.addEventListener('click', () => setLayout('stack', true));
+
+    document.getElementById('colorAccent').addEventListener('input', e => root.setProperty('--color-accent', e.target.value));
+    document.getElementById('colorTitle').addEventListener('input', e => root.setProperty('--color-title', e.target.value));
     document.getElementById('colorText').addEventListener('input', e => root.setProperty('--color-text', e.target.value));
     document.getElementById('colorImageBg').addEventListener('input', e => root.setProperty('--color-image-bg', e.target.value));
 
@@ -333,16 +375,16 @@
     document.getElementById('fontBody').addEventListener('change', e => root.setProperty('--font-body', e.target.value));
     document.querySelectorAll('.font-select option').forEach(opt => { opt.style.fontFamily = opt.value; });
 
-    document.getElementById('sizePageTitle').addEventListener('input', e => root.setProperty('--font-size-page-title', e.target.value + 'px'));
-    document.getElementById('sizeEntryTitle').addEventListener('input', e => root.setProperty('--font-size-entry-title', e.target.value + 'px'));
-    document.getElementById('sizeNumber').addEventListener('input', e => root.setProperty('--font-size-number', e.target.value + 'px'));
+    document.getElementById('sizeTitle').addEventListener('input', e => root.setProperty('--font-size-title', e.target.value + 'px'));
+    document.getElementById('sizeBody').addEventListener('input', e => root.setProperty('--font-size-body', e.target.value + 'px'));
 
-    // ============ per-entry image upload (shared file input) ============
+    // ============ image upload (shared input, per image-block) ============
     const sharedFileInput = document.getElementById('sharedImageUpload');
     let activeImageBlock = null;
 
-    document.querySelectorAll('.entry-image').forEach(block => {
-      block.addEventListener('click', () => {
+    document.querySelectorAll('.image-block').forEach(block => {
+      block.addEventListener('click', (e) => {
+        if (block.classList.contains('has-image') && e.target.closest('.change-btn') === null) return;
         activeImageBlock = block;
         sharedFileInput.click();
       });
@@ -359,6 +401,7 @@
           activeImageBlock.insertBefore(img, activeImageBlock.firstChild);
         }
         img.src = ev.target.result;
+        activeImageBlock.classList.add('has-image');
         const label = activeImageBlock.querySelector('.placeholder-label');
         if (label) label.style.display = 'none';
         pushHistory();
@@ -369,29 +412,27 @@
 
     function getAllImageData() {
       const data = {};
-      document.querySelectorAll('.entry-image').forEach(block => {
+      document.querySelectorAll('.image-block').forEach(block => {
         const img = block.querySelector('img');
-        data[block.dataset.entry] = img ? img.src : null;
+        data[block.dataset.slot] = img ? img.src : null;
       });
       return data;
     }
-
     function applyAllImageData(data) {
       if (!data) return;
-      document.querySelectorAll('.entry-image').forEach(block => {
-        const src = data[block.dataset.entry];
+      document.querySelectorAll('.image-block').forEach(block => {
+        const src = data[block.dataset.slot];
         const existingImg = block.querySelector('img');
         const label = block.querySelector('.placeholder-label');
         if (src) {
           let img = existingImg;
-          if (!img) {
-            img = document.createElement('img');
-            block.insertBefore(img, block.firstChild);
-          }
+          if (!img) { img = document.createElement('img'); block.insertBefore(img, block.firstChild); }
           img.src = src;
+          block.classList.add('has-image');
           if (label) label.style.display = 'none';
         } else {
           if (existingImg) existingImg.remove();
+          block.classList.remove('has-image');
           if (label) label.style.display = 'flex';
         }
       });
@@ -403,26 +444,27 @@
     let historyIndex = -1;
     let suppressCapture = false;
 
+    const colorAccent = document.getElementById('colorAccent');
     const colorTitle = document.getElementById('colorTitle');
     const colorText = document.getElementById('colorText');
     const colorImageBg = document.getElementById('colorImageBg');
     const fontHeading = document.getElementById('fontHeading');
     const fontBody = document.getElementById('fontBody');
-    const sizePageTitle = document.getElementById('sizePageTitle');
-    const sizeEntryTitle = document.getElementById('sizeEntryTitle');
-    const sizeNumber = document.getElementById('sizeNumber');
+    const sizeTitle = document.getElementById('sizeTitle');
+    const sizeBody = document.getElementById('sizeBody');
     const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
 
     function captureState() {
       return {
+        layout: activeLayout,
+        colorAccent: colorAccent.value,
         colorTitle: colorTitle.value,
         colorText: colorText.value,
         colorImageBg: colorImageBg.value,
         fontHeading: fontHeading.value,
         fontBody: fontBody.value,
-        sizePageTitle: sizePageTitle.value,
-        sizeEntryTitle: sizeEntryTitle.value,
-        sizeNumber: sizeNumber.value,
+        sizeTitle: sizeTitle.value,
+        sizeBody: sizeBody.value,
         editableContent: editableEls.map(el => el.innerHTML),
         images: getAllImageData()
       };
@@ -431,23 +473,23 @@
     function applyState(state) {
       if (!state) return;
       suppressCapture = true;
+      setLayout(state.layout, false);
+      root.setProperty('--color-accent', state.colorAccent);
       root.setProperty('--color-title', state.colorTitle);
-      root.setProperty('--color-number', state.colorTitle);
       root.setProperty('--color-text', state.colorText);
       root.setProperty('--color-image-bg', state.colorImageBg);
       root.setProperty('--font-heading', state.fontHeading);
       root.setProperty('--font-body', state.fontBody);
-      root.setProperty('--font-size-page-title', state.sizePageTitle + 'px');
-      root.setProperty('--font-size-entry-title', state.sizeEntryTitle + 'px');
-      root.setProperty('--font-size-number', state.sizeNumber + 'px');
+      root.setProperty('--font-size-title', state.sizeTitle + 'px');
+      root.setProperty('--font-size-body', state.sizeBody + 'px');
+      colorAccent.value = state.colorAccent;
       colorTitle.value = state.colorTitle;
       colorText.value = state.colorText;
       colorImageBg.value = state.colorImageBg;
       fontHeading.value = state.fontHeading;
       fontBody.value = state.fontBody;
-      sizePageTitle.value = state.sizePageTitle;
-      sizeEntryTitle.value = state.sizeEntryTitle;
-      sizeNumber.value = state.sizeNumber;
+      sizeTitle.value = state.sizeTitle;
+      sizeBody.value = state.sizeBody;
       if (state.editableContent) {
         state.editableContent.forEach((html, i) => { if (editableEls[i]) editableEls[i].innerHTML = html; });
       }
@@ -469,7 +511,7 @@
       document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
     }
 
-    [colorTitle, colorText, colorImageBg, fontHeading, fontBody, sizePageTitle, sizeEntryTitle, sizeNumber].forEach(el => {
+    [colorAccent, colorTitle, colorText, colorImageBg, fontHeading, fontBody, sizeTitle, sizeBody].forEach(el => {
       el.addEventListener('change', () => pushHistory());
     });
     editableEls.forEach(el => { el.addEventListener('blur', () => pushHistory()); });

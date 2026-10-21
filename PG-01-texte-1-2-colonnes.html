@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+
+<meta charset="UTF-8">
+<title>Éditeur — Page Texte (1 & 2 colonnes)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Libre+Baskerville:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --color-bg: #FFFFFF;
+    --color-accent: #4C1D95;
+    --color-title: #1A1A1A;
+    --color-text: #4A4A4A;
+    --color-tip-bg: #F3EEFB;
+    --color-tip-text: #4C1D95;
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --font-size-title: 30px;
+    --font-size-body: 15px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #EDEBE6;
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 816px;
+    height: 1056px;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    zoom: 0.65;
+    padding: 76px 64px;
+    display: none;
+  }
+  .page.active { display: block; }
+
+  .eyebrow-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .chapter-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .page-number {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: #999;
+  }
+
+  .page-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--font-size-title);
+    color: var(--color-title);
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+  }
+
+  .title-underline {
+    width: 56px;
+    height: 4px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .col-wrap-1 { display: block; }
+  .col-wrap-2 { display: flex; gap: 40px; }
+  .col-wrap-2 .col { flex: 1; }
+
+  .body-text {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text);
+    line-height: 1.75;
+  }
+  .body-text p { margin: 0 0 16px 0; }
+  .body-text p:last-child { margin-bottom: 0; }
+
+  .tip-box-zone {
+    position: absolute;
+    left: 64px;
+    right: 64px;
+    bottom: 76px;
+    min-height: 70px;
+  }
+  .tip-box {
+    background: var(--color-tip-bg);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-box.hidden-state { display: none; }
+  .tip-hidden-placeholder {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    border: 1px dashed rgba(0,0,0,0.15);
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #999;
+  }
+  .tip-box.hidden-state ~ .tip-hidden-placeholder { display: flex; }
+  .tip-eye {
+    position: absolute;
+    top: -12px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #E4E2DD;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 6;
+  }
+  .tip-box-zone:hover .tip-eye,
+  .tip-eye:focus { opacity: 1; transform: scale(1); }
+  .tip-eye.hidden-state { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .tip-icon {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .tip-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-tip-text);
+    line-height: 1.5;
+  }
+  .tip-text strong { font-weight: 700; }
+
+
+  .page.content-overflow {
+    outline: 3px dashed #DC2626;
+    outline-offset: -3px;
+  }
+  .content-clip {
+    overflow: hidden;
+  }
+  .overflow-badge {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: #DC2626;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: 6px;
+    display: none;
+    z-index: 50;
+  }
+  .page.content-overflow .overflow-badge { display: block; }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,0.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,0.35); outline-offset: 2px; }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    position: fixed; top: 0; left: 300px; right: 0; height: 52px;
+    background: #FFFFFF; border-bottom: 1px solid #E4E2DD;
+    display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100;
+    overflow-x: auto;
+  }
+  .toolbar button {
+    padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px;
+    background: #FAFAF8; font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar button.layout-btn.selected { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 300px;
+    background: #FFFFFF;
+    border-right: 1px solid #E4E2DD;
+    padding: 28px 24px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+  }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 24px 0; }
+  .control-group { margin-bottom: 22px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 8px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type="color"] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; background: #FAFAF8; }
+  hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+
+  .sidebar button.layout-btn {
+    padding: 8px 14px;
+    border: 1px solid #E4E2DD;
+    border-radius: 6px;
+    background: #FAFAF8;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  .sidebar button.layout-btn.selected {
+    background: #4C1D95;
+    color: #fff;
+    border-color: #4C1D95;
+  }
+
+  .preview-area {
+    margin-left: 300px;
+    padding: 92px 40px 40px 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar { display: none !important; }
+    .overflow-badge, .page.content-overflow { outline: none !important; }
+    .overflow-badge { display: none !important; }
+    .tip-eye { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page {
+      zoom: 1 !important;
+      width: 8.5in !important;
+      height: 11in !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Modifie les couleurs, fonts et tailles — la structure reste fixe.</p>
+
+    <div class="control-group">
+      <label>Mise en page</label>
+      <button type="button" class="layout-btn selected" id="layout1Btn">1 colonne</button>
+      <button type="button" class="layout-btn" id="layout2Btn">2 colonnes</button>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Couleurs</label>
+      <div class="swatch-row"><input type="color" id="colorAccent" value="#4C1D95"><span>Accent</span></div>
+      <div class="swatch-row"><input type="color" id="colorTitle" value="#1A1A1A"><span>Titre</span></div>
+      <div class="swatch-row"><input type="color" id="colorText" value="#4A4A4A"><span>Texte</span></div>
+      <div class="swatch-row"><input type="color" id="colorTipBg" value="#F3EEFB"><span>Fond du tip</span></div>
+      <div class="swatch-row"><input type="color" id="colorTipText" value="#4C1D95"><span>Texte du tip</span></div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Police — Titre</label>
+      <select class="font-select" id="fontHeading">
+        <option value="'Poppins', sans-serif">Poppins</option>
+        <option value="'Playfair Display', serif">Playfair Display</option>
+        <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+        <option value="'Outfit', sans-serif">Outfit</option>
+        <option value="'Bricolage Grotesque', sans-serif">Bricolage Grotesque</option>
+        <option value="'DM Serif Display', serif">DM Serif Display</option>
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Fraunces', serif">Fraunces</option>
+        <option value="'Marcellus', serif">Marcellus</option>
+        <option value="'Prata', serif">Prata</option>
+        <option value="'Italiana', serif">Italiana</option>
+        <option value="'Abril Fatface', serif">Abril Fatface</option>
+        <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+        <option value="'Cinzel', serif">Cinzel</option>
+        <option value="'Great Vibes', cursive">Great Vibes (calligraphie)</option>
+        <option value="'Dancing Script', cursive">Dancing Script (calligraphie)</option>
+        <option value="'Parisienne', cursive">Parisienne (calligraphie)</option>
+        <option value="'Alex Brush', cursive">Alex Brush (calligraphie)</option>
+        <option value="'Allura', cursive">Allura (calligraphie)</option>
+        <option value="'Sacramento', cursive">Sacramento (calligraphie)</option>
+        <option value="'Tangerine', cursive">Tangerine (calligraphie)</option>
+        <option value="'Pinyon Script', cursive">Pinyon Script (calligraphie)</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label>Police — Corps</label>
+      <select class="font-select" id="fontBody">
+        <option value="'Inter', sans-serif">Inter</option>
+        <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+        <option value="'Outfit', sans-serif">Outfit</option>
+        <option value="'Bricolage Grotesque', sans-serif">Bricolage Grotesque</option>
+        <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+        <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <label>Taille du titre</label>
+      <input type="range" id="sizeTitle" min="18" max="48" value="30" style="width:100%;">
+    </div>
+    <div class="control-group">
+      <label>Taille du texte</label>
+      <input type="range" id="sizeBody" min="11" max="22" value="15" style="width:100%;">
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <div class="preview-area">
+
+    <!-- ============ 1-COLUMN LAYOUT ============ -->
+    <div class="page active" id="page-1col">
+      <div class="eyebrow-row">
+        <span class="chapter-label" contenteditable="true">CHAPITRE 01</span>
+        <span class="page-number">05</span>
+      </div>
+      <h2 class="page-title" contenteditable="true">The Power of Consistent Content</h2>
+      <div class="title-underline"></div>
+      <div class="content-clip">
+        <div class="col-wrap-1">
+          <div class="body-text" contenteditable="true">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor.</p>
+            <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box-zone">
+        <div class="tip-box">
+          <span class="tip-icon">💡</span>
+          <span class="tip-text" contenteditable="true"><strong>Pro Tip:</strong> Consistent content builds trust, and trust builds a loyal community.</span>
+        </div>
+        <div class="tip-hidden-placeholder">Tip masque</div>
+        <button type="button" class="tip-eye" title="Masquer/afficher le tip">👁</button>
+      </div>
+      <div class="overflow-badge">Contenu trop long — depasse la page</div>
+    </div>
+
+    <!-- ============ 2-COLUMN LAYOUT ============ -->
+    <div class="page" id="page-2col">
+      <div class="eyebrow-row">
+        <span class="chapter-label" contenteditable="true">CHAPITRE 01</span>
+        <span class="page-number">06</span>
+      </div>
+      <h2 class="page-title" contenteditable="true">Why Content Matters</h2>
+      <div class="title-underline"></div>
+      <div class="content-clip">
+        <div class="col-wrap-2">
+          <div class="col">
+            <div class="body-text" contenteditable="true">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.</p>
+              <p>In id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor.</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="body-text" contenteditable="true">
+              <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer.</p>
+              <p>Nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box-zone">
+        <div class="tip-box">
+          <span class="tip-icon">💬</span>
+          <span class="tip-text" contenteditable="true">Great content solves problems and creates transformation.</span>
+        </div>
+        <div class="tip-hidden-placeholder">Tip masque</div>
+        <button type="button" class="tip-eye" title="Masquer/afficher le tip">👁</button>
+      </div>
+      <div class="overflow-badge">Contenu trop long — depasse la page</div>
+    </div>
+
+  </div>
+
+  <script>
+    const root = document.documentElement.style;
+
+    // ---- layout switcher ----
+    const layout1Btn = document.getElementById('layout1Btn');
+    const layout2Btn = document.getElementById('layout2Btn');
+    const page1col = document.getElementById('page-1col');
+    const page2col = document.getElementById('page-2col');
+    let activeLayout = '1col';
+
+    function setLayout(layout, capture) {
+      activeLayout = layout;
+      page1col.classList.toggle('active', layout === '1col');
+      page2col.classList.toggle('active', layout === '2col');
+      layout1Btn.classList.toggle('selected', layout === '1col');
+      layout2Btn.classList.toggle('selected', layout === '2col');
+      if (capture) pushHistory();
+      checkOverflow();
+    }
+
+    layout1Btn.addEventListener('click', () => setLayout('1col', true));
+    layout2Btn.addEventListener('click', () => setLayout('2col', true));
+
+    function checkOverflow() {
+      document.querySelectorAll('.page').forEach(pageEl => {
+        const clipEl = pageEl.querySelector('.content-clip');
+        const tipZoneEl = pageEl.querySelector('.tip-box-zone');
+        if (!clipEl || !tipZoneEl) return;
+        const gap = 20;
+        const limitTop = tipZoneEl.offsetTop - gap;
+        const availableForClip = limitTop - clipEl.offsetTop;
+        clipEl.style.maxHeight = Math.max(0, availableForClip) + 'px';
+        const naturalHeight = clipEl.scrollHeight;
+        pageEl.classList.toggle('content-overflow', naturalHeight > availableForClip + 1);
+      });
+    }
+
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.addEventListener('input', checkOverflow);
+    });
+
+    const overflowObserver = new MutationObserver(() => checkOverflow());
+    document.querySelectorAll('.page').forEach(pageEl => {
+      overflowObserver.observe(pageEl, { childList: true, subtree: true, characterData: true });
+    });
+
+
+    document.querySelectorAll('.tip-box-zone').forEach(zone => {
+      const tipBox = zone.querySelector('.tip-box');
+      const eyeBtn = zone.querySelector('.tip-eye');
+      eyeBtn.addEventListener('click', () => {
+        const nowHidden = !tipBox.classList.contains('hidden-state');
+        tipBox.classList.toggle('hidden-state', nowHidden);
+        eyeBtn.classList.toggle('hidden-state', nowHidden);
+        checkOverflow();
+        pushHistory();
+      });
+    });
+
+    document.getElementById('colorTipBg').addEventListener('input', e => root.setProperty('--color-tip-bg', e.target.value));
+    document.getElementById('colorTipText').addEventListener('input', e => root.setProperty('--color-tip-text', e.target.value));
+
+    document.getElementById('colorAccent').addEventListener('input', e => root.setProperty('--color-accent', e.target.value));
+    document.getElementById('colorTitle').addEventListener('input', e => root.setProperty('--color-title', e.target.value));
+    document.getElementById('colorText').addEventListener('input', e => root.setProperty('--color-text', e.target.value));
+
+    document.getElementById('fontHeading').addEventListener('change', e => root.setProperty('--font-heading', e.target.value));
+    document.getElementById('fontBody').addEventListener('change', e => root.setProperty('--font-body', e.target.value));
+    document.querySelectorAll('.font-select option').forEach(opt => { opt.style.fontFamily = opt.value; });
+
+    document.getElementById('sizeTitle').addEventListener('input', e => { root.setProperty('--font-size-title', e.target.value + 'px'); checkOverflow(); });
+    document.getElementById('sizeBody').addEventListener('input', e => { root.setProperty('--font-size-body', e.target.value + 'px'); checkOverflow(); });
+
+    // ============ undo/redo/save system ============
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [];
+    let historyIndex = -1;
+    let suppressCapture = false;
+
+    const colorAccent = document.getElementById('colorAccent');
+    const colorTitle = document.getElementById('colorTitle');
+    const colorText = document.getElementById('colorText');
+    const colorTipBg = document.getElementById('colorTipBg');
+    const colorTipText = document.getElementById('colorTipText');
+    const fontHeading = document.getElementById('fontHeading');
+    const fontBody = document.getElementById('fontBody');
+    const sizeTitle = document.getElementById('sizeTitle');
+    const sizeBody = document.getElementById('sizeBody');
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+
+    function getTipHiddenStates() {
+      return Array.from(document.querySelectorAll('.tip-box-zone .tip-box')).map(el => el.classList.contains('hidden-state'));
+    }
+    function applyTipHiddenStates(states) {
+      if (!states) return;
+      document.querySelectorAll('.tip-box-zone').forEach((zone, i) => {
+        const hidden = !!states[i];
+        zone.querySelector('.tip-box').classList.toggle('hidden-state', hidden);
+        zone.querySelector('.tip-eye').classList.toggle('hidden-state', hidden);
+      });
+    }
+
+    function captureState() {
+      return {
+        layout: activeLayout,
+        colorAccent: colorAccent.value,
+        colorTitle: colorTitle.value,
+        colorText: colorText.value,
+        colorTipBg: colorTipBg.value,
+        colorTipText: colorTipText.value,
+        fontHeading: fontHeading.value,
+        fontBody: fontBody.value,
+        sizeTitle: sizeTitle.value,
+        sizeBody: sizeBody.value,
+        editableContent: editableEls.map(el => el.innerHTML),
+        tipHidden: getTipHiddenStates()
+      };
+    }
+
+    function applyState(state) {
+      if (!state) return;
+      suppressCapture = true;
+      setLayout(state.layout, false);
+      root.setProperty('--color-accent', state.colorAccent);
+      root.setProperty('--color-title', state.colorTitle);
+      root.setProperty('--color-text', state.colorText);
+      root.setProperty('--color-tip-bg', state.colorTipBg || colorTipBg.value);
+      root.setProperty('--color-tip-text', state.colorTipText || colorTipText.value);
+      root.setProperty('--font-heading', state.fontHeading);
+      root.setProperty('--font-body', state.fontBody);
+      root.setProperty('--font-size-title', state.sizeTitle + 'px');
+      root.setProperty('--font-size-body', state.sizeBody + 'px');
+      colorAccent.value = state.colorAccent;
+      colorTitle.value = state.colorTitle;
+      colorText.value = state.colorText;
+      if (state.colorTipBg) colorTipBg.value = state.colorTipBg;
+      if (state.colorTipText) colorTipText.value = state.colorTipText;
+      fontHeading.value = state.fontHeading;
+      fontBody.value = state.fontBody;
+      sizeTitle.value = state.sizeTitle;
+      sizeBody.value = state.sizeBody;
+      if (state.editableContent) {
+        state.editableContent.forEach((html, i) => { if (editableEls[i]) editableEls[i].innerHTML = html; });
+      }
+      applyTipHiddenStates(state.tipHidden);
+      suppressCapture = false;
+      checkOverflow();
+    }
+
+    function pushHistory() {
+      if (suppressCapture) return;
+      const state = captureState();
+      history = history.slice(0, historyIndex + 1);
+      history.push(state);
+      historyIndex = history.length - 1;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      document.getElementById('undoBtn').disabled = historyIndex <= 0;
+      document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+    }
+
+    [colorAccent, colorTitle, colorText, colorTipBg, colorTipText, fontHeading, fontBody, sizeTitle, sizeBody].forEach(el => {
+      el.addEventListener('change', () => pushHistory());
+    });
+    editableEls.forEach(el => { el.addEventListener('blur', () => pushHistory()); });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); }
+    });
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); }
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+      const status = document.getElementById('saveStatus');
+      status.textContent = 'Enregistre \u2713';
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    });
+
+    document.getElementById('exportPdfBtn').addEventListener('click', () => { window.print(); });
+
+    setTimeout(function() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch(e) {} }
+      pushHistory();
+      updateButtons();
+      checkOverflow();
+    }, 0);
+  </script>
+
+</body>
+</html>

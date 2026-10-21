@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+<title>Éditeur — Objectif et message</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@400;600;700&family=Outfit:wght@400;600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-top: #EDEDEE;
+    --color-bottom: #DCDCDE;
+    --color-accent: #CF2A26;
+    --color-box: #D32B27;
+    --color-box-text: #FFFFFF;
+    --color-title: #141414;
+    --color-bold: #141414;
+    --color-text: #3C3C3E;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --size-main: 56px;
+    --size-sub: 37px;
+    --size-quote: 15.5px;
+    --size-body: 11px;
+    --size-box: 12px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #EDEBE6; font-family: 'Inter', sans-serif; display: flex; justify-content: center; padding: 40px 20px; }
+  .page { width: 816px; height: 1056px; background: var(--color-top); position: relative; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.18); zoom: .65; }
+  .bottom-bg { position: absolute; left: 0; right: 0; top: 580px; bottom: 0; background: var(--color-bottom); }
+  .box { position: absolute; left: 40px; top: 260px; width: 262px; height: 281px; background: var(--color-box); }
+  .box-clip { position: absolute; left: 79px; top: 309px; width: 184px; overflow: hidden; overflow: clip; }
+  .box-text { font-family: var(--font-heading); font-size: var(--size-box); font-weight: 600; line-height: 1.9; color: var(--color-box-text); }
+
+  .main-title { position: absolute; left: 343px; top: 88px; width: 420px; margin: 0; font-family: var(--font-heading); font-size: var(--size-main); font-weight: 800; line-height: .96; color: var(--color-accent); text-transform: uppercase; }
+  .sub-title { position: absolute; left: 76px; top: 620px; width: 240px; margin: 0; font-family: var(--font-heading); font-size: var(--size-sub); font-weight: 800; line-height: 1.1; color: var(--color-title); text-transform: uppercase; }
+
+  .clip { position: absolute; overflow: hidden; overflow: clip; }
+  #clipA { left: 343px; top: 259px; width: 415px; }
+  #clipQ { left: 343px; top: 627px; width: 405px; }
+  .col-clip { top: 755px; width: 196px; }
+  #col1 { left: 76px; } #col2 { left: 312px; } #col3 { left: 548px; }
+  .inner { font-family: var(--font-body); font-size: var(--size-body); line-height: 1.6; color: var(--color-text); }
+  .inner p { margin: 0 0 20px 0; }
+  .inner > :last-child { margin-bottom: 0; }
+  .inner p.lead { font-family: var(--font-heading); font-size: var(--size-quote); font-weight: 700; line-height: 1.5; color: var(--color-bold); }
+  .inner.red p.lead { color: var(--color-accent); font-weight: 600; margin-bottom: 0; }
+  .col-clip .inner p.lead { font-size: 11.5px; line-height: 1.6; margin-bottom: 19px; }
+  #clipA .inner p.lead { margin-bottom: 17px; }
+  .inner p { text-align: left; }
+  #clipA .inner p:not(.lead) { }
+
+  .overflow-badge { display: none; position: absolute; top: 14px; right: 14px; z-index: 20; background: #D64545; color: #fff; font: 600 14px 'Inter', sans-serif; padding: 6px 12px; border-radius: 6px; }
+  .page.content-overflow { outline: 3px dashed #D64545; outline-offset: -3px; }
+  .page.content-overflow .overflow-badge { display: block; }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,.35); outline-offset: 2px; }
+
+  .toolbar { position: fixed; top: 0; left: 300px; right: 0; height: 52px; background: #FFF; border-bottom: 1px solid #E4E2DD; display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100; overflow-x: auto; }
+  .toolbar button { padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font: 13px 'Inter', sans-serif; cursor: pointer; white-space: nowrap; }
+  .toolbar button:disabled { opacity: .4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  .sidebar { width: 300px; background: #FFF; border-right: 1px solid #E4E2DD; padding: 28px 24px; overflow-y: auto; position: fixed; top: 0; bottom: 0; left: 0; font-family: 'Inter', sans-serif; }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 22px; }
+  .sidebar h3 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #8A8781; margin: 0 0 12px; }
+  .control-group { margin-bottom: 18px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 7px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type=color] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select, select.zone-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 14px; background: #FAFAF8; }
+  .sidebar button.side-btn { width: 100%; padding: 9px 10px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font-size: 13px; cursor: pointer; }
+  .sidebar hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+  .sidebar input[type=range] { width: 100%; }
+  .preview-area { margin-left: 300px; padding: 92px 40px 40px; display: flex; justify-content: center; }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar, .change-btn, .overflow-badge, .placeholder-label { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page { zoom: 1 !important; width: 8.5in !important; height: 11in !important; box-shadow: none !important; margin: 0 !important; outline: none !important; }
+    .panel.selected { box-shadow: none !important; }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Clique sur un texte pour le modifier.</p>
+
+    <h3>Couleurs</h3>
+    <div class="swatch-row"><input type="color" id="colorAccent" value="#CF2A26"><span>Grand titre et citation rouge</span></div>
+    <div class="swatch-row"><input type="color" id="colorBox" value="#D32B27"><span>Carré rouge</span></div>
+    <div class="swatch-row"><input type="color" id="colorBoxText" value="#FFFFFF"><span>Texte du carré</span></div>
+    <div class="swatch-row"><input type="color" id="colorTop" value="#EDEDEE"><span>Fond du haut</span></div>
+    <div class="swatch-row"><input type="color" id="colorBottom" value="#DCDCDE"><span>Fond du bas</span></div>
+    <div class="swatch-row"><input type="color" id="colorTitle" value="#141414"><span>Sous-titre</span></div>
+    <div class="swatch-row"><input type="color" id="colorBold" value="#141414"><span>Texte en gras</span></div>
+    <div class="swatch-row"><input type="color" id="colorText" value="#3C3C3E"><span>Texte</span></div>
+
+    <hr>
+
+    <div class="control-group"><label>Police — Titres</label><select class="font-select" id="fontHeading"></select></div>
+    <div class="control-group"><label>Police — Texte</label><select class="font-select" id="fontBody"></select></div>
+
+    <hr>
+
+    <div class="control-group"><label>Taille du grand titre</label><input type="range" id="sizeMain" min="24" max="72" value="56"></div>
+    <div class="control-group"><label>Taille du sous-titre</label><input type="range" id="sizeSub" min="20" max="52" value="37"></div>
+    <div class="control-group"><label>Taille des citations</label><input type="range" id="sizeQuote" min="10" max="22" step="0.5" value="15.5"></div>
+    <div class="control-group"><label>Taille du texte</label><input type="range" id="sizeBody" min="8" max="16" step="0.5" value="11"></div>
+    <div class="control-group"><label>Taille du texte du carré</label><input type="range" id="sizeBox" min="9" max="18" step="0.5" value="12"></div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <div class="preview-area">
+    <div class="page" id="author-page">
+      <div class="overflow-badge">Contenu trop long</div>
+      <div class="bottom-bg"></div>
+
+      <h1 class="main-title" contenteditable="true">Our Objective</h1>
+
+      <div class="box"></div>
+      <div class="clip box-clip" id="clipBox"><div class="box-text" contenteditable="true">Quisque mauris mauris, dictum at semper vel, sollicitudin porttitor ultrices vitae auctor eu. Etiam duis ultrices in uis sed nunc sed. Urna duis convallis convallis tellus. Nam efficitur magna, id gravida purus feugiat.</div></div>
+
+      <div class="clip" id="clipA"><div class="inner" contenteditable="true">
+        <p class="lead">&ldquo;Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.&rdquo;</p>
+        <p>Pellentesque euismod tortor accumsan, ac magna est, nec vestibulum ex nunc. Nam efficitur magna, id gravida purus feugiat sit amet. Cras sed lacinia nunc, vel tincidunt turpis. Donec ullamcorper justo non quam finibus, a rhoncus. Suspendisse et metus vitae ipsum semper porta. Maecenas dapibus diam quis nulla pharetra, ut vestibulum erat tempor. Integer ac velit sed sem dictum dignissim. Mauris sollicitudin nibh quis eros mollis, vitae ultrices ligula, at porta ex lacinia. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+      </div></div>
+
+      <h2 class="sub-title" contenteditable="true">Our<br>Message</h2>
+
+      <div class="clip" id="clipQ"><div class="inner red" contenteditable="true">
+        <p class="lead">&ldquo;Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna.&rdquo;</p>
+      </div></div>
+
+      <div class="clip col-clip" id="col1"><div class="inner" contenteditable="true">
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+        <p>Pellentesque euismod tortor accumsan, ac magna est, nec vestibulum ex nunc. Nam efficitur magna, id gravida purus feugiat sit amet. Cras sed lacinia nunc, vel tincidunt turpis. Donec ullamcorper justo non quam finibus, a rhoncus. Suspendisse et metus vitae ipsum semper porta. Maecenas dapibus diam.</p>
+      </div></div>
+      <div class="clip col-clip" id="col2"><div class="inner" contenteditable="true">
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+        <p>Pellentesque euismod tortor accumsan, ac magna est, nec vestibulum ex nunc. Nam efficitur magna, id gravida purus feugiat sit amet. Cras sed lacinia nunc, vel tincidunt turpis. Donec ullamcorper justo non quam finibus, a rhoncus. Suspendisse et metus vitae ipsum semper porta. Maecenas dapibus diam.</p>
+      </div></div>
+      <div class="clip col-clip" id="col3"><div class="inner" contenteditable="true">
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+        <p>Pellentesque euismod tortor accumsan, ac magna est, nec vestibulum ex nunc. Nam efficitur magna, id gravida purus feugiat sit amet. Cras sed lacinia nunc, vel tincidunt turpis. Donec ullamcorper justo non quam finibus, a rhoncus. Suspendisse et metus vitae ipsum semper porta. Maecenas dapibus diam.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <script>
+    const FONTS = [["'EB Garamond', serif", "EB Garamond"], ["'Cormorant Garamond', serif", "Cormorant Garamond"], ["'Libre Baskerville', serif", "Libre Baskerville"], ["'Playfair Display', serif", "Playfair Display"], ["'Fraunces', serif", "Fraunces"], ["'Marcellus', serif", "Marcellus"], ["'Prata', serif", "Prata"], ["'Italiana', serif", "Italiana"], ["'DM Serif Display', serif", "DM Serif Display"], ["'Abril Fatface', serif", "Abril Fatface"], ["'Cinzel', serif", "Cinzel"], ["'Poppins', sans-serif", "Poppins"], ["'Inter', sans-serif", "Inter"], ["'Montserrat', sans-serif", "Montserrat"], ["'Space Grotesk', sans-serif", "Space Grotesk"], ["'Outfit', sans-serif", "Outfit"], ["'Bricolage Grotesque', sans-serif", "Bricolage Grotesque"], ["'Great Vibes', cursive", "Great Vibes"], ["'Dancing Script', cursive", "Dancing Script"], ["'Parisienne', cursive", "Parisienne"], ["'Alex Brush', cursive", "Alex Brush"], ["'Allura', cursive", "Allura"], ["'Sacramento', cursive", "Sacramento"], ["'Tangerine', cursive", "Tangerine"], ["'Pinyon Script', cursive", "Pinyon Script"]];
+    const root = document.documentElement.style;
+    const $ = id => document.getElementById(id);
+    ['fontHeading', 'fontBody'].forEach(id => FONTS.forEach(([v, n]) => {
+      const o = document.createElement('option'); o.value = v; o.textContent = n; o.style.fontFamily = v; $(id).appendChild(o);
+    }));
+    $('fontHeading').value = "'Montserrat', sans-serif";
+    $('fontBody').value = "'Inter', sans-serif";
+
+    const pageEl = $('author-page');
+    const COLORS = [['colorAccent','--color-accent'],['colorBox','--color-box'],['colorBoxText','--color-box-text'],['colorTop','--color-top'],['colorBottom','--color-bottom'],['colorTitle','--color-title'],['colorBold','--color-bold'],['colorText','--color-text']];
+    const SIZES = [['sizeMain','--size-main'],['sizeSub','--size-sub'],['sizeQuote','--size-quote'],['sizeBody','--size-body'],['sizeBox','--size-box']];
+    COLORS.forEach(([id, v]) => $(id).addEventListener('input', e => root.setProperty(v, e.target.value)));
+    $('fontHeading').addEventListener('change', e => { root.setProperty('--font-heading', e.target.value); checkOverflow(); });
+    $('fontBody').addEventListener('change', e => { root.setProperty('--font-body', e.target.value); checkOverflow(); });
+    SIZES.forEach(([id, v]) => $(id).addEventListener('input', e => { root.setProperty(v, e.target.value + 'px'); checkOverflow(); }));
+
+    // ---------- limites de texte ----------
+    const clips = Array.from(document.querySelectorAll('.clip'));
+    const LIMITS = { clipBox: 519, clipA: 568, clipQ: 746, col1: 1030, col2: 1030, col3: 1030 };
+    function checkOverflow() {
+      let over = false;
+      clips.forEach(c => {
+        c.style.maxHeight = Math.max(0, LIMITS[c.id] - c.offsetTop) + 'px';
+        c.scrollTop = 0;
+        if (c.scrollHeight > c.clientHeight + 1) over = true;
+      });
+      pageEl.classList.toggle('content-overflow', over);
+    }
+    pageEl.addEventListener('input', checkOverflow);
+    clips.forEach(c => new MutationObserver(checkOverflow).observe(c, { childList: true, subtree: true, characterData: true }));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(checkOverflow);
+
+    // ---------- annuler / retablir / enregistrer ----------
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [], historyIndex = -1, suppressCapture = false;
+    const IDS = COLORS.map(c => c[0]).concat(SIZES.map(c => c[0]), ['fontHeading', 'fontBody']);
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+    function captureState() {
+      const s = { editableContent: editableEls.map(el => el.innerHTML) };
+      IDS.forEach(id => s[id] = $(id).value);
+      return s;
+    }
+    function applyState(s) {
+      if (!s) return;
+      suppressCapture = true;
+      IDS.forEach(id => { if (s[id] !== undefined) $(id).value = s[id]; });
+      COLORS.forEach(([id, v]) => root.setProperty(v, $(id).value));
+      [['fontHeading','--font-heading'],['fontBody','--font-body']].forEach(([id, v]) => root.setProperty(v, $(id).value));
+      SIZES.forEach(([id, v]) => root.setProperty(v, $(id).value + 'px'));
+      if (s.editableContent && s.editableContent.length === editableEls.length) s.editableContent.forEach((h, i) => { editableEls[i].innerHTML = h; });
+      suppressCapture = false;
+      checkOverflow();
+    }
+    function pushHistory() {
+      if (suppressCapture) return;
+      history = history.slice(0, historyIndex + 1); history.push(captureState()); historyIndex = history.length - 1; updateButtons();
+    }
+    function updateButtons() { $('undoBtn').disabled = historyIndex <= 0; $('redoBtn').disabled = historyIndex >= history.length - 1; }
+    IDS.forEach(id => $(id).addEventListener('change', pushHistory));
+    editableEls.forEach(el => el.addEventListener('blur', pushHistory));
+    $('undoBtn').addEventListener('click', () => { if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); } });
+    $('redoBtn').addEventListener('click', () => { if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); } });
+    $('saveBtn').addEventListener('click', () => {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState())); const st = $('saveStatus'); st.textContent = 'Enregistre \u2713'; setTimeout(() => { st.textContent = ''; }, 2000); }
+      catch (e) { $('saveStatus').textContent = 'Espace plein'; }
+    });
+    $('exportPdfBtn').addEventListener('click', () => window.print());
+
+    setTimeout(function () {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch (e) {} }
+      checkOverflow(); pushHistory(); updateButtons();
+    }, 0);
+  </script>
+</body>
+</html>
