@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Help center | Emadeck</title>
+<meta name="description" content="Find answers about building ebooks and digital products with Emadeck: getting started, the builder, billing and troubleshooting.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1B4D;--blue:#1F4FD8;--sky:#DCE7FF;--ice:#EEF3FF;--line:#E4E9F5;--ink:#141B34;--muted:#5C6684;--font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/1.6 var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:68px;gap:34px}
+.brand{font:800 25px/1 var(--font);letter-spacing:-.03em;color:var(--navy);flex:none}
+.brand b{color:var(--blue);font-weight:800}
+.links{display:flex;align-items:center;justify-content:center;gap:6px}
+.has{position:relative}
+.has>button,.links>a{display:flex;align-items:center;gap:6px;border:0;background:none;padding:10px 14px;border-radius:10px;font:600 15px var(--font);color:var(--ink);transition:background .15s}
+.has>button:hover,.links>a:hover,.has:focus-within>button,.has.open>button{background:var(--ice)}
+.has>button svg{width:12px;height:12px;transition:transform .2s}
+.has:hover>button svg,.has.open>button svg{transform:rotate(180deg)}
+.menu{position:absolute;left:0;top:100%;min-width:280px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 24px 50px -20px rgba(11,27,77,.35);opacity:0;visibility:hidden;transform:translateY(8px);transition:.18s}
+.has:hover .menu,.has:focus-within .menu,.has.open .menu{opacity:1;visibility:visible;transform:none}
+.menu a{display:flex;flex-direction:column;padding:10px 14px;border-radius:10px;font-weight:600;font-size:15px}
+.menu a small{font-weight:400;color:var(--muted);font-size:13px}
+.menu a:hover{background:var(--ice);color:var(--blue)}
+.menu.two{display:grid;grid-template-columns:1fr 1fr;min-width:560px}
+.actions{display:flex;gap:10px;align-items:center;justify-self:end}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;font:700 15px var(--font);padding:12px 22px;border:1.5px solid transparent;transition:.2s;white-space:nowrap}
+.btn.pri{background:var(--blue);color:#fff}.btn.pri:hover{background:var(--navy);transform:translateY(-1px)}
+.btn.sec{background:#fff;color:var(--navy);border-color:#C9D3EE}.btn.sec:hover{border-color:var(--navy)}
+.btn.ghost{background:transparent;color:var(--ink)}.btn.ghost:hover{background:var(--ice)}
+.btn.lg{padding:16px 30px;font-size:17px;border-radius:14px}
+.burger{display:none;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:10px;width:44px;height:44px}
+.burger i{display:block;width:18px;height:2px;background:var(--navy);margin:4px auto;transition:.2s}
+section{padding:92px 0 0}
+h2{font:800 clamp(30px,3.8vw,46px)/1.1 var(--font);letter-spacing:-.03em;color:var(--navy);max-width:680px}
+.band{margin:92px 28px 0;border-radius:32px;background:var(--navy);color:#fff;padding:76px 28px;text-align:center;position:relative;overflow:hidden}
+.band::before,.band::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:var(--blue);opacity:.35;filter:blur(70px)}
+.band::before{left:-80px;top:-120px}.band::after{right:-60px;bottom:-140px;background:#8FB0FF;opacity:.25}
+.band h2{position:relative;color:#fff;margin:0 auto}
+.band p{position:relative;color:#BCCBF0;font-size:18px;margin:14px auto 30px;max-width:520px}
+.band .btn{position:relative;background:#fff;color:var(--navy)}.band .btn:hover{background:var(--sky)}
+footer{margin-top:92px;border-top:1px solid var(--line);padding:56px 0 40px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
+.fgrid p{color:var(--muted);max-width:280px;margin-top:12px;font-size:15px}
+.fgrid h4{font:700 14px var(--font);color:var(--navy);margin-bottom:14px}
+.fgrid a{display:block;color:var(--muted);font-size:15px;padding:4px 0}.fgrid a:hover{color:var(--blue)}
+.copy{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
+@media(max-width:1000px){
+ .nav .wrap{display:flex;gap:12px}.burger{display:block}
+ .links{position:absolute;left:0;right:0;top:68px;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:10px 20px 20px;display:none;gap:2px;max-height:calc(100vh - 68px);overflow:auto}
+ .nav.open .links{display:flex}
+ .has>button,.links>a{width:100%;justify-content:space-between}
+ .menu,.menu.two{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;padding:0 0 6px 10px;min-width:0;display:none;grid-template-columns:1fr}
+ .has.open .menu{display:block}.has.open .menu.two{display:grid}
+ .actions{margin-left:auto}.actions .ghost{display:none}
+ .burger{margin-left:0}
+ .fgrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+ .band{margin:70px 18px 0;padding:56px 22px}
+ section{padding-top:72px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1!important;transform:none!important}}
+.kick{font:700 14px var(--font);letter-spacing:.02em;color:var(--blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.kick::before{content:"";width:26px;height:2px;background:var(--blue)}
+h1{font:800 clamp(40px,5.2vw,70px)/1.04 var(--font);letter-spacing:-.035em;color:var(--navy)}
+h1 em{font-style:normal;color:var(--blue)}
+.sub{max-width:480px;color:var(--muted);font-size:18px}
+.hh{padding:64px 0 0;text-align:center}
+.hh .kick{justify-content:center}
+.hh h1{font-size:clamp(36px,4.6vw,60px);max-width:760px;margin:0 auto}
+.hh .sub{margin:16px auto 0;max-width:520px}
+.srch{position:relative;max-width:640px;margin:34px auto 0}
+.srch svg{position:absolute;left:22px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round}
+.srch input{width:100%;height:62px;border:1.5px solid #C9D3EE;border-radius:18px;padding:0 22px 0 56px;font:500 17px var(--font);color:var(--ink);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+.srch input::placeholder{color:#8B95B3}
+.srch input:focus{border-color:var(--blue);box-shadow:0 0 0 5px rgba(31,79,216,.12)}
+.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;max-width:1040px;margin:46px auto 0}
+.cat{display:flex;flex-direction:column;gap:8px;text-align:left;border:1.5px solid var(--line);border-radius:20px;padding:24px 22px;background:#fff;transition:transform .25s,border-color .25s,box-shadow .25s}
+.cat:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 22px 36px -24px rgba(31,79,216,.55)}
+.cat i{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--ice);margin-bottom:6px;transition:background .25s}
+.cat:hover i{background:var(--blue)}
+.cat svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+.cat:hover svg{stroke:#fff}
+.cat b{font:700 17px var(--font);color:var(--navy)}
+.cat span{font-size:14px;color:var(--muted);line-height:1.45}
+.faq{max-width:820px;margin:0 auto}
+.hs{padding-top:84px;scroll-margin-top:70px}
+.hs h2{font-size:clamp(26px,3vw,34px);margin-bottom:8px}
+.hs>p{color:var(--muted);margin-bottom:22px}
+details{border:1.5px solid var(--line);border-radius:16px;background:#fff;margin-bottom:12px;transition:border-color .2s,background .2s}
+details:hover{border-color:#C9D3EE}
+details[open]{border-color:#9DB6F5;background:#FAFCFF}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 24px;font:600 17px/1.4 var(--font);color:var(--navy)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:22px;height:22px;border-radius:50%;background:var(--ice) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%231F4FD8' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M2.5 4.5l3.5 3.5 3.5-3.5'/%3E%3C/svg%3E") center/12px no-repeat;transition:transform .25s}
+details[open] summary::after{transform:rotate(180deg)}
+.ans{padding:0 24px 22px;color:var(--muted);font-size:16px;line-height:1.7}
+.ans p+p{margin-top:10px}
+.ans ol,.ans ul{margin:10px 0 0 22px;display:grid;gap:6px}
+.ans b{color:var(--ink);font-weight:600}
+.none{display:none;text-align:center;color:var(--muted);padding:60px 0 10px;font-size:17px}
+.none.on{display:block}
+.contact{max-width:820px;margin:84px auto 0;border-radius:28px;background:var(--navy);color:#fff;padding:48px 44px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;position:relative;overflow:hidden}
+.contact::after{content:"";position:absolute;right:-70px;top:-110px;width:300px;height:300px;border-radius:50%;background:var(--blue);opacity:.4;filter:blur(70px)}
+.contact h3{position:relative;font:800 28px/1.15 var(--font);letter-spacing:-.02em}
+.contact p{position:relative;color:#BCCBF0;margin-top:8px;max-width:420px}
+.contact h3,.contact p,.contact .btn{z-index:1}.contact .btn{position:relative;background:#fff;color:var(--navy)}.contact .btn:hover{background:var(--sky)}
+@media(max-width:1000px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wrap{padding:0 18px}.cats{grid-template-columns:1fr}.hh{padding-top:44px}summary{padding:17px 18px;font-size:16px}.ans{padding:0 18px 18px}.contact{padding:34px 24px}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+<div class="wrap">
+  <a class="brand" href="index.html" aria-label="Emadeck home">Ema<b>deck.</b></a>
+  <nav class="links" id="links" aria-label="Main">
+    <div class="has"><button aria-haspopup="true" data-href="builder.html">Design <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.2l4 4 4-4"/></svg></button>
+      <div class="menu two">
+        <a href="builder.html">Ebook templates<small>Covers, chapters, content pages</small></a>
+        <a href="builder.html">Coloring pages<small>Line art ready to print</small></a>
+        <a href="builder.html">Planners and agendas<small>Daily, weekly, monthly</small></a>
+        <a href="builder.html">Labels<small>Stickers, jars, packaging</small></a>
+        <a href="builder.html">Quote cards<small>Posts and printable quotes</small></a>
+        <a href="builder.html">Mockups<small>Show your product in context</small></a>
+        <a href="builder.html">Cards<small>Greeting and business cards</small></a>
+      </div></div>
+    <div class="has"><button aria-haspopup="true">Pricing <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.2l4 4 4-4"/></svg></button>
+      <div class="menu"><a href="#plans">Monthly<small>Billed every month</small></a><a href="#plans">Annual<small>Best value</small></a><a href="#compare">Compare pricing<small>How Emadeck stacks up</small></a></div></div>
+    <div class="has"><button aria-haspopup="true">Help <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.2l4 4 4-4"/></svg></button>
+      <div class="menu"><a href="help.html">Help center</a><a href="#">Emadeck School</a><a href="about.html">About</a><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div></div>
+  </nav>
+  <div class="actions"><a class="btn ghost" href="login.html">Log in</a><a class="btn pri" href="signup.html">Sign up</a></div>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+</div>
+</header>
+
+<main>
+<div class="wrap hh">
+  <div class="kick">Help center</div>
+  <h1>How can we <em>help you?</em></h1>
+  <p class="sub">Search for an answer or browse by topic.</p>
+  <div class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="Search the help center" aria-label="Search the help center" autocomplete="off"></div>
+  <div class="cats" id="cats"></div>
+</div>
+<div class="wrap faq" id="faq"></div>
+<div class="wrap"><div class="none" id="none">No result found. Try another word, or write to us below.</div></div>
+<div class="wrap"><div class="contact rv"><div><h3>Still need help?</h3><p>Send us a message and we will get back to you as soon as we can.</p></div><a class="btn lg" href="mailto:contact@emadeck.com">Contact support</a></div></div>
+</main>
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a class="brand" href="index.html">Ema<b>deck.</b></a><p>A simple design platform for digital products. Drag, drop and edit.</p></div>
+    <div><h4>Design</h4><a href="builder.html">Ebook templates</a><a href="builder.html">Coloring pages</a><a href="builder.html">Planners</a><a href="builder.html">Labels</a><a href="builder.html">Mockups</a></div>
+    <div><h4>Pricing</h4><a href="#plans">Monthly</a><a href="#plans">Annual</a><a href="#compare">Compare pricing</a></div>
+    <div><h4>Help</h4><a href="help.html">Help center</a><a href="#">Emadeck School</a><a href="about.html">About</a><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div>
+  </div>
+  <div class="copy"><span>&copy; Emadeck</span><span>emadeck.com</span></div>
+</div></footer>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var IC={start:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',build:'<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',bill:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',fix:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"/>'};
+  var DATA=[
+   {id:'start',t:'Getting started',d:'Create your first product in minutes.',i:'start',q:[
+    ['How do I create my first ebook?','<ol><li>Open the builder with <b>Start designing</b>.</li><li>In the library, choose <b>Ebook</b>.</li><li>Open a part (Covers, Table of contents, Chapters...) and drag a template into your book, or press <b>+ Add</b>.</li><li>Click a page to write your text and change images.</li><li>Choose your colors and fonts in the <b>Style</b> bar.</li><li>Export your book as a PDF.</li></ol>'],
+    ['Do I need design skills?','<p>No. Every page is already designed. You only change the text, the images, the colors and the fonts. The layout stays clean and balanced.</p>'],
+    ['What can I create with Emadeck?','<p>Ebooks, planners and agendas, coloring pages, quote cards, mockups, labels, CVs and cards. New templates are added over time.</p>'],
+    ['Can I reorder, duplicate or remove pages?','<p>Yes. In <b>Mon livre</b>, drag a page to a new place, or use the arrows. Each page also has buttons to duplicate or delete it.</p>']]},
+   {id:'build',t:'Using the builder',d:'Colors, fonts, numbering, projects and export.',i:'build',q:[
+    ['How do I change the colors and fonts of my whole book?','<p>Use the <b>Style</b> bar above your pages. Click a color palette and every page updates at once. Pick a font pairing, or choose the title and text fonts separately. Press <b>Original</b> to go back to the original colors and fonts.</p>'],
+    ['How do I add page numbers?','<p>In the Style bar, tick <b>Page numbers</b>. Then choose where numbering starts:</p><ul><li><b>After cover</b>: the cover counts as page 1 but shows no number, so the table of contents is page 2.</li><li><b>From chapter 1</b>: pages before the first chapter have no number, and the first chapter is page 1.</li></ul><p>The cover is never numbered. If you move a page, numbers update automatically.</p>'],
+    ['How do I add my name or brand on every page?','<p>In the Style bar, tick <b>Signature</b>, type your name, brand or website, and choose its position (left, center or right). Tick <b>Skip cover</b> if you do not want it on the cover.</p>'],
+    ['Where are my projects saved?','<p>Your work is saved automatically. Press <b>Save</b> for the confirmation, and open <b>My projects</b> to find all your projects. From there you can open, duplicate or delete a project.</p><p>Projects are currently stored in your browser, on the device you are using.</p>'],
+    ['How do I start a new project without losing the current one?','<p>Press <b>New project</b>. Your current project stays in <b>My projects</b>, and you get an empty book.</p>'],
+    ['How do I export my ebook as a PDF?','<p>Press <b>Export ebook as PDF</b>. In the print window that opens:</p><ol><li>Choose <b>Save as PDF</b> as the destination.</li><li>Set margins to <b>None</b>.</li><li>Turn on <b>Background graphics</b>, so colors and images appear.</li></ol><p>Pages use the US Letter format (8.5 x 11 in).</p>']]},
+   {id:'bill',t:'Account and billing',d:'Plans, prices and subscription questions.',i:'bill',q:[
+    ['What plans are available?','<p>There are two plans, both with every template and every feature:</p><ul><li><b>Monthly</b>: $29.99 per month (launch offer, regular price $39).</li><li><b>Annual</b>: $149 per year (launch offer, regular price $210), which is about $12.42 per month.</li></ul>'],
+    ['What is the difference between Monthly and Annual?','<p>Only the billing. Both plans include the same features. Annual costs less per month, because you pay once for the year.</p>'],
+    ['How do I change or cancel my subscription?','<p>Write to <b>contact@emadeck.com</b> and we will take care of it.</p>'],
+    ['Can I get an invoice?','<p>Yes. Write to <b>contact@emadeck.com</b> with the email you used to subscribe.</p>']]},
+   {id:'fix',t:'Troubleshooting',d:'Quick fixes for common problems.',i:'fix',q:[
+    ['I cannot find my project.','<p>Projects are stored in the browser of the device where you created them. Open <b>My projects</b> in the same browser. If you cleared your browsing data or changed device, the projects will not appear there. Export your finished books as PDF to keep a copy.</p>'],
+    ['The colors or images are missing in my PDF.','<p>In the print window, turn on <b>Background graphics</b> and set margins to <b>None</b>.</p>'],
+    ['A page looks blank or takes a long time to load.','<p>Wait a few seconds, then refresh the page. If it still does not load, close other heavy tabs and try again.</p>'],
+    ['My text is cut off on the page.','<p>Each page has a fixed size. If the text is too long, the page shows <b>Contenu trop long</b> and stops accepting more letters. Shorten the text, or move part of it to another page.</p>'],
+    ['The Style bar does not change my pages.','<p>Add at least one page to your book first, then choose a palette. Refresh the page with Ctrl + F5 if the problem continues.</p>']]}
+  ];
+  var cats=$('#cats'),faq=$('#faq');
+  DATA.forEach(function(c){
+    cats.insertAdjacentHTML('beforeend','<a class="cat" href="#'+c.id+'"><i><svg viewBox="0 0 24 24">'+IC[c.i]+'</svg></i><b>'+c.t+'</b><span>'+c.d+'</span></a>');
+    var h='<section class="hs rv" id="'+c.id+'"><h2>'+c.t+'</h2><p>'+c.d+'</p>';
+    c.q.forEach(function(x){h+='<details><summary>'+x[0]+'</summary><div class="ans">'+x[1]+'</div></details>'});
+    faq.insertAdjacentHTML('beforeend',h+'</section>');
+  });
+  var q=$('#q'),none=$('#none');
+  q.addEventListener('input',function(){
+    var v=q.value.trim().toLowerCase(),shown=0;
+    $$('.hs').forEach(function(s){var n=0;$$('details',s).forEach(function(d){var m=!v||d.textContent.toLowerCase().indexOf(v)>-1;d.style.display=m?'':'none';if(m){n++;shown++;if(v)d.open=true}else d.open=false});s.style.display=n?'':'none'});
+    none.classList.toggle('on',!!v&&!shown);
+  });
+  var nav=$('#nav'),bg=$('#burger');
+  bg.addEventListener('click',function(){var o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
+  $$('.has>button').forEach(function(b){b.addEventListener('click',function(e){if(b.dataset.href&&innerWidth>1000){location.href=b.dataset.href;return}var h=b.parentNode,was=h.classList.contains('open');$$('.has').forEach(function(x){x.classList.remove('open')});if(!was)h.classList.add('open');e.stopPropagation()})});
+  document.addEventListener('click',function(){$$('.has').forEach(function(x){x.classList.remove('open')})});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.05});
+  $$('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

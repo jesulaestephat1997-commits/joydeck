@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<script src="joydeck-guard.js"></script>
+<script id="joydeck-embed">
+(function(){
+  var q=new URLSearchParams(location.search),slot=q.get('slot'),embed=q.get('embed');
+  if(slot){
+    var P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem;
+    var k=function(x){return (typeof x==='string'&&x.indexOf('joydeck_')===0&&x.indexOf('@')<0)?x+'@'+slot:x;};
+    P.getItem=function(x){return g.call(this,k(x));};
+    P.setItem=function(x,v){return s.call(this,k(x),v);};
+    P.removeItem=function(x){return r.call(this,k(x));};
+  }
+  if(embed){
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+  } else if(slot){
+    var t=null;
+    var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
+    document.addEventListener('DOMContentLoaded',function(){
+      ['input','change','click'].forEach(function(ev){document.addEventListener(ev,function(e){if(e.target&&e.target.id==='saveBtn')return;go();},true);});
+    });
+    window.addEventListener('pagehide',function(){var b=document.getElementById('saveBtn');if(b)b.click();});
+  }
+})();
+</script>
+<title>Éditeur — Défi 14 jours : tableau</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@400;600;700&family=Outfit:wght@400;600;700&family=Bricolage+Grotesque:wght@600;700&family=DM+Serif+Display&family=Fraunces:wght@600;700&family=Marcellus&family=Prata&family=Italiana&family=Abril+Fatface&family=Cinzel:wght@600;700&family=Great+Vibes&family=Dancing+Script:wght@700&family=Parisienne&family=Alex+Brush&family=Allura&family=Sacramento&family=Tangerine:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root {
+    --c-bg:#F4E8EB;
+    --c-dark:#8B3E50;
+    --c-text:#6C5C60;
+    --c-rose:#A25A66;
+    --c-rosel:#D9A9B3;
+    --c-blush:#EBD3D9;
+    --c-pale:#F4E8EB;
+    --c-white:#FFFFFF;
+    --c-mid:#D8B4BC;
+    --c-line:#D9B8C0;
+    --c-accent:#8B3E50;
+    --c-card:#EBD3D9;
+    --font-heading: 'Montserrat', sans-serif; --font-body: 'Montserrat', sans-serif;
+    --s-title:100px; --s-h2:20px; --s-h3:12px; --s-quote:20px; --s-body:11px; --s-small:9px; --s-name:12px;
+  }
+  .r.bg { background: var(--c-bg); } .t.bg .in { color: var(--c-bg); } .circ.bg { background: var(--c-bg); }
+  .r.dark { background: var(--c-dark); } .t.dark .in { color: var(--c-dark); } .circ.dark { background: var(--c-dark); }
+  .r.text { background: var(--c-text); } .t.text .in { color: var(--c-text); } .circ.text { background: var(--c-text); }
+  .r.rose { background: var(--c-rose); } .t.rose .in { color: var(--c-rose); } .circ.rose { background: var(--c-rose); }
+  .r.rosel { background: var(--c-rosel); } .t.rosel .in { color: var(--c-rosel); } .circ.rosel { background: var(--c-rosel); }
+  .r.blush { background: var(--c-blush); } .t.blush .in { color: var(--c-blush); } .circ.blush { background: var(--c-blush); }
+  .r.pale { background: var(--c-pale); } .t.pale .in { color: var(--c-pale); } .circ.pale { background: var(--c-pale); }
+  .r.white { background: var(--c-white); } .t.white .in { color: var(--c-white); } .circ.white { background: var(--c-white); }
+  .r.mid { background: var(--c-mid); } .t.mid .in { color: var(--c-mid); } .circ.mid { background: var(--c-mid); }
+  .r.line { background: var(--c-line); } .t.line .in { color: var(--c-line); } .circ.line { background: var(--c-line); }
+  .r.accent { background: var(--c-accent); } .t.accent .in { color: var(--c-accent); } .circ.accent { background: var(--c-accent); }
+  .r.card { background: var(--c-card); } .t.card .in { color: var(--c-card); } .circ.card { background: var(--c-card); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #EDEBE6; font-family: 'Inter', sans-serif; display: flex; justify-content: center; padding: 40px 20px; }
+  .page { width: 816px; height: 1056px; background: var(--c-bg); position: relative; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.18); zoom: .65; }
+  .clip { position: absolute; overflow: hidden; overflow: clip; }
+  .overflow-badge { display: none; position: absolute; top: 14px; right: 14px; z-index: 20; background: #D64545; color: #fff; font: 600 14px 'Inter', sans-serif; padding: 6px 12px; border-radius: 6px; }
+  .page.content-overflow { outline: 3px dashed #D64545; outline-offset: -3px; }
+  .page.content-overflow .overflow-badge { display: block; }
+
+  .t { position: absolute; }
+  .t .in { outline-offset: 2px; }
+  .t-title { font-family: var(--font-heading); font-weight: 600; font-size: var(--s-title); line-height: 1.1; text-transform: uppercase; white-space: nowrap; letter-spacing: .01em; }
+  .t-h3 { font-family: var(--font-heading); font-weight: 600; font-size: var(--s-h3); line-height: 1.25; text-transform: uppercase; letter-spacing: .02em; }
+  .t-quote { font-family: var(--font-heading); font-weight: 500; font-size: var(--s-quote); line-height: 1.5; }
+  .t-body { font-family: var(--font-body); font-size: var(--s-body); line-height: 1.75; }
+  .t-small { font-family: var(--font-body); font-size: var(--s-small); line-height: 1.7; }
+  .t-sub { font-family: var(--font-heading); font-weight: 600; font-size: var(--s-name); line-height: 1.3; }
+  .t-name { font-family: var(--font-heading); font-weight: 600; font-size: var(--s-name); line-height: 1.3; text-align: center; }
+  .t-btn { font-family: var(--font-heading); font-weight: 600; font-size: var(--s-h3); line-height: 1.2; text-transform: uppercase; text-align: center; letter-spacing: .03em; }
+  .t.one .in { white-space: nowrap; overflow: hidden; }
+  .t.upper .in { text-transform: uppercase; }
+  .t.nouc .in { text-transform: none; }
+  .t.italic .in { font-style: italic; }
+  .t-h2 { font-family: var(--font-heading); font-weight: 500; font-size: var(--s-h2); line-height: 1.3; }
+  .t-h3 { }
+  .t p { margin: 0 0 .6em 0; } .t p:last-child { margin-bottom: 0; }
+  .r { position: absolute; }
+  .r.outline { border: 1.5px solid var(--c-text); background: transparent; }
+  .circ { position: absolute; border-radius: 50%; aspect-ratio: 1; }
+  .sqi { position: absolute; border: 1.5px solid var(--c-text); aspect-ratio: 1; }
+  .sqi.filled { background: var(--c-accent); border-color: var(--c-accent); }
+  .barwrap { position: absolute; height: 4px; background: var(--c-line); }
+  .barwrap i { display: block; height: 100%; width: var(--w); background: var(--c-accent); }
+  .slot { position: absolute; overflow: hidden; background: var(--slot-bg, #D9D9DB); cursor: pointer; }
+  .slot.has-image { cursor: grab; } .slot.dragging { cursor: grabbing; }
+  .slot.sel { box-shadow: 0 0 0 3px #4C1D95; }
+  .slot .img-stack { position: absolute; inset: 0; transform-origin: center; display: none; }
+  .slot.has-image .img-stack { display: block; }
+  .slot .img-stack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none; pointer-events: none; }
+  .slot .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; font: 500 11px 'Inter', sans-serif; color: rgba(0,0,0,.4); padding: 4px; }
+  .slot.has-image .ph { display: none; }
+  .slot .chg { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); z-index: 5; display: none; background: rgba(0,0,0,.55); color: #fff; border: 0; border-radius: 6px; padding: 4px 9px; font: 500 11px 'Inter', sans-serif; cursor: pointer; }
+  .slot.has-image .chg { display: block; }
+  .t-title,.t-h2 { font-family: var(--font-heading); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; line-height: 1.15; padding-bottom: 16px; white-space: nowrap; }
+  .t-h3 { font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; line-height: 1.3; }
+  .t-sub,.t-name { font-family: var(--font-heading); font-weight: 600; text-transform: uppercase; letter-spacing: .2em; line-height: 1.3; }
+  .t-small,.t-body { font-family: var(--font-body); font-weight: 500; line-height: 1.5; text-transform: none; }
+  .t.just .in { text-align: justify; }
+
+  [contenteditable="true"] { outline: none; }
+  [contenteditable="true"]:hover { outline: 1px dashed rgba(0,0,0,.15); outline-offset: 2px; }
+  [contenteditable="true"]:focus { outline: 1px dashed rgba(0,0,0,.35); outline-offset: 2px; }
+
+  .toolbar { position: fixed; top: 0; left: 300px; right: 0; height: 52px; background: #FFF; border-bottom: 1px solid #E4E2DD; display: flex; align-items: center; gap: 10px; padding: 0 20px; z-index: 100; overflow-x: auto; }
+  .toolbar button { padding: 8px 14px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font: 13px 'Inter', sans-serif; cursor: pointer; white-space: nowrap; }
+  .toolbar button:disabled { opacity: .4; cursor: not-allowed; }
+  .toolbar button.save-btn { background: #4C1D95; color: #fff; border-color: #4C1D95; }
+  .toolbar button.export-btn { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+  .toolbar .save-status { font-size: 12px; color: #8A8781; white-space: nowrap; }
+
+  .sidebar { width: 300px; background: #FFF; border-right: 1px solid #E4E2DD; padding: 28px 24px; overflow-y: auto; position: fixed; top: 0; bottom: 0; left: 0; font-family: 'Inter', sans-serif; }
+  .sidebar h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px; color: #1A1A1A; }
+  .sidebar .sub { font-size: 12px; color: #8A8781; margin: 0 0 22px; }
+  .sidebar h3 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #8A8781; margin: 0 0 12px; }
+  .control-group { margin-bottom: 18px; }
+  .control-group label { display: block; font-size: 12px; font-weight: 600; color: #4A4842; margin-bottom: 7px; }
+  .swatch-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .swatch-row input[type=color] { width: 36px; height: 36px; border: 1px solid #E4E2DD; border-radius: 6px; padding: 0; cursor: pointer; }
+  .swatch-row span { font-size: 11px; color: #8A8781; }
+  select.font-select, select.zone-select { width: 100%; padding: 8px 10px; border: 1px solid #E4E2DD; border-radius: 6px; font-size: 14px; background: #FAFAF8; }
+  .sidebar button.side-btn { width: 100%; padding: 9px 10px; border: 1px solid #E4E2DD; border-radius: 6px; background: #FAFAF8; font-size: 13px; cursor: pointer; }
+  .sidebar hr { border: none; border-top: 1px solid #EEEDE9; margin: 20px 0; }
+  .sidebar input[type=range] { width: 100%; }
+  .preview-area { margin-left: 300px; padding: 92px 40px 40px; display: flex; justify-content: center; }
+
+  @media print {
+    body { background: #fff !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+    .sidebar, .toolbar, .change-btn, .overflow-badge, .placeholder-label { display: none !important; }
+    .preview-area { padding: 0 !important; margin: 0 !important; display: block !important; }
+    .page { zoom: 1 !important; width: 8.5in !important; height: 11in !important; box-shadow: none !important; margin: 0 !important; outline: none !important; }
+    .panel.selected { box-shadow: none !important; }
+    .slot.sel { box-shadow: none !important; }
+    @page { size: 8.5in 11in; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Personnaliser</h2>
+    <p class="sub">Clique sur un texte pour le modifier. Clique sur un cadre photo pour ajouter une image.</p>
+
+    <h3>Couleurs</h3>
+    <div class="swatch-row"><input type="color" id="c_bg" value="#F4E8EB"><span>Fond de la page</span></div>
+    <div class="swatch-row"><input type="color" id="c_dark" value="#8B3E50"><span>Titres</span></div>
+    <div class="swatch-row"><input type="color" id="c_text" value="#6C5C60"><span>Texte courant</span></div>
+    <div class="swatch-row"><input type="color" id="c_rose" value="#A25A66"><span>Rose foncé</span></div>
+    <div class="swatch-row"><input type="color" id="c_rosel" value="#D9A9B3"><span>Rose moyen</span></div>
+    <div class="swatch-row"><input type="color" id="c_blush" value="#EBD3D9"><span>Rose clair</span></div>
+    <div class="swatch-row"><input type="color" id="c_pale" value="#F4E8EB"><span>Rose très clair</span></div>
+    <div class="swatch-row"><input type="color" id="c_white" value="#FFFFFF"><span>Blanc</span></div>
+    <div class="swatch-row"><input type="color" id="c_mid" value="#D8B4BC"><span>Rose pâle (numéros)</span></div>
+    <div class="swatch-row"><input type="color" id="c_line" value="#D9B8C0"><span>Lignes</span></div>
+    <div class="swatch-row"><input type="color" id="c_accent" value="#8B3E50"><span>Icônes</span></div>
+    <div class="swatch-row"><input type="color" id="c_card" value="#EBD3D9"><span>Cartes</span></div>
+
+    <hr>
+
+    <div class="control-group"><label>Police — Titres</label><select class="font-select" id="fontHeading"></select></div>
+    <div class="control-group"><label>Police — Texte</label><select class="font-select" id="fontBody"></select></div>
+
+    <hr>
+
+    <div class="control-group"><label>Taille du grand titre</label><input type="range" id="sTitle" min="14" max="320" step="1" value="100"></div>
+    <div class="control-group"><label>Taille des titres moyens</label><input type="range" id="sH2" min="10" max="36" step="0.5" value="20"></div>
+    <div class="control-group"><label>Taille des sous-titres</label><input type="range" id="sH3" min="8" max="24" step="0.5" value="12"></div>
+    <div class="control-group"><label>Taille des citations</label><input type="range" id="sQuote" min="9" max="26" step="0.5" value="20"></div>
+    <div class="control-group"><label>Taille du texte</label><input type="range" id="sBody" min="7" max="16" step="0.5" value="11"></div>
+    <div class="control-group"><label>Taille du petit texte</label><input type="range" id="sSmall" min="6" max="13" step="0.5" value="9"></div>
+    <div class="control-group"><label>Taille des noms</label><input type="range" id="sName" min="8" max="22" step="0.5" value="12"></div>
+  </div>
+
+  <div class="toolbar">
+    <button id="undoBtn" title="Annuler">&#8630; Annuler</button>
+    <button id="redoBtn" title="Retablir">&#8631; Retablir</button>
+    <button type="button" class="export-btn" id="exportPdfBtn">Exporter PDF</button>
+    <button class="save-btn" id="saveBtn">Enregistrer</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+
+  <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+
+  <div class="preview-area">
+    <div class="page" id="author-page">
+      <div class="overflow-badge">Contenu trop long</div>
+      <div class="clip t t-sub mid one" id="t1" data-maxy="" style="left:149.1px;top:60.8px;width:517.8px;text-align:center;font-size:calc(var(--s-name)*1.666)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge worksheet</p></div></div>
+      <div class="clip t t-title dark one" id="t2" data-maxy="" style="left:100.4px;top:118.4px;width:615.1px;text-align:center;font-size:calc(var(--s-title)*0.498)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">14 Day Challenge</p></div></div>
+      <div class="r pale" style="left:211.8px;top:189.1px;width:172.6px;height:780.2px;border-radius:0px"></div>
+      <div class="r rose" style="left:78.5px;top:189.1px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t3" data-maxy="" style="left:102.0px;top:204.5px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t4" data-maxy="" style="left:102.0px;top:226.2px;width:79.1px;font-size:calc(var(--s-title)*0.607)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">01</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:189.1px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t5" data-maxy="" style="left:227.5px;top:210.5px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t6" data-maxy="295.5" style="left:227.5px;top:245.3px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r rose" style="left:78.5px;top:301.8px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t7" data-maxy="" style="left:102.0px;top:317.2px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t8" data-maxy="" style="left:102.0px;top:340.9px;width:79.1px;font-size:calc(var(--s-title)*0.52)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">02</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:301.8px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t9" data-maxy="" style="left:227.5px;top:323.2px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t10" data-maxy="408.2" style="left:227.5px;top:358.0px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r rose" style="left:78.5px;top:414.5px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t11" data-maxy="" style="left:102.0px;top:429.9px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t12" data-maxy="" style="left:102.0px;top:453.6px;width:79.1px;font-size:calc(var(--s-title)*0.52)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">03</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:414.5px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t13" data-maxy="" style="left:227.5px;top:435.9px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t14" data-maxy="520.9" style="left:227.5px;top:470.7px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r rose" style="left:78.5px;top:527.2px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t15" data-maxy="" style="left:102.0px;top:542.6px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t16" data-maxy="" style="left:102.0px;top:567.2px;width:79.1px;font-size:calc(var(--s-title)*0.482)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">04</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:527.2px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t17" data-maxy="" style="left:227.5px;top:548.6px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t18" data-maxy="633.6" style="left:227.5px;top:583.4px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r rose" style="left:78.5px;top:639.9px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t19" data-maxy="" style="left:102.0px;top:655.2px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t20" data-maxy="" style="left:102.0px;top:679.1px;width:79.1px;font-size:calc(var(--s-title)*0.515)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">05</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:639.9px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t21" data-maxy="" style="left:227.5px;top:661.3px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t22" data-maxy="746.3" style="left:227.5px;top:696.1px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r rose" style="left:78.5px;top:752.6px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t23" data-maxy="" style="left:102.0px;top:767.9px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t24" data-maxy="" style="left:102.0px;top:792.2px;width:79.1px;font-size:calc(var(--s-title)*0.499)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">06</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:752.6px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t25" data-maxy="" style="left:227.5px;top:774.0px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t26" data-maxy="859.0" style="left:227.5px;top:808.7px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r rose" style="left:78.5px;top:865.3px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t27" data-maxy="" style="left:102.0px;top:880.6px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t28" data-maxy="" style="left:102.0px;top:904.7px;width:79.1px;font-size:calc(var(--s-title)*0.506)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">07</p></div></div>
+      <div class="r rosel" style="left:211.8px;top:865.3px;width:172.6px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t29" data-maxy="" style="left:227.5px;top:886.7px;width:173.4px;font-size:calc(var(--s-h3)*1.034)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t30" data-maxy="971.7" style="left:227.5px;top:921.4px;width:141.2px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor.</p></div></div>
+      <div class="r pale" style="left:541.4px;top:189.1px;width:196.2px;height:780.2px;border-radius:0px"></div>
+      <div class="r rose" style="left:408.0px;top:189.1px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t31" data-maxy="" style="left:431.5px;top:204.5px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t32" data-maxy="" style="left:431.5px;top:228.9px;width:79.1px;font-size:calc(var(--s-title)*0.492)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">08</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:189.1px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t33" data-maxy="" style="left:557.1px;top:209.8px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t34" data-maxy="295.5" style="left:557.1px;top:245.3px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+      <div class="r rose" style="left:408.0px;top:301.8px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t35" data-maxy="" style="left:431.5px;top:317.2px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t36" data-maxy="" style="left:431.5px;top:341.4px;width:79.1px;font-size:calc(var(--s-title)*0.499)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">09</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:301.8px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t37" data-maxy="" style="left:557.1px;top:322.5px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t38" data-maxy="408.2" style="left:557.1px;top:358.0px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+      <div class="r rose" style="left:408.0px;top:414.5px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t39" data-maxy="" style="left:431.5px;top:429.9px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t40" data-maxy="" style="left:431.5px;top:451.7px;width:79.1px;font-size:calc(var(--s-title)*0.604)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">10</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:414.5px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t41" data-maxy="" style="left:557.1px;top:435.2px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t42" data-maxy="520.9" style="left:557.1px;top:470.7px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+      <div class="r rose" style="left:408.0px;top:527.2px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t43" data-maxy="" style="left:431.5px;top:542.6px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t44" data-maxy="" style="left:431.5px;top:559.9px;width:79.1px;font-size:calc(var(--s-title)*0.793)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">11</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:527.2px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t45" data-maxy="" style="left:557.1px;top:547.9px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t46" data-maxy="633.6" style="left:557.1px;top:583.4px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+      <div class="r rose" style="left:408.0px;top:639.9px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t47" data-maxy="" style="left:431.5px;top:655.2px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t48" data-maxy="" style="left:431.5px;top:675.9px;width:79.1px;font-size:calc(var(--s-title)*0.651)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">12</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:639.9px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t49" data-maxy="" style="left:557.1px;top:660.6px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t50" data-maxy="746.3" style="left:557.1px;top:696.1px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+      <div class="r rose" style="left:408.0px;top:752.6px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t51" data-maxy="" style="left:431.5px;top:767.9px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t52" data-maxy="" style="left:431.5px;top:788.7px;width:79.1px;font-size:calc(var(--s-title)*0.649)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">13</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:752.6px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t53" data-maxy="" style="left:557.1px;top:773.3px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t54" data-maxy="859.0" style="left:557.1px;top:808.7px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+      <div class="r rose" style="left:408.0px;top:865.3px;width:133.4px;height:108.8px;border-radius:0px"></div>
+      <div class="clip t t-sub blush one" id="t55" data-maxy="" style="left:431.5px;top:880.6px;width:51.0px;font-size:calc(var(--s-name)*1.179)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Day</p></div></div>
+      <div class="clip t t-title white one" id="t56" data-maxy="" style="left:431.5px;top:902.6px;width:79.1px;font-size:calc(var(--s-title)*0.596)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">14</p></div></div>
+      <div class="r rosel" style="left:541.4px;top:865.3px;width:196.2px;height:3.9px;border-radius:0px"></div>
+      <div class="clip t t-h3 dark one" id="t57" data-maxy="" style="left:557.1px;top:886.0px;width:204.0px;font-size:calc(var(--s-h3)*1.217)"><div class="in" contenteditable="true"><p data-lines="1" data-off="0">Challenge title</p></div></div>
+      <div class="clip t t-small text" id="t58" data-maxy="971.7" style="left:557.1px;top:921.4px;width:164.8px;line-height:19.7px;font-size:calc(var(--s-small)*1.459)"><div class="in" contenteditable="true"><p data-lines="2" data-off="0">Pellentesque euismod tortor accumsan ac.</p></div></div>
+    </div>
+  </div>
+
+  <script>
+    const FONTS = [["'EB Garamond', serif", "EB Garamond"], ["'Cormorant Garamond', serif", "Cormorant Garamond"], ["'Libre Baskerville', serif", "Libre Baskerville"], ["'Playfair Display', serif", "Playfair Display"], ["'Fraunces', serif", "Fraunces"], ["'Marcellus', serif", "Marcellus"], ["'Prata', serif", "Prata"], ["'Italiana', serif", "Italiana"], ["'DM Serif Display', serif", "DM Serif Display"], ["'Abril Fatface', serif", "Abril Fatface"], ["'Cinzel', serif", "Cinzel"], ["'Poppins', sans-serif", "Poppins"], ["'Inter', sans-serif", "Inter"], ["'Montserrat', sans-serif", "Montserrat"], ["'Space Grotesk', sans-serif", "Space Grotesk"], ["'Outfit', sans-serif", "Outfit"], ["'Bricolage Grotesque', sans-serif", "Bricolage Grotesque"], ["'Great Vibes', cursive", "Great Vibes"], ["'Dancing Script', cursive", "Dancing Script"], ["'Parisienne', cursive", "Parisienne"], ["'Alex Brush', cursive", "Alex Brush"], ["'Allura', cursive", "Allura"], ["'Sacramento', cursive", "Sacramento"], ["'Tangerine', cursive", "Tangerine"], ["'Pinyon Script', cursive", "Pinyon Script"]].concat([["'Montserrat', sans-serif", 'Montserrat']]);
+    const root = document.documentElement.style;
+    const $ = id => document.getElementById(id);
+    ['fontHeading', 'fontBody'].forEach(id => FONTS.forEach(([v, n]) => {
+      const o = document.createElement('option'); o.value = v; o.textContent = n; o.style.fontFamily = v; $(id).appendChild(o);
+    }));
+    $('fontHeading').value = "'Montserrat', sans-serif";
+    $('fontHeading').value = "'Montserrat', sans-serif";
+    $('fontBody').value = "'Montserrat', sans-serif";
+    const pageEl = $('author-page');
+    const COLORS = [['c_bg','--c-bg'],['c_dark','--c-dark'],['c_text','--c-text'],['c_rose','--c-rose'],['c_rosel','--c-rosel'],['c_blush','--c-blush'],['c_pale','--c-pale'],['c_white','--c-white'],['c_mid','--c-mid'],['c_line','--c-line'],['c_accent','--c-accent'],['c_card','--c-card']];
+    const SIZES = [['sTitle','--s-title'],['sH2','--s-h2'],['sH3','--s-h3'],['sQuote','--s-quote'],['sBody','--s-body'],['sSmall','--s-small'],['sName','--s-name']];
+    const BARS = [];
+    const INIT = [];
+    // ---------- photos (plusieurs cadres) ----------
+    const NEWIMG = (i) => Object.assign({ src: null, zoom: 100, x: 0, y: 0, blur: 0, zone: 'all', op: 100, bg: '#D9D9DB' }, INIT[i] || {});
+    const slots = Array.from(document.querySelectorAll('.slot'));
+    let imgs = slots.map((_, i) => NEWIMG(i)), sel = 0;
+    const MASKS = { all: 'none', top: 'linear-gradient(to bottom,#000 0%,#000 30%,transparent 75%)', bottom: 'linear-gradient(to top,#000 0%,#000 30%,transparent 75%)', left: 'linear-gradient(to right,#000 0%,#000 30%,transparent 75%)', right: 'linear-gradient(to left,#000 0%,#000 30%,transparent 75%)', center: 'radial-gradient(ellipse at center,#000 22%,transparent 72%)' };
+    function renderImage(i) {
+      const d = imgs[i], el = slots[i], st = el.querySelector('.img-stack'), b = el.querySelector('.ib'), bl = el.querySelector('.ibl');
+      el.classList.toggle('has-image', !!d.src);
+      el.style.setProperty('--slot-bg', d.bg);
+      if (d.src) { b.src = d.src; bl.src = d.src; } else { b.removeAttribute('src'); bl.removeAttribute('src'); }
+      st.style.opacity = d.op / 100;
+      st.style.transform = 'translate(' + d.x + 'px,' + d.y + 'px) scale(' + (d.zoom / 100) + ')';
+      bl.style.display = d.blur > 0 ? 'block' : 'none';
+      bl.style.filter = 'blur(' + d.blur + 'px)';
+      const m = MASKS[d.zone] || 'none';
+      bl.style.webkitMaskImage = m; bl.style.maskImage = m;
+    }
+    function renderAll() { slots.forEach((_, i) => renderImage(i)); }
+    function syncControls() {
+      if (!slots.length) return;
+      const d = imgs[sel];
+      $('photoSel').value = sel; $('imgZoom').value = d.zoom; $('imgOpacity').value = d.op; $('imgBlur').value = d.blur; $('blurZone').value = d.zone; $('slotBg').value = d.bg;
+      slots.forEach((s, i) => s.classList.toggle('sel', i === sel));
+    }
+    function select(i) { sel = i; syncControls(); }
+    function loadFile(file) {
+      if (!file) return;
+      const rd = new FileReader();
+      rd.onload = ev => {
+        const im = new Image();
+        im.onload = () => {
+          const max = 1400, s = Math.min(1, max / Math.max(im.width, im.height));
+          const c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
+          c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+          imgs[sel].src = c.toDataURL('image/jpeg', 0.85); imgs[sel].x = 0; imgs[sel].y = 0;
+          renderImage(sel); pushHistory();
+        };
+        im.src = ev.target.result;
+      };
+      rd.readAsDataURL(file);
+    }
+    const fileInput = $('imageUpload');
+    fileInput.addEventListener('change', e => { loadFile(e.target.files[0]); fileInput.value = ''; });
+    if (slots.length) {
+      $('photoBtn').addEventListener('click', () => fileInput.click());
+      $('photoSel').addEventListener('change', e => select(+e.target.value));
+      let drag = null;
+      slots.forEach((el, i) => {
+        el.querySelector('.chg').addEventListener('click', e => { e.stopPropagation(); select(i); fileInput.click(); });
+        el.addEventListener('pointerdown', e => {
+          if (e.target.closest('.chg')) return;
+          select(i);
+          if (!imgs[i].src) return;
+          const pr = pageEl.getBoundingClientRect(), k = pr.height / pageEl.offsetHeight || 1;
+          drag = { i, sx: e.clientX, sy: e.clientY, ox: imgs[i].x, oy: imgs[i].y, k, moved: false };
+          el.setPointerCapture(e.pointerId); el.classList.add('dragging'); e.preventDefault();
+        });
+        el.addEventListener('pointermove', e => {
+          if (!drag || drag.i !== i) return;
+          const dx = (e.clientX - drag.sx) / drag.k, dy = (e.clientY - drag.sy) / drag.k;
+          if (Math.abs(dx) + Math.abs(dy) > 2) drag.moved = true;
+          imgs[i].x = drag.ox + dx; imgs[i].y = drag.oy + dy; renderImage(i);
+        });
+        const end = () => { if (!drag) return; const m = drag.moved; drag = null; el.classList.remove('dragging'); if (m) pushHistory(); };
+        el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+        el.addEventListener('click', e => { if (!imgs[i].src && !e.target.closest('.chg')) { select(i); fileInput.click(); } });
+      });
+      $('imgZoom').addEventListener('input', e => { imgs[sel].zoom = +e.target.value; renderImage(sel); });
+      $('imgBlur').addEventListener('input', e => { imgs[sel].blur = +e.target.value; renderImage(sel); });
+      $('imgOpacity').addEventListener('input', e => { imgs[sel].op = +e.target.value; renderImage(sel); });
+      $('blurZone').addEventListener('change', e => { imgs[sel].zone = e.target.value; renderImage(sel); });
+      $('slotBg').addEventListener('input', e => { imgs[sel].bg = e.target.value; renderImage(sel); });
+    }
+
+    const LIMITS = {"t1": 156.8, "t2": 245.7, "t3": 292.9, "t4": 366.0, "t5": 296.6, "t6": 295.5, "t7": 405.6, "t8": 470.7, "t9": 409.3, "t10": 408.2, "t11": 518.3, "t12": 583.4, "t13": 522.0, "t14": 520.9, "t15": 631.0, "t16": 692.6, "t17": 634.7, "t18": 633.6, "t19": 743.6, "t20": 808.3, "t21": 747.4, "t22": 746.3, "t23": 856.3, "t24": 919.6, "t25": 860.1, "t26": 859.0, "t27": 969.0, "t28": 1032.9, "t29": 972.8, "t30": 971.7, "t31": 292.9, "t32": 355.5, "t33": 298.8, "t34": 295.5, "t35": 405.6, "t36": 468.8, "t37": 411.5, "t38": 408.2, "t39": 518.3, "t40": 591.1, "t41": 524.2, "t42": 520.9, "t43": 631.0, "t44": 721.1, "t45": 636.9, "t46": 633.6, "t47": 743.6, "t48": 820.8, "t49": 749.6, "t50": 746.3, "t51": 856.3, "t52": 933.4, "t53": 862.3, "t54": 859.0, "t55": 969.0, "t56": 1041.2, "t57": 975.0, "t58": 971.7};
+    const ONES = ["t1", "t2", "t3", "t4", "t5", "t7", "t8", "t9", "t11", "t12", "t13", "t15", "t16", "t17", "t19", "t20", "t21", "t23", "t24", "t25", "t27", "t28", "t29", "t31", "t32", "t33", "t35", "t36", "t37", "t39", "t40", "t41", "t43", "t44", "t45", "t47", "t48", "t49", "t51", "t52", "t53", "t55", "t56", "t57"];
+    COLORS.forEach(([id, v]) => $(id).addEventListener('input', e => root.setProperty(v, e.target.value)));
+    BARS.forEach(([id, rid]) => $(rid).addEventListener('input', e => root.setProperty('--' + id, e.target.value + '%')));
+    $('fontHeading').addEventListener('change', e => { root.setProperty('--font-heading', e.target.value); checkOverflow(); });
+    $('fontBody').addEventListener('change', e => { root.setProperty('--font-body', e.target.value); checkOverflow(); });
+    SIZES.forEach(([id, v]) => $(id).addEventListener('input', e => { root.setProperty(v, e.target.value + 'px'); checkOverflow(); }));
+
+    // ---------- limites de texte ----------
+    const clips = Array.from(document.querySelectorAll('.clip'));
+    function checkOverflow() {
+      let over = false;
+      clips.forEach(c => {
+        const lim = LIMITS[c.id];
+        if (lim) c.style.maxHeight = Math.max(0, lim - c.offsetTop) + 'px';
+        c.scrollTop = 0;
+        if (c.scrollHeight > c.clientHeight + 1) over = true;
+        if (ONES.indexOf(c.id) >= 0) { const inn = c.firstElementChild; if (inn && inn.scrollWidth > inn.clientWidth + 1) over = true; }
+      });
+      pageEl.classList.toggle('content-overflow', over);
+    }
+    pageEl.addEventListener('input', checkOverflow);
+    clips.forEach(c => new MutationObserver(checkOverflow).observe(c, { childList: true, subtree: true, characterData: true }));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(checkOverflow);
+    window.addEventListener('load', () => { checkOverflow(); setTimeout(checkOverflow, 1200); });
+
+    // ---------- annuler / retablir / enregistrer ----------
+    const STORAGE_KEY = 'joydeck_' + location.pathname.split('/').pop();
+    let history = [], historyIndex = -1, suppressCapture = false;
+    const IDS = COLORS.map(c => c[0]).concat(SIZES.map(c => c[0]), BARS.map(b => b[1]), ['fontHeading', 'fontBody']);
+    const editableEls = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+    function captureState() {
+      const s = { editableContent: editableEls.map(el => el.innerHTML), imgs: imgs.map(d => Object.assign({}, d)) };
+      IDS.forEach(id => s[id] = $(id).value);
+      return s;
+    }
+    function applyState(s) {
+      if (!s) return;
+      suppressCapture = true;
+      IDS.forEach(id => { if (s[id] !== undefined) $(id).value = s[id]; });
+      COLORS.forEach(([id, v]) => root.setProperty(v, $(id).value));
+      BARS.forEach(([id, rid]) => root.setProperty('--' + id, $(rid).value + '%'));
+      [['fontHeading','--font-heading'],['fontBody','--font-body']].forEach(([id, v]) => root.setProperty(v, $(id).value));
+      SIZES.forEach(([id, v]) => root.setProperty(v, $(id).value + 'px'));
+      if (s.imgs && s.imgs.length === slots.length) imgs = s.imgs.map((d, i) => Object.assign(NEWIMG(i), d));
+      renderAll(); syncControls();
+      if (s.editableContent && s.editableContent.length === editableEls.length) s.editableContent.forEach((h, i) => { editableEls[i].innerHTML = h; });
+      suppressCapture = false;
+      checkOverflow();
+    }
+    function pushHistory() {
+      if (suppressCapture) return;
+      history = history.slice(0, historyIndex + 1); history.push(captureState()); historyIndex = history.length - 1; updateButtons();
+    }
+    function updateButtons() { $('undoBtn').disabled = historyIndex <= 0; $('redoBtn').disabled = historyIndex >= history.length - 1; }
+    IDS.concat(slots.length ? ['photoSel', 'imgZoom', 'imgBlur', 'blurZone', 'imgOpacity', 'slotBg'] : []).forEach(id => $(id).addEventListener('change', pushHistory));
+    editableEls.forEach(el => el.addEventListener('blur', pushHistory));
+    $('undoBtn').addEventListener('click', () => { if (historyIndex > 0) { historyIndex--; applyState(history[historyIndex]); updateButtons(); } });
+    $('redoBtn').addEventListener('click', () => { if (historyIndex < history.length - 1) { historyIndex++; applyState(history[historyIndex]); updateButtons(); } });
+    $('saveBtn').addEventListener('click', () => {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState())); const st = $('saveStatus'); st.textContent = 'Enregistre ✓'; setTimeout(() => { st.textContent = ''; }, 2000); }
+      catch (e) { $('saveStatus').textContent = 'Espace plein : photos trop lourdes'; }
+    });
+    $('exportPdfBtn').addEventListener('click', () => window.print());
+
+    setTimeout(function () {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) { try { applyState(JSON.parse(saved)); } catch (e) {} }
+      renderAll(); syncControls(); checkOverflow(); pushHistory(); updateButtons();
+    }, 0);
+  </script>
+</body>
+</html>

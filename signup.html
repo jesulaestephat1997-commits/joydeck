@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign up | Emadeck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1B4D;--blue:#1F4FD8;--sky:#DCE7FF;--ice:#EEF3FF;--line:#E4E9F5;--ink:#141B34;--muted:#5C6684;--err:#C0392B;--font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0}
+body{font:400 16px/1.6 var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button,input{font:inherit}
+.auth{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:100vh}
+.side{position:relative;background:linear-gradient(150deg,#0A1745 0%,#0F2566 55%,#1A3AA0 100%);color:#fff;padding:44px 52px;display:flex;flex-direction:column;overflow:hidden}
+.side::before{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:#5B8CFF;opacity:.3;filter:blur(90px)}
+.side::after{content:"";position:absolute;left:-100px;bottom:-140px;width:380px;height:380px;border-radius:50%;background:#1F4FD8;opacity:.4;filter:blur(90px)}
+.brand{position:relative;z-index:2;font:800 27px/1 var(--font);letter-spacing:-.03em;color:#fff;align-self:flex-start}
+.brand b{color:#7FA6FF}
+.side h2{position:relative;z-index:2;margin-top:auto;font:800 clamp(30px,3vw,42px)/1.1 var(--font);letter-spacing:-.03em;max-width:420px}
+.side h2 em{font-style:normal;color:#8FB0FF}
+.side p{position:relative;z-index:2;margin-top:16px;color:#BCCBF0;max-width:380px;font-size:17px}
+.chips{position:relative;z-index:2;display:flex;gap:10px;margin:28px 0 8px;flex-wrap:wrap}
+.chips span{border:1.5px solid rgba(255,255,255,.22);border-radius:12px;padding:6px 16px;font:700 17px var(--font);color:#9FB3EA;transition:.45s cubic-bezier(.3,1.4,.5,1)}
+.chips span.on{background:#fff;color:var(--navy);border-color:#fff;transform:rotate(-2deg) scale(1.05)}
+.cards{position:relative;z-index:1;height:300px;margin:34px 0 0}
+.fc{position:absolute;background:#fff;border-radius:14px;box-shadow:0 26px 40px -22px rgba(0,0,0,.55);padding:7px;animation:bob 6s ease-in-out infinite}
+.fc svg{display:block;width:100%;height:auto;border-radius:8px}
+.fc.c1{left:4%;top:30px;width:30%;transform:rotate(-5deg)}
+.fc.c2{left:34%;top:0;width:29%;transform:rotate(4deg);animation-delay:-2s}
+.fc.c3{left:60%;top:50px;width:26%;transform:rotate(-2deg);animation-delay:-4s}
+@keyframes bob{50%{translate:0 -10px}}
+.pp{fill:var(--p,#fff)}.pa{fill:var(--a,#0B1B4D)}.pb{fill:var(--b,#1F4FD8)}.pc{fill:var(--c,#C9D8FA)}
+.main{display:flex;flex-direction:column;padding:34px 48px 40px;min-height:100vh}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.top .brand{display:none;color:var(--navy)}.top .brand b{color:var(--blue)}
+.top .back{font:600 14.5px var(--font);color:var(--muted);display:inline-flex;align-items:center;gap:8px;transition:color .2s}
+.top .back:hover{color:var(--blue)}.top .back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top .alt{font:500 15px var(--font);color:var(--muted)}.top .alt a{color:var(--blue);font-weight:700}
+.box{width:100%;max-width:520px;margin:auto;padding:30px 0;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.kick{font:700 14px var(--font);letter-spacing:.02em;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.kick::before{content:"";width:26px;height:2px;background:var(--blue)}
+h1{font:800 clamp(30px,3.4vw,40px)/1.1 var(--font);letter-spacing:-.03em;color:var(--navy)}
+.lead{color:var(--muted);margin:10px 0 30px;font-size:17px}
+form{display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f label,.f .lb{display:block;font:600 14px var(--font);color:var(--navy);margin-bottom:8px}
+.f label.chk{display:flex;margin:0;font-weight:400;font-size:14.5px;color:var(--muted)}
+.f label i,.f .lb i{font-style:normal;color:var(--blue)}
+.in,.cb>button{width:100%;height:54px;border:1.5px solid #D5DCEE;border-radius:14px;padding:0 16px;background:#fff;color:var(--ink);font:500 16px var(--font);outline:none;transition:border-color .2s,box-shadow .2s;text-align:left}
+.in::placeholder{color:#97A1BD}
+.in:hover,.cb>button:hover{border-color:#B5C1E3}
+.in:focus,.cb>button:focus,.cb.open>button{border-color:var(--blue);box-shadow:0 0 0 4px rgba(31,79,216,.12)}
+.f.bad .in,.f.bad .cb>button{border-color:var(--err);box-shadow:0 0 0 4px rgba(192,57,43,.08)}
+.msg{display:none;margin-top:7px;font:500 13.5px var(--font);color:var(--err)}
+.f.bad .msg{display:block}
+.phone{display:grid;grid-template-columns:150px 1fr;gap:10px}
+.cb{position:relative}
+.cb>button{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;color:var(--ink)}
+.cb>button .ph{color:#97A1BD}
+.cb>button svg{flex:none;width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.cb.open>button svg{transform:rotate(180deg)}
+.cb>button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pop{position:absolute;z-index:30;left:0;top:calc(100% + 8px);width:max(100%,300px);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 26px 50px -20px rgba(11,27,77,.4);padding:10px;display:none}
+.cb.open .pop{display:block;animation:rise .2s ease both}
+.pop input{width:100%;height:44px;border:1.5px solid #D5DCEE;border-radius:10px;padding:0 14px;font:500 15px var(--font);outline:none;margin-bottom:8px}
+.pop input:focus{border-color:var(--blue)}
+.pop ul{list-style:none;padding:0;margin:0;max-height:240px;overflow:auto}
+.pop li{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;font:500 15px var(--font);cursor:pointer;color:var(--ink)}
+.pop li small{color:var(--muted);font-size:14px;flex:none}
+.pop li.hi,.pop li:hover{background:var(--ice);color:var(--blue)}
+.pop li.sel{font-weight:700}
+.pop .empty{padding:14px;color:var(--muted);font-size:14.5px}
+.pw{position:relative}.pw .in{padding-right:60px}
+.pw button{position:absolute;right:8px;top:8px;height:38px;border:0;background:none;color:var(--muted);font:600 13px var(--font);padding:0 10px;border-radius:9px;cursor:pointer}
+.pw button:hover{background:var(--ice);color:var(--blue)}
+.hint{margin-top:7px;color:var(--muted);font-size:13.5px}
+.chk{display:flex;gap:12px;align-items:flex-start;color:var(--muted);font-size:14.5px;line-height:1.5}
+.chk input{appearance:none;flex:none;width:22px;height:22px;margin-top:1px;border:1.5px solid #B5C1E3;border-radius:7px;background:#fff;cursor:pointer;display:grid;place-items:center;transition:.2s}
+.chk input:checked{background:var(--blue);border-color:var(--blue)}
+.chk input:checked::after{content:"";width:10px;height:5px;border-left:2.4px solid #fff;border-bottom:2.4px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.chk input:focus-visible{box-shadow:0 0 0 4px rgba(31,79,216,.15)}
+.chk a{color:var(--blue);font-weight:600}
+.f.bad .chk input{border-color:var(--err)}
+.sub{display:flex;justify-content:space-between;align-items:center;font-size:14.5px}
+.sub a{color:var(--blue);font-weight:600}
+.btn{display:flex;align-items:center;justify-content:center;height:56px;border:0;border-radius:14px;background:var(--blue);color:#fff;font:700 17px var(--font);cursor:pointer;transition:.2s;width:100%}
+.btn:hover{background:var(--navy);transform:translateY(-1px)}
+.btn[disabled]{opacity:.7;cursor:wait;transform:none}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:15px}.foot a{color:var(--blue);font-weight:700}
+.ok{display:none;text-align:center;padding:30px 0}
+.ok.on{display:block;animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.ok .tick{width:78px;height:78px;border-radius:50%;background:var(--ice);margin:0 auto 24px;display:grid;place-items:center}
+.ok .tick svg{width:38px;height:38px;stroke:var(--blue);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:dr .7s .25s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.ok h1{margin-bottom:12px}.ok p{color:var(--muted);margin:0 auto 28px;max-width:380px;font-size:17px}.ok .btn{max-width:280px;margin:0 auto}
+@media(max-width:980px){.auth{grid-template-columns:1fr}.side{display:none}.top .brand{display:block}.main{padding:26px 22px 34px}}
+@media(max-width:520px){.row{grid-template-columns:1fr}.phone{grid-template-columns:128px 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-mode="signup">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-ebook" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><rect width="120" height="74" class="pa"/><rect x="14" y="22" width="68" height="9" rx="2" class="pp"/><rect x="14" y="38" width="44" height="9" rx="2" class="pp"/><circle cx="92" cy="108" r="17" class="pb"/><rect x="14" y="100" width="52" height="4" rx="2" class="pc"/><rect x="14" y="110" width="42" height="4" rx="2" class="pc"/><rect x="14" y="120" width="48" height="4" rx="2" class="pc"/><rect x="14" y="140" width="32" height="7" rx="3.5" class="pb"/></symbol>
+<symbol id="i-plan" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><rect width="120" height="28" class="pa"/><rect x="12" y="10" width="44" height="8" rx="2" class="pp"/><g class="pc"><rect x="10" y="40" width="32" height="24" rx="3"/><rect x="44" y="40" width="32" height="24" rx="3"/><rect x="78" y="40" width="32" height="24" rx="3"/><rect x="10" y="68" width="32" height="24" rx="3"/><rect x="78" y="68" width="32" height="24" rx="3"/><rect x="10" y="96" width="32" height="24" rx="3"/><rect x="44" y="96" width="32" height="24" rx="3"/><rect x="10" y="124" width="32" height="24" rx="3"/><rect x="44" y="124" width="32" height="24" rx="3"/><rect x="78" y="124" width="32" height="24" rx="3"/></g><rect x="44" y="68" width="32" height="24" rx="3" class="pb"/><rect x="78" y="96" width="32" height="24" rx="3" class="pb"/></symbol>
+<symbol id="i-color" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><g class="ps"><circle cx="60" cy="68" r="12"/><circle cx="60" cy="42" r="14"/><circle cx="60" cy="94" r="14"/><circle cx="37" cy="55" r="14"/><circle cx="83" cy="55" r="14"/><circle cx="37" cy="81" r="14"/><circle cx="83" cy="81" r="14"/><path d="M60 108v34M60 126c-14-2-22-10-24-20M60 134c12-2 20-8 24-18"/></g></symbol>
+<symbol id="i-label" viewBox="0 0 160 110"><rect width="160" height="110" rx="10" class="pp"/><rect x="8" y="8" width="144" height="94" rx="6" fill="none" style="stroke:var(--b,#1F4FD8);stroke-width:2;stroke-dasharray:5 4"/><circle cx="38" cy="55" r="18" class="pa"/><rect x="66" y="34" width="70" height="9" rx="2" class="pa"/><rect x="66" y="52" width="54" height="5" rx="2.5" class="pc"/><rect x="66" y="64" width="62" height="5" rx="2.5" class="pc"/><rect x="66" y="80" width="30" height="8" rx="4" class="pb"/></symbol>
+<symbol id="i-quote" viewBox="0 0 120 120"><rect width="120" height="120" rx="4" class="pa"/><path class="pb" d="M22 52q0-22 20-26l2 8q-9 3-9 12h9v22H22zM58 52q0-22 20-26l2 8q-9 3-9 12h9v22H58z"/><rect x="22" y="86" width="76" height="5" rx="2.5" class="pp" opacity=".9"/><rect x="22" y="97" width="46" height="5" rx="2.5" class="pp" opacity=".55"/></symbol>
+<symbol id="i-mock" viewBox="0 0 160 120"><rect x="4" y="106" width="152" height="8" rx="4" fill="#000" opacity=".08"/><rect x="48" y="6" width="64" height="104" rx="9" class="pa"/><rect x="53" y="13" width="54" height="90" rx="4" class="pp"/><rect x="53" y="13" width="54" height="40" class="pb"/><rect x="59" y="62" width="34" height="5" rx="2.5" class="pa"/><rect x="59" y="73" width="42" height="4" rx="2" class="pc"/><rect x="59" y="82" width="38" height="4" rx="2" class="pc"/><rect x="59" y="92" width="22" height="6" rx="3" class="pb"/></symbol>
+<symbol id="i-card" viewBox="0 0 120 160"><rect x="6" y="10" width="108" height="140" rx="6" class="pc"/><path d="M60 10h54a6 6 0 016 6v128a6 6 0 01-6 6H60z" class="pp"/><rect x="72" y="34" width="34" height="7" rx="2" class="pa"/><rect x="72" y="48" width="26" height="5" rx="2.5" class="pb"/><circle cx="33" cy="64" r="16" class="pb"/><rect x="18" y="96" width="30" height="5" rx="2.5" class="pa"/><rect x="18" y="108" width="22" height="5" rx="2.5" class="pb"/></symbol>
+<symbol id="i-pick" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><rect x="12" y="12" width="44" height="64" rx="4" class="pa"/><rect x="64" y="12" width="44" height="64" rx="4" class="pb"/><rect x="12" y="84" width="44" height="64" rx="4" class="pc"/><rect x="64" y="84" width="44" height="64" rx="4" class="pc"/></symbol>
+</svg>
+<div class="auth">
+<aside class="side">
+  <a class="brand" href="index.html">Ema<b>deck.</b></a>
+  <div class="cards" aria-hidden="true">
+    <div class="fc c1"><svg viewBox="0 0 120 160"><use href="#i-ebook"/></svg></div>
+    <div class="fc c2" style="--a:#7A2E1D;--b:#E58F65;--c:#F6D9C8"><svg viewBox="0 0 120 160"><use href="#i-plan"/></svg></div>
+    <div class="fc c3" style="--a:#0E4F57;--b:#2AA6B0;--c:#BFE3E6"><svg viewBox="0 0 120 120"><use href="#i-quote"/></svg></div>
+  </div>
+  <h2>Design digital products <em>the easy way.</em></h2>
+  <p>Ready-made pages, one-click colors and fonts, and everything saved in one place.</p>
+  <div class="chips"><span class="on">Drag.</span><span>Drop.</span><span>Edit.</span></div>
+</aside>
+<section class="main">
+  <div class="top"><a class="brand" href="index.html">Ema<b>deck.</b></a><a class="back" href="index.html"><svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>Back to home</a><span class="alt">Already have an account? <a href="login.html">Log in</a></span></div>
+  <div class="box">
+    <div class="kick">Create your account</div>
+    <h1>Start designing today</h1>
+    <p class="lead">Fill in your details to get started. All fields are required.</p>
+    <form id="form" novalidate>
+      <div class="row">
+        <div class="f" id="fFirst"><label for="first">First name <i>*</i></label><input class="in" id="first" type="text" autocomplete="given-name" placeholder="First name"><div class="msg"></div></div>
+        <div class="f" id="fLast"><label for="last">Last name <i>*</i></label><input class="in" id="last" type="text" autocomplete="family-name" placeholder="Last name"><div class="msg"></div></div>
+      </div>
+      <div class="f" id="fEmail"><label for="email">Email <i>*</i></label><input class="in" id="email" type="email" autocomplete="email" placeholder="Email address"><div class="msg"></div></div>
+      <div class="f" id="fPhone"><div class="lb">Phone number <i>*</i></div><div class="phone"><div id="cc"></div><input class="in" id="phone" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="Phone number" aria-label="Phone number"></div><div class="msg"></div></div>
+      <div class="f" id="fCountry"><div class="lb">Country <i>*</i></div><div id="country"></div><div class="msg"></div></div>
+      <div class="f" id="fPass"><label for="pass">Password <i>*</i></label><div class="pw"><input class="in" id="pass" type="password" autocomplete="new-password" placeholder="Password"><button type="button" aria-label="Show or hide password">Show</button></div><div class="hint">At least 8 characters.</div><div class="msg"></div></div>
+      <div class="f" id="fPass2"><label for="pass2">Confirm password <i>*</i></label><div class="pw"><input class="in" id="pass2" type="password" autocomplete="new-password" placeholder="Confirm password"><button type="button" aria-label="Show or hide password">Show</button></div><div class="msg"></div></div>
+      <div class="f" id="fTerms"><label class="chk"><input type="checkbox" id="terms"><span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label><div class="msg"></div></div>
+      <button class="btn" type="submit">Create account</button>
+    </form>
+    <p class="foot">Already have an account? <a href="login.html">Log in</a></p>
+    <div class="ok" id="ok"><div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>Welcome to Emadeck</h1><p>Your account is ready. Open the builder and create your first digital product.</p><a class="btn" href="builder.html">Start designing</a></div>
+  </div>
+</section>
+</div>
+<script>
+(function(){
+  var C=[];'Afghanistan|93;Albania|355;Algeria|213;American Samoa|1;Andorra|376;Angola|244;Anguilla|1;Antigua and Barbuda|1;Argentina|54;Armenia|374;Aruba|297;Australia|61;Austria|43;Azerbaijan|994;Bahamas|1;Bahrain|973;Bangladesh|880;Barbados|1;Belarus|375;Belgium|32;Belize|501;Benin|229;Bermuda|1;Bhutan|975;Bolivia|591;Bosnia and Herzegovina|387;Botswana|267;Brazil|55;British Virgin Islands|1;Brunei|673;Bulgaria|359;Burkina Faso|226;Burundi|257;Cambodia|855;Cameroon|237;Canada|1;Cape Verde|238;Cayman Islands|1;Central African Republic|236;Chad|235;Chile|56;China|86;Colombia|57;Comoros|269;Congo (Brazzaville)|242;Congo (Kinshasa)|243;Cook Islands|682;Costa Rica|506;Cote d’Ivoire|225;Croatia|385;Cuba|53;Curacao|599;Cyprus|357;Czechia|420;Denmark|45;Djibouti|253;Dominica|1;Dominican Republic|1;Ecuador|593;Egypt|20;El Salvador|503;Equatorial Guinea|240;Eritrea|291;Estonia|372;Eswatini|268;Ethiopia|251;Falkland Islands|500;Faroe Islands|298;Fiji|679;Finland|358;France|33;French Guiana|594;French Polynesia|689;Gabon|241;Gambia|220;Georgia|995;Germany|49;Ghana|233;Gibraltar|350;Greece|30;Greenland|299;Grenada|1;Guadeloupe|590;Guam|1;Guatemala|502;Guinea|224;Guinea-Bissau|245;Guyana|592;Haiti|509;Honduras|504;Hong Kong|852;Hungary|36;Iceland|354;India|91;Indonesia|62;Iran|98;Iraq|964;Ireland|353;Israel|972;Italy|39;Jamaica|1;Japan|81;Jordan|962;Kazakhstan|7;Kenya|254;Kiribati|686;Kosovo|383;Kuwait|965;Kyrgyzstan|996;Laos|856;Latvia|371;Lebanon|961;Lesotho|266;Liberia|231;Libya|218;Liechtenstein|423;Lithuania|370;Luxembourg|352;Macau|853;Madagascar|261;Malawi|265;Malaysia|60;Maldives|960;Mali|223;Malta|356;Marshall Islands|692;Martinique|596;Mauritania|222;Mauritius|230;Mayotte|262;Mexico|52;Micronesia|691;Moldova|373;Monaco|377;Mongolia|976;Montenegro|382;Montserrat|1;Morocco|212;Mozambique|258;Myanmar|95;Namibia|264;Nauru|674;Nepal|977;Netherlands|31;New Caledonia|687;New Zealand|64;Nicaragua|505;Niger|227;Nigeria|234;Niue|683;North Korea|850;North Macedonia|389;Northern Mariana Islands|1;Norway|47;Oman|968;Pakistan|92;Palau|680;Palestine|970;Panama|507;Papua New Guinea|675;Paraguay|595;Peru|51;Philippines|63;Poland|48;Portugal|351;Puerto Rico|1;Qatar|974;Reunion|262;Romania|40;Russia|7;Rwanda|250;Saint Kitts and Nevis|1;Saint Lucia|1;Saint Martin|590;Saint Pierre and Miquelon|508;Saint Vincent and the Grenadines|1;Samoa|685;San Marino|378;Sao Tome and Principe|239;Saudi Arabia|966;Senegal|221;Serbia|381;Seychelles|248;Sierra Leone|232;Singapore|65;Sint Maarten|1;Slovakia|421;Slovenia|386;Solomon Islands|677;Somalia|252;South Africa|27;South Korea|82;South Sudan|211;Spain|34;Sri Lanka|94;Sudan|249;Suriname|597;Sweden|46;Switzerland|41;Syria|963;Taiwan|886;Tajikistan|992;Tanzania|255;Thailand|66;Timor-Leste|670;Togo|228;Tonga|676;Trinidad and Tobago|1;Tunisia|216;Turkey|90;Turkmenistan|993;Turks and Caicos Islands|1;Tuvalu|688;Uganda|256;Ukraine|380;United Arab Emirates|971;United Kingdom|44;United States|1;Uruguay|598;US Virgin Islands|1;Uzbekistan|998;Vanuatu|678;Vatican City|379;Venezuela|58;Vietnam|84;Wallis and Futuna|681;Yemen|967;Zambia|260;Zimbabwe|263'.split(';').forEach(function(s){var p=s.split('|');C.push({n:p[0],d:p[1]})});
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var CH='<svg viewBox="0 0 14 14"><path d="M3 5l4 4 4-4"/></svg>';
+  function combo(root,opts){
+    var items=opts.items,val=null,hi=-1,list;
+    root.classList.add('cb');
+    root.innerHTML='<button type="button" aria-haspopup="listbox"><span class="ph">'+opts.ph+'</span>'+CH+'</button><div class="pop"><input type="text" placeholder="'+opts.search+'" aria-label="'+opts.search+'" autocomplete="off"><ul role="listbox"></ul></div>';
+    var btn=$('button',root),span=$('span',btn),inp=$('input',root),ul=$('ul',root);
+    function render(q){
+      q=(q||'').toLowerCase().replace(/^\+/,'');
+      var f=items.filter(function(it){return !q||it.n.toLowerCase().indexOf(q)>-1||it.d.indexOf(q)===0});
+      list=f;hi=f.length?0:-1;
+      ul.innerHTML=f.length?f.map(function(it,i){return '<li role="option" data-i="'+i+'"'+(val===it?' class="sel"':'')+'>'+it.n+'<small>+'+it.d+'</small></li>'}).join(''):'<div class="empty">No result</div>';
+      mark();
+    }
+    function mark(){$$('li',ul).forEach(function(l,i){l.classList.toggle('hi',i===hi)});var h=$('li.hi',ul);if(h)h.scrollIntoView({block:'nearest'})}
+    function open(){root.classList.add('open');inp.value='';render('');setTimeout(function(){inp.focus()},20)}
+    function close(){root.classList.remove('open')}
+    function pick(it){val=it;span.className='';span.textContent=opts.show(it);close();root.dispatchEvent(new CustomEvent('change',{detail:it}));btn.focus()}
+    btn.addEventListener('click',function(){root.classList.contains('open')?close():open()});
+    inp.addEventListener('input',function(){render(inp.value)});
+    inp.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'){hi=Math.min(list.length-1,hi+1);mark();e.preventDefault()}
+      else if(e.key==='ArrowUp'){hi=Math.max(0,hi-1);mark();e.preventDefault()}
+      else if(e.key==='Enter'){if(list[hi])pick(list[hi]);e.preventDefault()}
+      else if(e.key==='Escape'){close();btn.focus()}
+    });
+    ul.addEventListener('mousedown',function(e){var l=e.target.closest('li');if(l){e.preventDefault();pick(list[+l.dataset.i])}});
+    document.addEventListener('click',function(e){if(!root.contains(e.target))close()});
+    root.get=function(){return val};root.set=function(it){val=it;span.className='';span.textContent=opts.show(it)};
+    return root;
+  }
+  var mode=document.body.dataset.mode;
+  var F=$('form'),busy=false;
+  function bad(f,m){f.classList.add('bad');var s=$('.msg',f);if(s)s.textContent=m}
+  function good(f){f.classList.remove('bad')}
+  var pc,co,userPickedCode=false;
+  if(mode==='signup'){
+    pc=combo($('#cc'),{items:C,ph:'Code',search:'Search country or code',show:function(it){return '+'+it.d}});
+    co=combo($('#country'),{items:C,ph:'Select your country',search:'Search country',show:function(it){return it.n}});
+    pc.addEventListener('change',function(){userPickedCode=true;good($('#fPhone'))});
+    co.addEventListener('change',function(){good($('#fCountry'));if(!userPickedCode)pc.set(co.get())});
+  }
+  $$('.pw button').forEach(function(b){b.addEventListener('click',function(){var i=b.previousElementSibling;var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show'})});
+  $$('.in').forEach(function(i){i.addEventListener('input',function(){good(i.closest('.f'))})});
+  var terms=$('#terms');if(terms)terms.addEventListener('change',function(){good(terms.closest('.f'))});
+  var EM=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  F.addEventListener('submit',function(e){
+    e.preventDefault();if(busy)return;
+    var first=null,v=function(id){var el=$('#'+id);return el?el.value.trim():''};
+    function chk(ok,fid,m){if(!ok){bad($('#'+fid),m);if(!first)first=fid}}
+    if(mode==='signup'){
+      chk(v('first'),'fFirst','Please enter your first name.');
+      chk(v('last'),'fLast','Please enter your last name.');
+      chk(EM.test(v('email')),'fEmail','Please enter a valid email address.');
+      var digits=v('phone').replace(/[\s\-().]/g,'');
+      chk(pc.get()&&/^\d{5,14}$/.test(digits),'fPhone',pc.get()?'Please enter a valid phone number.':'Please choose your country code and enter your number.');
+      chk(co.get(),'fCountry','Please select your country.');
+      chk(v('pass').length>=8,'fPass','Use at least 8 characters.');
+      chk(v('pass2')&&v('pass2')===$('#pass').value.trim(),'fPass2','The passwords do not match.');
+      chk($('#terms').checked,'fTerms','Please accept the terms to continue.');
+    }else{
+      chk(EM.test(v('email')),'fEmail','Please enter a valid email address.');
+      chk($('#pass').value,'fPass','Please enter your password.');
+    }
+    if(first){var f=$('#'+first),t=$('input,button',f);if(t)t.focus();return}
+    var data={};$$('input',F).forEach(function(i){if(i.id&&i.type!=='checkbox')data[i.id]=i.value.trim()});
+    if(mode==='signup'){data.phoneCode='+'+pc.get().d;data.country=co.get().n;delete data.pass2}
+    busy=true;var b=$('.btn',F);b.disabled=true;b.textContent=mode==='signup'?'Creating your account...':'Signing in...';
+    var A=window.EMADECK_AUTH||{signUp:function(){return Promise.resolve()},signIn:function(){return Promise.resolve()}};
+    (mode==='signup'?A.signUp(data):A.signIn(data)).then(function(){
+      if(mode==='signup'){F.style.display='none';$$('.lead,.foot').forEach(function(n){n.style.display='none'});$('#ok').classList.add('on');var h=$('h1');if(h)h.style.display='none';$('.kick').style.display='none'}
+      else location.href='builder.html';
+    }).catch(function(err){busy=false;b.disabled=false;b.textContent=mode==='signup'?'Create account':'Log in';var f=$('#'+(mode==='signup'?'fEmail':'fPass'));bad(f,(err&&err.message)||'Something went wrong. Please try again.')});
+  });
+  var sp=$$('.chips span'),k=0;if(sp.length)setInterval(function(){k=(k+1)%sp.length;sp.forEach(function(s,i){s.classList.toggle('on',i===k)})},1500);
+})();
+</script>
+</body>
+</html>

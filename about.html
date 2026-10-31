@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About | Emadeck</title>
+<meta name="description" content="Emadeck was created by a creator who was tired of spending hours editing templates. Learn our story.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1B4D;--blue:#1F4FD8;--sky:#DCE7FF;--ice:#EEF3FF;--line:#E4E9F5;--ink:#141B34;--muted:#5C6684;--font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/1.6 var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:68px;gap:34px}
+.brand{font:800 25px/1 var(--font);letter-spacing:-.03em;color:var(--navy);flex:none}
+.brand b{color:var(--blue);font-weight:800}
+.links{display:flex;align-items:center;justify-content:center;gap:6px}
+.has{position:relative}
+.has>button,.links>a{display:flex;align-items:center;gap:6px;border:0;background:none;padding:10px 14px;border-radius:10px;font:600 15px var(--font);color:var(--ink);transition:background .15s}
+.has>button:hover,.links>a:hover,.has:focus-within>button,.has.open>button{background:var(--ice)}
+.has>button svg{width:12px;height:12px;transition:transform .2s}
+.has:hover>button svg,.has.open>button svg{transform:rotate(180deg)}
+.menu{position:absolute;left:0;top:100%;min-width:280px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 24px 50px -20px rgba(11,27,77,.35);opacity:0;visibility:hidden;transform:translateY(8px);transition:.18s}
+.has:hover .menu,.has:focus-within .menu,.has.open .menu{opacity:1;visibility:visible;transform:none}
+.menu a{display:flex;flex-direction:column;padding:10px 14px;border-radius:10px;font-weight:600;font-size:15px}
+.menu a small{font-weight:400;color:var(--muted);font-size:13px}
+.menu a:hover{background:var(--ice);color:var(--blue)}
+.menu.two{display:grid;grid-template-columns:1fr 1fr;min-width:560px}
+.actions{display:flex;gap:10px;align-items:center;justify-self:end}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;font:700 15px var(--font);padding:12px 22px;border:1.5px solid transparent;transition:.2s;white-space:nowrap}
+.btn.pri{background:var(--blue);color:#fff}.btn.pri:hover{background:var(--navy);transform:translateY(-1px)}
+.btn.sec{background:#fff;color:var(--navy);border-color:#C9D3EE}.btn.sec:hover{border-color:var(--navy)}
+.btn.ghost{background:transparent;color:var(--ink)}.btn.ghost:hover{background:var(--ice)}
+.btn.lg{padding:16px 30px;font-size:17px;border-radius:14px}
+.burger{display:none;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:10px;width:44px;height:44px}
+.burger i{display:block;width:18px;height:2px;background:var(--navy);margin:4px auto;transition:.2s}
+section{padding:92px 0 0}
+h2{font:800 clamp(30px,3.8vw,46px)/1.1 var(--font);letter-spacing:-.03em;color:var(--navy);max-width:680px}
+.band{margin:92px 28px 0;border-radius:32px;background:var(--navy);color:#fff;padding:76px 28px;text-align:center;position:relative;overflow:hidden}
+.band::before,.band::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:var(--blue);opacity:.35;filter:blur(70px)}
+.band::before{left:-80px;top:-120px}.band::after{right:-60px;bottom:-140px;background:#8FB0FF;opacity:.25}
+.band h2{position:relative;color:#fff;margin:0 auto}
+.band p{position:relative;color:#BCCBF0;font-size:18px;margin:14px auto 30px;max-width:520px}
+.band .btn{position:relative;background:#fff;color:var(--navy)}.band .btn:hover{background:var(--sky)}
+footer{margin-top:92px;border-top:1px solid var(--line);padding:56px 0 40px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
+.fgrid p{color:var(--muted);max-width:280px;margin-top:12px;font-size:15px}
+.fgrid h4{font:700 14px var(--font);color:var(--navy);margin-bottom:14px}
+.fgrid a{display:block;color:var(--muted);font-size:15px;padding:4px 0}.fgrid a:hover{color:var(--blue)}
+.copy{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
+@media(max-width:1000px){
+ .nav .wrap{display:flex;gap:12px}.burger{display:block}
+ .links{position:absolute;left:0;right:0;top:68px;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:10px 20px 20px;display:none;gap:2px;max-height:calc(100vh - 68px);overflow:auto}
+ .nav.open .links{display:flex}
+ .has>button,.links>a{width:100%;justify-content:space-between}
+ .menu,.menu.two{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;padding:0 0 6px 10px;min-width:0;display:none;grid-template-columns:1fr}
+ .has.open .menu{display:block}.has.open .menu.two{display:grid}
+ .actions{margin-left:auto}.actions .ghost{display:none}
+ .burger{margin-left:0}
+ .fgrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+ .band{margin:70px 18px 0;padding:56px 22px}
+ section{padding-top:72px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1!important;transform:none!important}}
+.kick{font:700 14px var(--font);letter-spacing:.02em;color:var(--blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.kick::before{content:"";width:26px;height:2px;background:var(--blue)}
+h1{font:800 clamp(40px,5.2vw,70px)/1.04 var(--font);letter-spacing:-.035em;color:var(--navy)}
+h1 em{font-style:normal;color:var(--blue)}
+.sub{max-width:480px;color:var(--muted);font-size:18px}
+.pp{fill:var(--p,#fff)}.pa{fill:var(--a,#0B1B4D)}.pb{fill:var(--b,#1F4FD8)}.pc{fill:var(--c,#C9D8FA)}
+.ps{fill:none;stroke:var(--a,#0B1B4D);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ab{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:64px 28px 0}
+.ab h1{font-size:clamp(38px,5vw,66px)}
+.ab h1 em{display:block}
+.ab .sub{margin-top:22px;max-width:500px}
+.stack{position:relative;height:430px}
+.fc{position:absolute;background:#fff;border-radius:14px;box-shadow:0 26px 40px -22px rgba(11,27,77,.5);padding:8px;animation:bob 6s ease-in-out infinite}
+.fc svg{display:block;width:100%;height:auto;border-radius:8px}
+.fc.c1{left:6%;top:30px;width:38%;transform:rotate(-5deg)}
+.fc.c2{right:4%;top:0;width:36%;transform:rotate(4deg);animation-delay:-2s}
+.fc.c3{left:34%;bottom:0;width:32%;transform:rotate(-2deg);animation-delay:-4s}
+@keyframes bob{50%{translate:0 -12px}}
+.story{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
+.story h2{position:sticky;top:110px;font-size:clamp(30px,3.6vw,46px)}
+.story h2 em{font-style:normal;color:var(--blue)}
+.txt p{font-size:19px;line-height:1.75;color:var(--muted)}
+.txt p+p{margin-top:22px}
+.txt p.lead{font-size:23px;line-height:1.55;color:var(--navy);font-weight:600;letter-spacing:-.01em}
+.txt mark{background:linear-gradient(transparent 62%,#CFE0FF 62%);color:var(--navy);font-weight:600;padding:0 2px}
+.sig{margin-top:34px;display:flex;align-items:center;gap:16px}
+.sig i{width:44px;height:2px;background:var(--blue)}
+.sig b{display:block;color:var(--navy);font-size:17px}.sig span{color:var(--muted);font-size:14.5px}
+.vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:38px}
+.val{border:1.5px solid var(--line);border-radius:24px;padding:32px 30px;background:#fff;transition:transform .3s,border-color .3s,box-shadow .3s}
+.val:hover{transform:translateY(-5px);border-color:var(--blue);box-shadow:0 26px 40px -28px rgba(31,79,216,.6)}
+.val em{font:800 15px var(--font);font-style:normal;letter-spacing:.1em;color:var(--blue)}
+.val h3{font:700 22px/1.25 var(--font);color:var(--navy);margin:14px 0 10px;letter-spacing:-.01em}
+.val p{color:var(--muted);font-size:16px;line-height:1.65}
+.fin{margin:100px 28px 0;border-radius:32px;background:var(--navy);color:#fff;padding:86px 28px 80px;text-align:center;position:relative;overflow:hidden}
+.fin::before,.fin::after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:var(--blue);opacity:.35;filter:blur(80px)}
+.fin::before{left:-90px;top:-130px}.fin::after{right:-70px;bottom:-150px;background:#8FB0FF;opacity:.25}
+.fin h2{position:relative;color:#fff;margin:0 auto;font-size:clamp(34px,4.6vw,58px)}
+.fin p{position:relative;color:#BCCBF0;font-size:18px;margin:16px auto 0;max-width:520px}
+.fs{position:relative;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:36px 0 34px;font:800 clamp(26px,3.4vw,44px) var(--font);letter-spacing:-.03em}
+.fs span{padding:6px 20px;border-radius:14px;color:#7F90C2;transition:.45s cubic-bezier(.3,1.4,.5,1)}
+.fs span.on{background:#fff;color:var(--navy);transform:rotate(-2deg) scale(1.06)}
+.fin .btn{position:relative;background:#fff;color:var(--navy)}.fin .btn:hover{background:var(--sky)}
+@media(max-width:1000px){.ab{grid-template-columns:1fr;padding-top:44px}.stack{height:360px}.story{grid-template-columns:1fr;gap:26px}.story h2{position:static}.vals{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{padding:0 18px}.ab{padding:44px 18px 0}.fin{margin:70px 18px 0;padding:60px 22px}.txt p{font-size:17px}.txt p.lead{font-size:20px}.stack{height:320px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-ebook" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><rect width="120" height="74" class="pa"/><rect x="14" y="22" width="68" height="9" rx="2" class="pp"/><rect x="14" y="38" width="44" height="9" rx="2" class="pp"/><circle cx="92" cy="108" r="17" class="pb"/><rect x="14" y="100" width="52" height="4" rx="2" class="pc"/><rect x="14" y="110" width="42" height="4" rx="2" class="pc"/><rect x="14" y="120" width="48" height="4" rx="2" class="pc"/><rect x="14" y="140" width="32" height="7" rx="3.5" class="pb"/></symbol>
+<symbol id="i-plan" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><rect width="120" height="28" class="pa"/><rect x="12" y="10" width="44" height="8" rx="2" class="pp"/><g class="pc"><rect x="10" y="40" width="32" height="24" rx="3"/><rect x="44" y="40" width="32" height="24" rx="3"/><rect x="78" y="40" width="32" height="24" rx="3"/><rect x="10" y="68" width="32" height="24" rx="3"/><rect x="78" y="68" width="32" height="24" rx="3"/><rect x="10" y="96" width="32" height="24" rx="3"/><rect x="44" y="96" width="32" height="24" rx="3"/><rect x="10" y="124" width="32" height="24" rx="3"/><rect x="44" y="124" width="32" height="24" rx="3"/><rect x="78" y="124" width="32" height="24" rx="3"/></g><rect x="44" y="68" width="32" height="24" rx="3" class="pb"/><rect x="78" y="96" width="32" height="24" rx="3" class="pb"/></symbol>
+<symbol id="i-color" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><g class="ps"><circle cx="60" cy="68" r="12"/><circle cx="60" cy="42" r="14"/><circle cx="60" cy="94" r="14"/><circle cx="37" cy="55" r="14"/><circle cx="83" cy="55" r="14"/><circle cx="37" cy="81" r="14"/><circle cx="83" cy="81" r="14"/><path d="M60 108v34M60 126c-14-2-22-10-24-20M60 134c12-2 20-8 24-18"/></g></symbol>
+<symbol id="i-label" viewBox="0 0 160 110"><rect width="160" height="110" rx="10" class="pp"/><rect x="8" y="8" width="144" height="94" rx="6" fill="none" style="stroke:var(--b,#1F4FD8);stroke-width:2;stroke-dasharray:5 4"/><circle cx="38" cy="55" r="18" class="pa"/><rect x="66" y="34" width="70" height="9" rx="2" class="pa"/><rect x="66" y="52" width="54" height="5" rx="2.5" class="pc"/><rect x="66" y="64" width="62" height="5" rx="2.5" class="pc"/><rect x="66" y="80" width="30" height="8" rx="4" class="pb"/></symbol>
+<symbol id="i-quote" viewBox="0 0 120 120"><rect width="120" height="120" rx="4" class="pa"/><path class="pb" d="M22 52q0-22 20-26l2 8q-9 3-9 12h9v22H22zM58 52q0-22 20-26l2 8q-9 3-9 12h9v22H58z"/><rect x="22" y="86" width="76" height="5" rx="2.5" class="pp" opacity=".9"/><rect x="22" y="97" width="46" height="5" rx="2.5" class="pp" opacity=".55"/></symbol>
+<symbol id="i-mock" viewBox="0 0 160 120"><rect x="4" y="106" width="152" height="8" rx="4" fill="#000" opacity=".08"/><rect x="48" y="6" width="64" height="104" rx="9" class="pa"/><rect x="53" y="13" width="54" height="90" rx="4" class="pp"/><rect x="53" y="13" width="54" height="40" class="pb"/><rect x="59" y="62" width="34" height="5" rx="2.5" class="pa"/><rect x="59" y="73" width="42" height="4" rx="2" class="pc"/><rect x="59" y="82" width="38" height="4" rx="2" class="pc"/><rect x="59" y="92" width="22" height="6" rx="3" class="pb"/></symbol>
+<symbol id="i-card" viewBox="0 0 120 160"><rect x="6" y="10" width="108" height="140" rx="6" class="pc"/><path d="M60 10h54a6 6 0 016 6v128a6 6 0 01-6 6H60z" class="pp"/><rect x="72" y="34" width="34" height="7" rx="2" class="pa"/><rect x="72" y="48" width="26" height="5" rx="2.5" class="pb"/><circle cx="33" cy="64" r="16" class="pb"/><rect x="18" y="96" width="30" height="5" rx="2.5" class="pa"/><rect x="18" y="108" width="22" height="5" rx="2.5" class="pb"/></symbol>
+<symbol id="i-pick" viewBox="0 0 120 160"><rect width="120" height="160" rx="4" class="pp"/><rect x="12" y="12" width="44" height="64" rx="4" class="pa"/><rect x="64" y="12" width="44" height="64" rx="4" class="pb"/><rect x="12" y="84" width="44" height="64" rx="4" class="pc"/><rect x="64" y="84" width="44" height="64" rx="4" class="pc"/></symbol>
+</svg><header class="nav" id="nav">
+<div class="wrap">
+  <a class="brand" href="index.html" aria-label="Emadeck home">Ema<b>deck.</b></a>
+  <nav class="links" id="links" aria-label="Main">
+    <div class="has"><button aria-haspopup="true" data-href="builder.html">Design <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.2l4 4 4-4"/></svg></button>
+      <div class="menu two">
+        <a href="builder.html">Ebook templates<small>Covers, chapters, content pages</small></a>
+        <a href="builder.html">Coloring pages<small>Line art ready to print</small></a>
+        <a href="builder.html">Planners and agendas<small>Daily, weekly, monthly</small></a>
+        <a href="builder.html">Labels<small>Stickers, jars, packaging</small></a>
+        <a href="builder.html">Quote cards<small>Posts and printable quotes</small></a>
+        <a href="builder.html">Mockups<small>Show your product in context</small></a>
+        <a href="builder.html">Cards<small>Greeting and business cards</small></a>
+      </div></div>
+    <div class="has"><button aria-haspopup="true">Pricing <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.2l4 4 4-4"/></svg></button>
+      <div class="menu"><a href="#plans">Monthly<small>Billed every month</small></a><a href="#plans">Annual<small>Best value</small></a><a href="#compare">Compare pricing<small>How Emadeck stacks up</small></a></div></div>
+    <div class="has"><button aria-haspopup="true">Help <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.2l4 4 4-4"/></svg></button>
+      <div class="menu"><a href="help.html">Help center</a><a href="#">Emadeck School</a><a href="about.html">About</a><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div></div>
+  </nav>
+  <div class="actions"><a class="btn ghost" href="login.html">Log in</a><a class="btn pri" href="signup.html">Sign up</a></div>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+</div>
+</header>
+
+<main>
+<div class="wrap ab">
+  <div>
+    <div class="kick rv">About Emadeck</div>
+    <h1 class="rv">Made by a creator, <em>for creators.</em></h1>
+    <p class="sub rv">Emadeck exists to give your time back, so you can spend it creating instead of editing.</p>
+  </div>
+  <div class="stack" aria-hidden="true">
+    <div class="fc c1"><svg viewBox="0 0 120 160"><use href="#i-ebook"/></svg></div>
+    <div class="fc c2" style="--a:#7A2E1D;--b:#E58F65;--c:#F6D9C8"><svg viewBox="0 0 120 160"><use href="#i-plan"/></svg></div>
+    <div class="fc c3" style="--a:#0E4F57;--b:#2AA6B0;--c:#BFE3E6"><svg viewBox="0 0 120 120"><use href="#i-quote"/></svg></div>
+  </div>
+</div>
+
+<section><div class="wrap story">
+  <h2 class="rv">Where the idea <em>came from.</em></h2>
+  <div class="txt">
+    <p class="lead rv">I am a creator, and I kept buying templates.</p>
+    <p class="rv">Every template looked perfect in the preview. Then the real work began. I changed the colors, one page at a time. I changed the fonts. I fixed the spacing, rewrote the text, moved things around, and started again with the next page.</p>
+    <p class="rv">I was spending <mark>hours editing</mark> instead of creating the product I wanted to sell. And I kept paying for more templates, hoping the next one would be easier.</p>
+    <p class="rv">It did not need to be that hard. So I built the tool I was looking for: ready-made pages that look professional, a book you build by simply placing them, and <mark>one click to change every color and font</mark> across all your pages.</p>
+    <p class="rv">Emadeck is that tool. It started with ebooks, and it grows with planners, coloring pages, quotes, mockups, labels, CVs and cards. Everything built around one idea: make your life easier.</p>
+    <div class="sig rv"><i></i><div><b>Ella</b><span>Founder of Emadeck</span></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 class="rv">What we believe</h2>
+  <div class="vals">
+    <div class="val rv"><em>01</em><h3>Simple comes first</h3><p>Pick a page, place it, write your text. No blank canvas and no design skills needed.</p></div>
+    <div class="val rv"><em>02</em><h3>Your time matters</h3><p>Change the colors and fonts of a whole book in one click, and add page numbers or your signature just as fast.</p></div>
+    <div class="val rv"><em>03</em><h3>Made for creators</h3><p>Professional, clean pages that help you turn your idea into a product you are proud to sell.</p></div>
+  </div>
+</div></section>
+
+<div class="fin rv">
+  <h2>We hope you enjoy it.</h2>
+  <p>Thank you for being here. Open the builder and make something you love.</p>
+  <div class="fs" id="slogan"><span class="on">Drag.</span><span>Drop.</span><span>Edit.</span></div>
+  <a class="btn lg" href="builder.html">Start designing</a>
+</div>
+</main>
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a class="brand" href="index.html">Ema<b>deck.</b></a><p>A simple design platform for digital products. Drag, drop and edit.</p></div>
+    <div><h4>Design</h4><a href="builder.html">Ebook templates</a><a href="builder.html">Coloring pages</a><a href="builder.html">Planners</a><a href="builder.html">Labels</a><a href="builder.html">Mockups</a></div>
+    <div><h4>Pricing</h4><a href="#plans">Monthly</a><a href="#plans">Annual</a><a href="#compare">Compare pricing</a></div>
+    <div><h4>Help</h4><a href="help.html">Help center</a><a href="#">Emadeck School</a><a href="about.html">About</a><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div>
+  </div>
+  <div class="copy"><span>&copy; Emadeck</span><span>emadeck.com</span></div>
+</div></footer>
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+  var nav=$('#nav'),bg=$('#burger');
+  bg.addEventListener('click',function(){var o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
+  $$('.has>button').forEach(function(b){b.addEventListener('click',function(e){if(b.dataset.href&&innerWidth>1000){location.href=b.dataset.href;return}var h=b.parentNode,was=h.classList.contains('open');$$('.has').forEach(function(x){x.classList.remove('open')});if(!was)h.classList.add('open');e.stopPropagation()})});
+  document.addEventListener('click',function(){$$('.has').forEach(function(x){x.classList.remove('open')})});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  $$('.rv').forEach(function(e,i){e.style.transitionDelay=(i%4)*80+'ms';io.observe(e)});
+  var sp=$$('#slogan span'),k=0;setInterval(function(){k=(k+1)%sp.length;sp.forEach(function(s,i){s.classList.toggle('on',i===k)})},1500);
+})();
+</script>
+</body>
+</html>

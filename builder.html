@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JoyDeck — Builder</title>
+<title>Emadeck — Builder</title>
 <style>
   :root{
     --bg:#f4f1ec; --panel:#fff; --ink:#1f2a24; --muted:#7a857e; --line:#e3ded5;
@@ -97,11 +97,12 @@
     #printRoot iframe:last-child{page-break-after:auto;break-after:auto}
   }
 </style>
+<script src="joydeck-speed.js"></script>
 </head>
-<body>
+<body><a id="emadeck-back" href="index.html" style="position:fixed;left:16px;bottom:16px;z-index:99999;background:#0B1B4D;color:#fff;font:700 14px system-ui,sans-serif;padding:10px 16px;border-radius:12px;text-decoration:none;box-shadow:0 10px 24px -10px rgba(11,27,77,.6)">&larr; Emadeck</a><style>@media print{#emadeck-back{display:none}}</style>
 <div id="app">
   <header class="top">
-    <div class="logo">JoyDeck<small>Builder</small></div>
+    <div class="logo">Emadeck<small>Builder</small></div>
     <input id="title" value="Mon ebook" aria-label="Titre du projet">
     <span class="count" id="count"></span>
     <span class="spacer"></span>
@@ -151,7 +152,50 @@
       {id:'toc-3', code:'SM-03', file:'SM-03-sommaire-photos.html', old:'editor-toc-3.html', name:'Sommaire photos'}]},
     {cat:'Chapitres', items:[
       {id:'chapter', code:'CH-01', file:'CH-01-chapitre-numerote.html', old:'editor-chapter.html', name:'Chapitre numéroté'},
-      {id:'literary', code:'CH-02', file:'CH-02-chapitre-litteraire.html', old:'editor-literary-chapter.html', name:'Chapitre littéraire'}]},
+      {id:'literary', code:'CH-02', file:'CH-02-chapitre-litteraire.html', old:'editor-literary-chapter.html', name:'Chapitre littéraire'},
+      {id:'ch-03', code:'CH-03', file:'CH-03-chapitre-photo-rose-vertical.html', old:'', name:'Chapitre : photo rose + trait'},
+      {id:'ch-04', code:'CH-04', file:'CH-04-chapitre-photo-haut-boite-rose.html', old:'', name:'Chapitre : photo haut + boîte'},
+      {id:'ch-05', code:'CH-05', file:'CH-05-chapitre-photo-cadre-rose.html', old:'', name:'Chapitre : photo + cadre rose'},
+      {id:'ch-06', code:'CH-06', file:'CH-06-chapitre-grand-chiffre-4.html', old:'', name:'Chapitre : grand chiffre'},
+      {id:'ch-07', code:'CH-07', file:'CH-07-ardoise-chapitre-numero-geant.html', old:'', name:'Ardoise : chapitre n° géant'},
+      {id:'ch-08', code:'CH-08', file:'CH-08-ardoise-chapitre-photo-texte-vertical.html', old:'', name:'Ardoise : chapitre photo + titre vertical'},
+      {id:'ch-09', code:'CH-09', file:'CH-09-ardoise-chapitre-bandeau-sombre-2-colonnes.html', old:'', name:'Ardoise : chapitre bandeau sombre'},
+      {id:'ch-10', code:'CH-10', file:'CH-10-ardoise-chapitre-numero-fantome-photo-droite.html', old:'', name:'Ardoise : chapitre fantôme + photo'},
+      {id:'ch-11', code:'CH-11', file:'CH-11-ardoise-chapitre-bandeau-sombre-variante.html', old:'', name:'Ardoise : chapitre bandeau (variante)'},
+      {id:'ch-12', code:'CH-12', file:'CH-12-elegant-chapitre-un-photo-gauche-texte-droite.html', old:'', name:'Élégant : chapitre « One »'},
+      {id:'ch-13', code:'CH-13', file:'CH-13-elegant-chapitre-deux-3-colonnes-photo.html', old:'', name:'Élégant : chapitre « Two »'},
+      {id:'ch-14', code:'CH-14', file:'CH-14-elegant-chapitre-photo-haut-titre-3-colonnes.html', old:'', name:'Élégant : chapitre photo haut'},
+      {id:'ch-15', code:'CH-15', file:'CH-15-elegant-chapitre-04-photo-barre-orange.html', old:'', name:'Élégant : chapitre 04'},
+      {id:'ch-16', code:'CH-16', file:'CH-16-elegant-chapitre-05-3-colonnes-grande-photo.html', old:'', name:'Élégant : chapitre 05'},
+      {id:'ch-17', code:'CH-17', file:'CH-17-elegant-chapitre-06-2-colonnes-texte.html', old:'', name:'Élégant : chapitre 06'},
+      {id:'ch-18', code:'CH-18', file:'CH-18-elegant-chapitre-photo-haute-gauche.html', old:'', name:'Élégant : chapitre photo haute'},
+      {id:'ch-19', code:'CH-19', file:'CH-19-elegant-chapitre-neuf-3-photos.html', old:'', name:'Élégant : chapitre « Nine » + 3 photos'},
+      {id:'ch-20', code:'CH-20', file:'CH-20-sierra-chapitre-bandeau-rouge.html', old:'', name:'Sierra : chapitre bandeau rouge'},
+      {id:'ch-21', code:'CH-21', file:'CH-21-sierra-chapitre-03-titre-centre.html', old:'', name:'Sierra : chapitre 03 centré'},
+      {id:'ch-22', code:'CH-22', file:'CH-22-bundle-chapitre-1-deux-colonnes.html', old:'', name:'Bundle : chapitre 1 deux colonnes'},
+      {id:'ch-23', code:'CH-23', file:'CH-23-bundle-chapitre-3-texte-lettrine.html', old:'', name:'Bundle : chapitre 3 lettrine'},
+      {id:'ch-24', code:'CH-24', file:'CH-24-bundle-chapitre-photo-haut-texte-bas.html', old:'', name:'Bundle : chapitre photo en haut'},
+      {id:'ch-25', code:'CH-25', file:'CH-25-noir-chapitre-1-photo-droite-puces.html', old:'', name:'Noir Bebas : chapitre 1 photo droite'},
+      {id:'ch-26', code:'CH-26', file:'CH-26-noir-chapitre-2-colonnes-cases-photo.html', old:'', name:'Noir Bebas : chapitre 2 + photo large'},
+      {id:'ch-27', code:'CH-27', file:'CH-27-noir-chapitre-3-encadre-noir-photo.html', old:'', name:'Noir Bebas : chapitre 3 + encadré noir'},
+      {id:'ch-28', code:'CH-28', file:'CH-28-noir-chapitre-4-cases-photo-liste.html', old:'', name:'Noir Bebas : chapitre 4 + puces'},
+      {id:'ch-29', code:'CH-29', file:'CH-29-noir-chapitre-5-2-photos-cases.html', old:'', name:'Noir Bebas : chapitre 5 + 2 photos'},
+      {id:'ch-30', code:'CH-30', file:'CH-30-stage-chapitre-01-introduction-cercle.html', old:'', name:'Stage : chapitre 01 + cercle'},
+      {id:'ch-31', code:'CH-31', file:'CH-31-stage-chapitre-05-bilan-cercle.html', old:'', name:'Stage : chapitre 05 + cercle'},
+      {id:'ch-32', code:'CH-32', file:'CH-32-digital-chapitre-01-ovale-sombre.html', old:'', name:'Digital : chapitre 01 ovale'},
+      {id:'ch-33', code:'CH-33', file:'CH-33-digital-chapitre-02-masques-gauche.html', old:'', name:'Digital : chapitre 02 masques'},
+      {id:'ch-34', code:'CH-34', file:'CH-34-digital-chapitre-03-diagonale-appareil.html', old:'', name:'Digital : chapitre 03 diagonale'},
+      {id:'ch-35', code:'CH-35', file:'CH-35-elegant-chapitre-2-fond-noir-4-photos.html', old:'', name:'Elegant : chapitre 2 fond noir'},
+      {id:'ch-36', code:'CH-36', file:'CH-36-elegant-chapitre-6-portrait-robe-bleue.html', old:'', name:'Elegant : chapitre 6 portrait'},
+      {id:'ch-37', code:'CH-37', file:'CH-37-livre-manuel-chapitre-11-barres-grises.html', old:'', name:'Livre : chapitre 11 barres grises'},
+      {id:'ch-38', code:'CH-38', file:'CH-38-livre-chapitre-i-epigraphe-centree.html', old:'', name:'Livre : chapitre I + epigraphe'},
+      {id:'ch-39', code:'CH-39', file:'CH-39-livre-chapitre-one-texte-simple.html', old:'', name:'Livre : chapitre One + texte'},
+      {id:'ch-40', code:'CH-40', file:'CH-40-livre-chapitre-two-lettrine.html', old:'', name:'Livre : chapitre Two + lettrine'},
+      {id:'ch-41', code:'CH-41', file:'CH-41-sierra-chapitre-petite-photo-titre-centre.html', old:'', name:'Sierra : chapitre petite photo'},
+      {id:'ch-42', code:'CH-42', file:'CH-42-magazine-noir-titre-geant-colonnes.html', old:'', name:'Magazine noir : titre geant + colonnes'},
+      {id:'ch-43', code:'CH-43', file:'CH-43-magazine-noir-mood-titre-centre.html', old:'', name:'Magazine noir : MOOD titre centre'},
+      {id:'ch-44', code:'CH-44', file:'CH-44-magazine-blanc-titre-geant-intro-colonnes.html', old:'', name:'Magazine blanc : titre geant + intro'},
+      {id:'ch-45', code:'CH-45', file:'CH-45-magazine-blanc-the-road-ahead.html', old:'', name:'Magazine blanc : titre 2 lignes + colonnes'}]},
     {cat:'Pages de contenu', items:[
       {id:'text', code:'PG-01', file:'PG-01-texte-1-2-colonnes.html', old:'editor-text-page.html', name:'Texte 1 / 2 colonnes'},
       {id:'image-text', code:'PG-02', file:'PG-02-image-texte.html', old:'editor-image-text.html', name:'Image + texte'},
@@ -178,6 +222,28 @@
     {id:'terms', code:'PG-23', file:'PG-23-conditions.html', name:'Conditions générales'},
     {id:'cv-05', code:'CV-05', file:'CV-05-couverture-blog.html', name:'Couverture blog'},
     {id:'ct-02', code:'CT-02', file:'CT-02-citation-tissu.html', name:'Citation sur photo'},
+      {id:'ct-03', code:'CT-03', file:'CT-03-citation-photo-rose.html', old:'', name:'Citation sur photo rose'},
+      {id:'ct-04', code:'CT-04', file:'CT-04-temoignage-boite-rose.html', old:'', name:'Témoignage (boîte rose)'},
+      {id:'ct-05', code:'CT-05', file:'CT-05-ardoise-citation-photo-haut-gauche-texte-droite.html', old:'', name:'Ardoise : citation + photo'},
+      {id:'ct-06', code:'CT-06', file:'CT-06-ardoise-citation-panneau-gris-photo-cadre.html', old:'', name:'Ardoise : citation panneau gris'},
+      {id:'ct-07', code:'CT-07', file:'CT-07-ardoise-citation-photo-haut-large.html', old:'', name:'Ardoise : citation photo large'},
+      {id:'ct-08', code:'CT-08', file:'CT-08-ardoise-citation-photo-droite-texte-gauche.html', old:'', name:'Ardoise : citation texte gauche'},
+      {id:'ct-09', code:'CT-09', file:'CT-09-bundle-citation-centree-2-colonnes.html', old:'', name:'Bundle : citation + 2 colonnes'},
+      {id:'ct-10', code:'CT-10', file:'CT-10-projet-citation-guillemets-photo.html', old:'', name:'Projet : citation + photo'},
+      {id:'ct-11', code:'CT-11', file:'CT-11-noir-citation-haut-photo-grise.html', old:'', name:'Noir Bebas : citation + photo grise'},
+      {id:'ct-12', code:'CT-12', file:'CT-12-noir-citation-entre-2-photos.html', old:'', name:'Noir Bebas : citation entre 2 photos'},
+      {id:'ct-13', code:'CT-13', file:'CT-13-citation-noir-texte-gauche-guillemet.html', old:'', name:'Citation noire : texte + guillemet'},
+      {id:'ct-14', code:'CT-14', file:'CT-14-citation-blanche-texte-gras-2-paragraphes.html', old:'', name:'Citation blanche : titre gras + 2 paragraphes'},
+      {id:'ct-15', code:'CT-15', file:'CT-15-citation-blanche-titre-bleu-signature.html', old:'', name:'Citation blanche : titre bleu + signature'},
+      {id:'ct-16', code:'CT-16', file:'CT-16-citation-carte-as-we-grow-older.html', old:'', name:'Citation carte : As we grow older'},
+      {id:'ct-17', code:'CT-17', file:'CT-17-citation-carte-becoming-best-version.html', old:'', name:'Citation carte : Becoming the best version'},
+      {id:'ct-18', code:'CT-18', file:'CT-18-citation-carte-perspective-everything.html', old:'', name:'Citation carte : Perspective is everything'},
+      {id:'ct-19', code:'CT-19', file:'CT-19-citation-carte-purest-things.html', old:'', name:'Citation carte : One of the purest things'},
+      {id:'ct-20', code:'CT-20', file:'CT-20-citation-carte-turning-tables.html', old:'', name:'Citation carte : Life has a way of turning tables'},
+      {id:'ct-21', code:'CT-21', file:'CT-21-citation-carte-love-worries.html', old:'', name:'Citation carte : love should be the least of our worries'},
+      {id:'ct-22', code:'CT-22', file:'CT-22-citation-carte-if-you-failed.html', old:'', name:'Citation carte : If you failed, congratulations'},
+      {id:'ct-23', code:'CT-23', file:'CT-23-citation-livre-i-love-like-this.html', old:'', name:'Citation livre : I love like this (titre capitales)'},
+      {id:'ct-24', code:'CT-24', file:'CT-24-citation-grise-learn-to-be-alone.html', old:'', name:'Citation grise : titre gras + leger'},
     {id:'pg-24', code:'PG-24', file:'PG-24-elle-etait-la.html', name:'Elle était là'},
     {id:'pg-25', code:'PG-25', file:'PG-25-trois-conseils.html', name:'3 conseils en or'},
     {id:'pg-26', code:'PG-26', file:'PG-26-moment-niche.html', name:'Moment et niche'},
@@ -187,7 +253,306 @@
     {id:'pg-30', code:'PG-30', file:'PG-30-planche-ambiance.html', name:'Planche ambiance'},
     {id:'pg-31', code:'PG-31', file:'PG-31-moment-objectif.html', name:'Moment et objectif'},
     {id:'pg-32', code:'PG-32', file:'PG-32-geants-3-colonnes.html', name:'Inspirés par les géants (3 colonnes)'},
-    {id:'pg-33', code:'PG-33', file:'PG-33-geants-liste.html', name:'Inspirés par les géants (liste)'}]},
+    {id:'pg-33', code:'PG-33', file:'PG-33-geants-liste.html', name:'Inspirés par les géants (liste)'},
+    {id:'cv-06', code:'CV-06', file:'CV-06-couverture-sombre.html', name:"Couverture sombre"},
+    {id:'cv-07', code:'CV-07', file:'CV-07-couverture-creme.html', name:"Couverture crème"},
+    {id:'cv-08', code:'CV-08', file:'CV-08-couverture-terracotta.html', name:"Couverture terracotta"},
+    {id:'fn-04', code:'FN-04', file:'FN-04-a-propos-auteur-2.html', name:"À propos de l'auteur (2)"},
+    {id:'sm-05', code:'SM-05', file:'SM-05-sommaire-photo-gauche.html', name:"Sommaire photo gauche"},
+    {id:'pg-34', code:'PG-34', file:'PG-34-photo-haut-titre-2-colonnes.html', name:"Photo haut + titre + texte"},
+    {id:'pg-35', code:'PG-35', file:'PG-35-ouverture-chapitre-texte.html', name:"Ouverture de chapitre + texte"},
+    {id:'pg-36', code:'PG-36', file:'PG-36-titre-bandeau-2-colonnes.html', name:"Titre bandeau + 2 colonnes"},
+    {id:'pg-37', code:'PG-37', file:'PG-37-texte-citation-photo-droite.html', name:"Texte + citation + photo droite"},
+    {id:'pg-38', code:'PG-38', file:'PG-38-photo-bandeau-2-colonnes.html', name:"Photo bandeau + 2 colonnes"},
+    {id:'pg-39', code:'PG-39', file:'PG-39-deux-photos-empilees.html', name:"Deux photos empilées"},
+    {id:'pg-40', code:'PG-40', file:'PG-40-3-photos-texte-droite.html', name:"3 photos + texte droite"},
+    {id:'pg-41', code:'PG-41', file:'PG-41-citation-gauche-texte-droite.html', name:"Citation gauche + texte droite"},
+    {id:'pg-42', code:'PG-42', file:'PG-42-collage-3-photos.html', name:"Collage 3 photos"},
+    {id:'pg-43', code:'PG-43', file:'PG-43-citation-haut-2-colonnes.html', name:"Citation haut + 2 colonnes"},
+    {id:'pg-44', code:'PG-44', file:'PG-44-2-photos-texte-surligne.html', name:"2 photos + texte surligné"},
+    {id:'pg-45', code:'PG-45', file:'PG-45-photo-haut-texte-citation.html', name:"Photo haut + texte + citation"},
+    {id:'pg-46', code:'PG-46', file:'PG-46-photo-plein-citation.html', name:"Photo plein cadre + citation"},
+    {id:'pg-47', code:'PG-47', file:'PG-47-photo-plein-carte-blanche.html', name:"Photo plein cadre + carte texte"},
+    {id:'fn-05', code:'FN-05', file:'FN-05-mots-de-la-fin.html', name:"Mots de la fin"},
+    {id:'pg-48', code:'PG-48', file:'PG-48-photo-cadre-sombre.html', name:"Photo cadre sombre"},
+    {id:'sm-06', code:'SM-06', file:'SM-06-sommaire-vertical.html', name:"Sommaire vertical"},
+    {id:'pg-49', code:'PG-49', file:'PG-49-titre-sous-titre-photo.html', name:"Titre, sous-titre et photo"},
+    {id:'pg-50', code:'PG-50', file:'PG-50-grand-portrait.html', name:"Grand portrait"},
+    {id:'pg-51', code:'PG-51', file:'PG-51-titre-photo-architecture.html', name:"Titre + photo + 2 colonnes"},
+    {id:'pg-52', code:'PG-52', file:'PG-52-portrait-colonnes-citation.html', name:"Portrait + colonnes + citation"},
+    {id:'pg-53', code:'PG-53', file:'PG-53-grande-lettre-profil.html', name:"Grande lettre + profil"},
+    {id:'pg-54', code:'PG-54', file:'PG-54-citation-2-photos-texte.html', name:"Citation + 2 photos + texte"},
+    {id:'pg-55', code:'PG-55', file:'PG-55-photo-profil-texte-vertical.html', name:"Photo de profil + texte vertical"},
+    {id:'pg-56', code:'PG-56', file:'PG-56-gros-titre-sous-titre.html', name:"Gros titre + sous-titre"},
+    {id:'pg-57', code:'PG-57', file:'PG-57-texte-photo-chien.html', name:"Texte + photo + légende"},
+    {id:'pg-58', code:'PG-58', file:'PG-58-titre-vertical-photo.html', name:"Titre vertical + photo"},
+    {id:'pg-59', code:'PG-59', file:'PG-59-titre-lettrine-3-colonnes.html', name:"Titre + lettrine + 3 colonnes"},
+    {id:'pg-60', code:'PG-60', file:'PG-60-liste-numerotee.html', name:"Liste numérotée 1 à 5"},
+    {id:'pg-61', code:'PG-61', file:'PG-61-photos-et-colonnes.html', name:"Photos + colonnes + citation"},
+    {id:'pg-62', code:'PG-62', file:'PG-62-photo-capuche-colonnes.html', name:"Photo + colonnes + photo"},
+    {id:'cv-09', code:'CV-09', file:'CV-09-couverture-marketing.html', name:"Couverture marketing digital"},
+    {id:'sm-07', code:'SM-07', file:'SM-07-sommaire-chiffres.html', name:"Sommaire à chiffres"},
+    {id:'pg-63', code:'PG-63', file:'PG-63-a-propos-photo-texte.html', name:"À propos : photo et texte"},
+    {id:'pg-64', code:'PG-64', file:'PG-64-ouverture-chapitre-photo.html', name:"Ouverture de chapitre photo"},
+    {id:'pg-65', code:'PG-65', file:'PG-65-sous-titre-2-photos-texte.html', name:"Sous-titre + 2 photos + texte"},
+    {id:'pg-66', code:'PG-66', file:'PG-66-3-photos-3-colonnes.html', name:"3 photos + 3 colonnes"},
+    {id:'pg-67', code:'PG-67', file:'PG-67-photo-gauche-texte.html', name:"Photo gauche + texte"},
+    {id:'pg-68', code:'PG-68', file:'PG-68-liste-ressources.html', name:"Liste de ressources"},
+    {id:'pg-69', code:'PG-69', file:'PG-69-checklist-facebook.html', name:"Checklist 2 colonnes"},
+    {id:'pg-70', code:'PG-70', file:'PG-70-fiche-cases-a-cocher.html', name:"Fiche : cases à cocher"},
+    {id:'pg-71', code:'PG-71', file:'PG-71-frise-chronologique.html', name:"Frise chronologique"},
+    {id:'pg-72', code:'PG-72', file:'PG-72-fiche-notes.html', name:"Fiche : zones de notes"},
+    {id:'cv-10', code:'CV-10', file:'CV-10-ebook-couverture-claire.html', name:"Couverture ebook claire"},
+    {id:'pg-73', code:'PG-73', file:'PG-73-avant-propos-teal.html', name:"Avant-propos (fond teal)"},
+    {id:'sm-08', code:'SM-08', file:'SM-08-sommaire-bande-teal.html', name:"Sommaire bande teal"},
+    {id:'fn-06', code:'FN-06', file:'FN-06-ebook-titre-tirets.html', name:"Titre avec tirets"},
+      {id:'fn-07', code:'FN-07', file:'FN-07-appel-a-laction-3-tablettes.html', old:'', name:'Appel à l’action + 3 tablettes'},
+      {id:'fn-08', code:'FN-08', file:'FN-08-feuille-de-route-3-etapes.html', old:'', name:'Feuille de route 3 étapes'},
+      {id:'fn-09', code:'FN-09', file:'FN-09-elegant-merci-degrade-contact.html', old:'', name:'Élégant : page finale « Thank You »'},
+      {id:'fn-10', code:'FN-10', file:'FN-10-sierra-page-finale-telechargement.html', old:'', name:'Sierra : page finale téléchargement'},
+      {id:'fn-11', code:'FN-11', file:'FN-11-bundle-mots-de-la-fin-bouton.html', old:'', name:'Bundle : mots de la fin + bouton'},
+      {id:'fn-12', code:'FN-12', file:'FN-12-business-carte-contact-reseaux.html', old:'', name:'Business : carte + contact'},
+      {id:'fn-13', code:'FN-13', file:'FN-13-projet-contact-merci.html', old:'', name:'Projet : contact + merci'},
+      {id:'fn-14', code:'FN-14', file:'FN-14-noir-the-end-photo-coupee.html', old:'', name:'Noir Bebas : THE END'},
+      {id:'fn-15', code:'FN-15', file:'FN-15-stage-merci-a-vous-cercle.html', old:'', name:'Stage : merci à vous'},
+      {id:'fn-16', code:'FN-16', file:'FN-16-digital-merci-contact-panneau-noir.html', old:'', name:'Digital : merci + contact'},
+      {id:'fn-17', code:'FN-17', file:'FN-17-elegant-page-finale-photo-et-marque.html', old:'', name:'Elegant : page finale'},
+      {id:'fn-18', code:'FN-18', file:'FN-18-sierra-merci-photo-rouge-texte.html', old:'', name:'Sierra : merci + photo rouge'},
+    {id:'pg-74', code:'PG-74', file:'PG-74-cher-lecteur.html', name:"Cher lecteur"},
+    {id:'pg-75', code:'PG-75', file:'PG-75-contenu-6-entrees.html', name:"Contenu : 6 entrées numérotées"},
+    {id:'sm-09', code:'SM-09', file:'SM-09-sommaire-teal.html', name:"Sommaire fond teal"},
+    {id:'pg-76', code:'PG-76', file:'PG-76-bienvenue-2-colonnes.html', name:"Bienvenue + 2 colonnes"},
+      {id:'pg-77', code:'PG-77', file:'PG-77-section-photo-arche.html', old:'', name:'Section : photo plein fond + arche'},
+      {id:'pg-78', code:'PG-78', file:'PG-78-a-propos-polaroid.html', old:'', name:'À propos de moi (polaroid)'},
+      {id:'pg-79', code:'PG-79', file:'PG-79-equipe-2-arches.html', old:'', name:'Équipe : 2 personnes'},
+      {id:'pg-80', code:'PG-80', file:'PG-80-a-propos-grande-lettre.html', old:'', name:'À propos : grande lettre'},
+      {id:'pg-81', code:'PG-81', file:'PG-81-fonctionnement-2-colonnes.html', old:'', name:'Fonctionnement : 2 colonnes'},
+      {id:'pg-82', code:'PG-82', file:'PG-82-nos-valeurs.html', old:'', name:'Nos valeurs (cercles + bande)'},
+      {id:'pg-83', code:'PG-83', file:'PG-83-pour-commencer-3-arches.html', old:'', name:'Pour commencer : 3 arches'},
+      {id:'pg-84', code:'PG-84', file:'PG-84-attentes-barres-sauge.html', old:'', name:'À quoi s’attendre (barres sauge)'},
+      {id:'pg-85', code:'PG-85', file:'PG-85-services-2-offres.html', old:'', name:'Services : 2 offres'},
+      {id:'pg-86', code:'PG-86', file:'PG-86-services-3-formules.html', old:'', name:'Services : 3 formules'},
+      {id:'pg-87', code:'PG-87', file:'PG-87-section-grand-chiffre.html', old:'', name:'Section : grand chiffre + photo cercle'},
+      {id:'pg-88', code:'PG-88', file:'PG-88-recommandations-titre-vertical.html', old:'', name:'Recommandations (titre vertical)'},
+      {id:'pg-89', code:'PG-89', file:'PG-89-checklist-2-photos.html', old:'', name:'Checklist : 2 photos + liste'},
+      {id:'pg-90', code:'PG-90', file:'PG-90-checklist-3-sections.html', old:'', name:'Checklist : 3 sections'},
+      {id:'pg-91', code:'PG-91', file:'PG-91-checklist-photo-cadre-sauge.html', old:'', name:'Checklist : photo cadre sauge'},
+      {id:'pg-92', code:'PG-92', file:'PG-92-etape-par-etape.html', old:'', name:'Étape par étape (4 blocs)'},
+      {id:'pg-93', code:'PG-93', file:'PG-93-etude-de-cas.html', old:'', name:'Étude de cas'},
+      {id:'pg-94', code:'PG-94', file:'PG-94-titre-feuillage.html', old:'', name:'Titre + photos feuillage'},
+      {id:'pg-95', code:'PG-95', file:'PG-95-expertise-2-demi-arches.html', old:'', name:'Expertise : 2 demi-arches'},
+      {id:'pg-96', code:'PG-96', file:'PG-96-attentes-3-etapes-arches.html', old:'', name:'À quoi s’attendre (3 étapes)'},
+      {id:'pg-97', code:'PG-97', file:'PG-97-conseils-bonus-5-fleches.html', old:'', name:'Conseils bonus (5 flèches)'},
+      {id:'pg-98', code:'PG-98', file:'PG-98-calendrier-6-etapes.html', old:'', name:'Calendrier (6 étapes + jalons)'},
+      {id:'pg-99', code:'PG-99', file:'PG-99-comparaison-avant-apres.html', old:'', name:'Comparaison : avant → après'},
+      {id:'pg-100', code:'PG-100', file:'PG-100-resultats-vs.html', old:'', name:'Résultats : situation actuelle VS résultat'},
+      {id:'pg-101', code:'PG-101', file:'PG-101-ressources-3-arches.html', old:'', name:'Ressources recommandées (3)'},
+      {id:'pg-102', code:'PG-102', file:'PG-102-bonjour-je-suis-photo-citation.html', old:'', name:'Bonjour : bio + photo'},
+      {id:'pg-103', code:'PG-103', file:'PG-103-bienvenue-photo-haut.html', old:'', name:'Bienvenue : photo + panneau'},
+      {id:'pg-104', code:'PG-104', file:'PG-104-equipe-2-fiches-horizontales.html', old:'', name:'Équipe : 2 fiches horizontales'},
+      {id:'pg-105', code:'PG-105', file:'PG-105-equipe-2-colonnes-mission.html', old:'', name:'Équipe : 2 colonnes + mission'},
+      {id:'pg-106', code:'PG-106', file:'PG-106-mentions-legales.html', old:'', name:'Mentions légales (cadre rose)'},
+      {id:'pg-107', code:'PG-107', file:'PG-107-ma-promesse-photo-plein.html', old:'', name:'Ma promesse : photo + boîte blanche'},
+      {id:'pg-108', code:'PG-108', file:'PG-108-defi-7-jours-apercu-3-lignes.html', old:'', name:'Défi 7 jours : aperçu (3 lignes)'},
+      {id:'pg-109', code:'PG-109', file:'PG-109-defi-7-jours-apercu-4-lignes.html', old:'', name:'Défi 7 jours : aperçu (4 lignes)'},
+      {id:'pg-110', code:'PG-110', file:'PG-110-defi-7-jours-tableau.html', old:'', name:'Défi 7 jours : tableau'},
+      {id:'pg-111', code:'PG-111', file:'PG-111-defi-14-jours-tableau.html', old:'', name:'Défi 14 jours : tableau'},
+      {id:'pg-112', code:'PG-112', file:'PG-112-defi-21-jours-tableau.html', old:'', name:'Défi 21 jours : tableau'},
+      {id:'pg-113', code:'PG-113', file:'PG-113-defi-30-jours-grille.html', old:'', name:'Défi 30 jours : grille'},
+      {id:'pg-114', code:'PG-114', file:'PG-114-est-ce-pour-vous-2-listes.html', old:'', name:'Est-ce pour vous ? (2 listes)'},
+      {id:'pg-115', code:'PG-115', file:'PG-115-est-ce-pour-vous-photo.html', old:'', name:'Est-ce pour vous ? (photo)'},
+      {id:'pg-116', code:'PG-116', file:'PG-116-atelier-titre-texte-point-cle.html', old:'', name:'Atelier : titre + texte + point clé'},
+      {id:'pg-117', code:'PG-117', file:'PG-117-atelier-colonne-laterale-rose.html', old:'', name:'Atelier : texte + colonne rose'},
+      {id:'pg-118', code:'PG-118', file:'PG-118-atelier-photo-haut-2-colonnes.html', old:'', name:'Atelier : photo haut + 2 colonnes'},
+      {id:'pg-119', code:'PG-119', file:'PG-119-atelier-zone-ecriture-citation.html', old:'', name:'Atelier : cadre + citation'},
+      {id:'pg-120', code:'PG-120', file:'PG-120-atelier-texte-points-cles.html', old:'', name:'Atelier : texte + points clés'},
+      {id:'pg-121', code:'PG-121', file:'PG-121-atelier-texte-zone-lignes.html', old:'', name:'Atelier : texte + zone à lignes'},
+      {id:'pg-122', code:'PG-122', file:'PG-122-questionnaire-1-bloc.html', old:'', name:'Questionnaire : 1 bloc'},
+      {id:'pg-123', code:'PG-123', file:'PG-123-questionnaire-2-blocs.html', old:'', name:'Questionnaire : 2 blocs'},
+      {id:'pg-124', code:'PG-124', file:'PG-124-questionnaire-3-blocs.html', old:'', name:'Questionnaire : 3 blocs'},
+      {id:'pg-125', code:'PG-125', file:'PG-125-questionnaire-4-blocs.html', old:'', name:'Questionnaire : 4 blocs'},
+      {id:'pg-126', code:'PG-126', file:'PG-126-checklist-2-colonnes-notes.html', old:'', name:'Checklist : 2 colonnes + notes'},
+      {id:'pg-127', code:'PG-127', file:'PG-127-checklist-2-colonnes-8-items.html', old:'', name:'Checklist : 2 colonnes (8 items)'},
+      {id:'pg-128', code:'PG-128', file:'PG-128-checklist-1-colonne-8-items.html', old:'', name:'Checklist : 1 colonne (8 items)'},
+      {id:'pg-129', code:'PG-129', file:'PG-129-checklist-2-colonnes-groupes.html', old:'', name:'Checklist : 2 colonnes (3 groupes)'},
+      {id:'pg-130', code:'PG-130', file:'PG-130-checklist-barres-8.html', old:'', name:'Checklist : barres (8)'},
+      {id:'pg-131', code:'PG-131', file:'PG-131-checklist-cartes-2-colonnes.html', old:'', name:'Checklist : cartes 2 colonnes'},
+      {id:'pg-132', code:'PG-132', file:'PG-132-etapes-3-photos.html', old:'', name:'Étapes d’action : 3 + photos'},
+      {id:'pg-133', code:'PG-133', file:'PG-133-etapes-3-notes.html', old:'', name:'Étapes d’action : 3 + zone notes'},
+      {id:'pg-134', code:'PG-134', file:'PG-134-etapes-4-liste.html', old:'', name:'Étapes d’action : 4 en liste'},
+      {id:'pg-135', code:'PG-135', file:'PG-135-etapes-5-liste.html', old:'', name:'Étapes d’action : 5 en liste'},
+      {id:'pg-136', code:'PG-136', file:'PG-136-etapes-6-deux-colonnes.html', old:'', name:'Étapes d’action : 6 en 2 colonnes'},
+      {id:'pg-137', code:'PG-137', file:'PG-137-ardoise-copyright-fond-sombre.html', old:'', name:'Ardoise : copyright (fond sombre)'},
+      {id:'pg-138', code:'PG-138', file:'PG-138-ardoise-avertissement.html', old:'', name:'Ardoise : avertissement'},
+      {id:'pg-139', code:'PG-139', file:'PG-139-ardoise-bienvenue-photo-2-colonnes.html', old:'', name:'Ardoise : bienvenue + signature'},
+      {id:'pg-140', code:'PG-140', file:'PG-140-ardoise-titre-simple-fond-sombre.html', old:'', name:'Ardoise : fond sombre 2 colonnes'},
+      {id:'pg-141', code:'PG-141', file:'PG-141-ardoise-photo-haut-numero-titre-2-colonnes.html', old:'', name:'Ardoise : photo + n° + titre'},
+      {id:'pg-142', code:'PG-142', file:'PG-142-ardoise-photo-haut-3-colonnes-numerotees.html', old:'', name:'Ardoise : 3 colonnes numérotées'},
+      {id:'pg-143', code:'PG-143', file:'PG-143-ardoise-2-photos-titre-citation-serif.html', old:'', name:'Ardoise : photos + titre + texte'},
+      {id:'pg-144', code:'PG-144', file:'PG-144-ardoise-fond-sombre-variante.html', old:'', name:'Ardoise : fond sombre (variante)'},
+      {id:'pg-145', code:'PG-145', file:'PG-145-ardoise-photo-haut-numero-titre-variante.html', old:'', name:'Ardoise : photo + n° + titre (variante)'},
+      {id:'pg-146', code:'PG-146', file:'PG-146-ardoise-photo-haut-3-colonnes-variante.html', old:'', name:'Ardoise : 3 colonnes (variante)'},
+      {id:'pg-147', code:'PG-147', file:'PG-147-ardoise-3-photos-colonne-titre-texte.html', old:'', name:'Ardoise : colonne 3 photos + texte'},
+      {id:'pg-148', code:'PG-148', file:'PG-148-ardoise-lettrine-geante-2-photos.html', old:'', name:'Ardoise : lettrine géante'},
+      {id:'pg-149', code:'PG-149', file:'PG-149-ardoise-2-photos-titre-vertical.html', old:'', name:'Ardoise : 2 photos + titre vertical'},
+      {id:'pg-150', code:'PG-150', file:'PG-150-ardoise-texte-photos-haut-bas-lead-serif.html', old:'', name:'Ardoise : texte + 2 photos + lead'},
+      {id:'pg-151', code:'PG-151', file:'PG-151-ardoise-photo-haut-2-photos-legendes.html', old:'', name:'Ardoise : photo haut + 2 légendes'},
+      {id:'pg-152', code:'PG-152', file:'PG-152-elegant-bienvenue-photo-inclinee.html', old:'', name:'Élégant : message de bienvenue'},
+      {id:'pg-153', code:'PG-153', file:'PG-153-elegant-photo-haut-3-colonnes-2-blocs.html', old:'', name:'Élégant : photo + 3 colonnes + 2 blocs'},
+      {id:'pg-154', code:'PG-154', file:'PG-154-elegant-photo-gauche-texte-droite-lignes.html', old:'', name:'Élégant : photo + texte + filets'},
+      {id:'pg-155', code:'PG-155', file:'PG-155-elegant-photo-grande-texte-superpose.html', old:'', name:'Élégant : grande photo + texte'},
+      {id:'pg-156', code:'PG-156', file:'PG-156-elegant-photo-boite-peche-citation.html', old:'', name:'Élégant : photo + boîte pêche + citation'},
+      {id:'pg-157', code:'PG-157', file:'PG-157-sierra-5-conseils-photo-droite.html', old:'', name:'Sierra : 5 conseils + photo'},
+      {id:'pg-158', code:'PG-158', file:'PG-158-sierra-photo-haut-2-colonnes.html', old:'', name:'Sierra : photo + 2 colonnes'},
+      {id:'pg-159', code:'PG-159', file:'PG-159-sierra-ressources-3-blocs-photos.html', old:'', name:'Sierra : ressources 3 blocs'},
+      {id:'pg-160', code:'PG-160', file:'PG-160-sierra-ressources-liste-5-boutons.html', old:'', name:'Sierra : liste 5 ressources'},
+      {id:'pg-161', code:'PG-161', file:'PG-161-sierra-texte-citation-bas.html', old:'', name:'Sierra : texte + citation'},
+      {id:'pg-162', code:'PG-162', file:'PG-162-sierra-galerie-5-photos-serie.html', old:'', name:'Sierra : galerie 5 photos'},
+      {id:'pg-163', code:'PG-163', file:'PG-163-sierra-faq-2-colonnes.html', old:'', name:'Sierra : FAQ 2 colonnes'},
+      {id:'pg-164', code:'PG-164', file:'PG-164-sierra-equipe-3-membres.html', old:'', name:'Sierra : équipe 3 membres'},
+      {id:'pg-165', code:'PG-165', file:'PG-165-sierra-photo-gauche-pleine-hauteur.html', old:'', name:'Sierra : photo pleine hauteur gauche'},
+      {id:'pg-166', code:'PG-166', file:'PG-166-sierra-2-photos-2-sous-titres.html', old:'', name:'Sierra : 2 photos + 2 sous-titres'},
+      {id:'pg-167', code:'PG-167', file:'PG-167-bundle-auteur-photo-ronde-reseaux.html', old:'', name:'Bundle : à propos de l auteur'},
+      {id:'pg-168', code:'PG-168', file:'PG-168-bundle-2-photos-empilees.html', old:'', name:'Bundle : 2 photos empilées'},
+      {id:'pg-169', code:'PG-169', file:'PG-169-bundle-photos-gauche-3-sections.html', old:'', name:'Bundle : photos gauche + 3 sections'},
+      {id:'pg-170', code:'PG-170', file:'PG-170-bundle-grande-photo-centrale.html', old:'', name:'Bundle : grande photo centrale'},
+      {id:'pg-171', code:'PG-171', file:'PG-171-bundle-2-photos-texte-bas.html', old:'', name:'Bundle : 2 photos + texte'},
+      {id:'pg-172', code:'PG-172', file:'PG-172-bundle-photo-haut-citation-gauche.html', old:'', name:'Bundle : photo haut + citation'},
+      {id:'pg-173', code:'PG-173', file:'PG-173-bundle-texte-gauche-citation-photo.html', old:'', name:'Bundle : texte + citation + photo'},
+      {id:'pg-174', code:'PG-174', file:'PG-174-bundle-bandeau-clair-2-colonnes.html', old:'', name:'Bundle : bandeau + 2 colonnes'},
+      {id:'pg-175', code:'PG-175', file:'PG-175-bundle-encadre-bleu-texte.html', old:'', name:'Bundle : texte + encadré bleu'},
+      {id:'pg-176', code:'PG-176', file:'PG-176-bundle-texte-haut-grande-photo-bas.html', old:'', name:'Bundle : texte haut + photo bas'},
+      {id:'pg-177', code:'PG-177', file:'PG-177-bundle-2-colonnes-photos-bord.html', old:'', name:'Bundle : 2 colonnes + photos bord'},
+      {id:'pg-178', code:'PG-178', file:'PG-178-business-texte-photo-bureau.html', old:'', name:'Business : texte + photo bureau'},
+      {id:'pg-179', code:'PG-179', file:'PG-179-business-grand-titre-bandeau-bleu.html', old:'', name:'Business : titre + bandeau bleu'},
+      {id:'pg-180', code:'PG-180', file:'PG-180-business-titre-liste-6-icones.html', old:'', name:'Business : texte + 6 icônes'},
+      {id:'pg-181', code:'PG-181', file:'PG-181-business-portrait-colonne-bleue.html', old:'', name:'Business : portrait + colonne bleue'},
+      {id:'pg-182', code:'PG-182', file:'PG-182-business-equipe-4-portraits-texte.html', old:'', name:'Business : équipe 4 portraits'},
+      {id:'pg-183', code:'PG-183', file:'PG-183-business-titre-4-icones-encadre.html', old:'', name:'Business : 4 icônes + encadré'},
+      {id:'pg-184', code:'PG-184', file:'PG-184-business-barre-bleue-4-etapes.html', old:'', name:'Business : barre bleue 4 étapes'},
+      {id:'pg-185', code:'PG-185', file:'PG-185-business-titre-photo-metro-texte.html', old:'', name:'Business : photo + texte'},
+      {id:'pg-186', code:'PG-186', file:'PG-186-business-2-blocs-puces.html', old:'', name:'Business : 2 blocs à puces'},
+      {id:'pg-187', code:'PG-187', file:'PG-187-business-2-blocs-fiche-membre.html', old:'', name:'Business : 2 blocs + fiche membre'},
+      {id:'pg-188', code:'PG-188', file:'PG-188-business-portrait-etiquette-numero.html', old:'', name:'Business : portrait + numéro'},
+      {id:'pg-189', code:'PG-189', file:'PG-189-business-liste-10-lignes-filets.html', old:'', name:'Business : liste 10 lignes'},
+      {id:'pg-190', code:'PG-190', file:'PG-190-business-5-lignes-libelle-texte.html', old:'', name:'Business : 5 lignes libellé + texte'},
+      {id:'pg-191', code:'PG-191', file:'PG-191-business-schema-scrum-2-blocs.html', old:'', name:'Business : schéma + 2 blocs'},
+      {id:'pg-192', code:'PG-192', file:'PG-192-business-tableau-coches-7-lignes.html', old:'', name:'Business : tableau avec coches'},
+      {id:'pg-193', code:'PG-193', file:'PG-193-business-tableau-barres-progression.html', old:'', name:'Business : barres de progression'},
+      {id:'pg-194', code:'PG-194', file:'PG-194-business-equipe-4-portraits-bis.html', old:'', name:'Business : équipe 4 portraits bis'},
+      {id:'pg-195', code:'PG-195', file:'PG-195-business-carte-monde-2-colonnes.html', old:'', name:'Business : carte du monde'},
+      {id:'pg-196', code:'PG-196', file:'PG-196-business-graphique-barres-icones.html', old:'', name:'Business : graphique barres + icônes'},
+      {id:'pg-197', code:'PG-197', file:'PG-197-business-bulles-population.html', old:'', name:'Business : bulles + population'},
+      {id:'pg-198', code:'PG-198', file:'PG-198-business-cercles-concentriques.html', old:'', name:'Business : cercles concentriques'},
+      {id:'pg-199', code:'PG-199', file:'PG-199-business-frise-4-etapes-fleche.html', old:'', name:'Business : frise 4 étapes'},
+      {id:'pg-200', code:'PG-200', file:'PG-200-business-pourcentages-silhouettes.html', old:'', name:'Business : pourcentages + silhouettes'},
+      {id:'pg-201', code:'PG-201', file:'PG-201-business-texte-photo-bureau-bis.html', old:'', name:'Business : texte + photo bureau bis'},
+      {id:'pg-202', code:'PG-202', file:'PG-202-business-titre-bandeau-bleu-bis.html', old:'', name:'Business : titre + bandeau bleu bis'},
+      {id:'pg-203', code:'PG-203', file:'PG-203-business-6-icones-texte-haut.html', old:'', name:'Business : texte + 6 icônes'},
+      {id:'pg-204', code:'PG-204', file:'PG-204-business-equipe-4-portraits-ter.html', old:'', name:'Business : équipe 4 portraits ter'},
+      {id:'pg-205', code:'PG-205', file:'PG-205-business-4-icones-encadre-bleu.html', old:'', name:'Business : 4 icônes + encadré bleu'},
+      {id:'pg-206', code:'PG-206', file:'PG-206-projet-bienvenue-photo-signature.html', old:'', name:'Projet : bienvenue + photo'},
+      {id:'pg-207', code:'PG-207', file:'PG-207-projet-a-propos-vision-objectifs.html', old:'', name:'Projet : à propos + vision'},
+      {id:'pg-208', code:'PG-208', file:'PG-208-projet-equipe-3-cartes-rondes.html', old:'', name:'Projet : équipe 3 membres'},
+      {id:'pg-209', code:'PG-209', file:'PG-209-projet-services-6-icones.html', old:'', name:'Projet : services 6 icônes'},
+      {id:'pg-210', code:'PG-210', file:'PG-210-projet-photo-pleine-page-titre-haut.html', old:'', name:'Projet : grande photo'},
+      {id:'pg-211', code:'PG-211', file:'PG-211-projet-travaux-mosaique-photos.html', old:'', name:'Projet : travaux + mosaïque'},
+      {id:'pg-212', code:'PG-212', file:'PG-212-projet-travaux-4-projets-liste.html', old:'', name:'Projet : 4 projets en liste'},
+      {id:'pg-213', code:'PG-213', file:'PG-213-projet-etude-de-cas-2-photos.html', old:'', name:'Projet : étude de cas'},
+      {id:'pg-214', code:'PG-214', file:'PG-214-projet-capacites-photo-6-boites.html', old:'', name:'Projet : capacités 6 boîtes'},
+      {id:'pg-215', code:'PG-215', file:'PG-215-projet-clients-logos-liste.html', old:'', name:'Projet : clients + logos'},
+      {id:'pg-216', code:'PG-216', file:'PG-216-projet-travail-video-grande-phrase.html', old:'', name:'Projet : phrase d’accroche + photo'},
+      {id:'pg-217', code:'PG-217', file:'PG-217-projet-calendrier-3-etapes.html', old:'', name:'Projet : timeline 3 étapes'},
+      {id:'pg-218', code:'PG-218', file:'PG-218-projet-calendrier-etape-4-photo.html', old:'', name:'Projet : étape 4 + photo'},
+      {id:'pg-219', code:'PG-219', file:'PG-219-projet-offres-3-forfaits.html', old:'', name:'Projet : 3 forfaits'},
+      {id:'pg-220', code:'PG-220', file:'PG-220-projet-budget-3-tableaux.html', old:'', name:'Projet : budget en tableaux'},
+      {id:'pg-221', code:'PG-221', file:'PG-221-projet-acceptation-devis.html', old:'', name:'Projet : acceptation de devis'},
+      {id:'pg-222', code:'PG-222', file:'PG-222-projet-formulaire-accord.html', old:'', name:'Projet : formulaire d’accord'},
+      {id:'pg-223', code:'PG-223', file:'PG-223-projet-termes-4-cartes.html', old:'', name:'Projet : termes et conditions'},
+      {id:'pg-224', code:'PG-224', file:'PG-224-projet-photo-grande-legende.html', old:'', name:'Projet : grande photo + légende'},
+      {id:'pg-225', code:'PG-225', file:'PG-225-noir-bienvenue-photo-ovale-signature.html', old:'', name:'Noir Bebas : bienvenue + photo ovale'},
+      {id:'pg-226', code:'PG-226', file:'PG-226-noir-2-photos-citation-centree.html', old:'', name:'Noir Bebas : 2 photos + citation'},
+      {id:'pg-227', code:'PG-227', file:'PG-227-noir-grande-photo-3-colonnes-sous-titre.html', old:'', name:'Noir Bebas : grande photo + 3 colonnes'},
+      {id:'pg-228', code:'PG-228', file:'PG-228-noir-3-colonnes-cases-photo-sombre.html', old:'', name:'Noir Bebas : 3 colonnes + photo sombre'},
+      {id:'pg-229', code:'PG-229', file:'PG-229-noir-sous-titre-photo-noix-3-colonnes.html', old:'', name:'Noir Bebas : sous-titre + photo + 3 colonnes'},
+      {id:'pg-230', code:'PG-230', file:'PG-230-noir-photo-mode-sous-titre-texte.html', old:'', name:'Noir Bebas : photo + sous-titre'},
+      {id:'pg-231', code:'PG-231', file:'PG-231-stage-sous-titre-bandeau-2-photos.html', old:'', name:'Stage : texte + bandeau + 2 photos'},
+      {id:'pg-232', code:'PG-232', file:'PG-232-stage-organisation-4-etapes.html', old:'', name:'Stage : organisation 4 étapes'},
+      {id:'pg-233', code:'PG-233', file:'PG-233-stage-projet-01-bloc-lilas.html', old:'', name:'Stage : projet 01 + bloc lilas'},
+      {id:'pg-234', code:'PG-234', file:'PG-234-stage-mosaique-3-photos.html', old:'', name:'Stage : mosaïque 3 photos'},
+      {id:'pg-235', code:'PG-235', file:'PG-235-stage-bilan-technique-humain.html', old:'', name:'Stage : bilan technique + humain'},
+      {id:'pg-236', code:'PG-236', file:'PG-236-digital-copyright-panneau-noir-photo.html', old:'', name:'Digital : copyright panneau noir'},
+      {id:'pg-237', code:'PG-237', file:'PG-237-digital-bienvenue-photo-large-2-colonnes.html', old:'', name:'Digital : hello + photo large'},
+      {id:'pg-238', code:'PG-238', file:'PG-238-digital-equipe-4-membres-photos.html', old:'', name:'Digital : équipe 4 membres'},
+      {id:'pg-239', code:'PG-239', file:'PG-239-digital-histoire-succes-portrait-2-colonnes.html', old:'', name:'Digital : histoire de succès'},
+      {id:'pg-240', code:'PG-240', file:'PG-240-digital-panneau-noir-photo-2-colonnes.html', old:'', name:'Digital : panneau noir + photo'},
+      {id:'pg-241', code:'PG-241', file:'PG-241-digital-2-colonnes-photo-large-sous-titres.html', old:'', name:'Digital : texte + photo large'},
+      {id:'pg-242', code:'PG-242', file:'PG-242-digital-panneau-noir-2-photos-citation.html', old:'', name:'Digital : panneau noir 2 photos'},
+      {id:'pg-243', code:'PG-243', file:'PG-243-digital-2-colonnes-portrait-droite.html', old:'', name:'Digital : texte + portrait droite'},
+      {id:'pg-244', code:'PG-244', file:'PG-244-digital-silhouettes-photo-sombre-colonnes.html', old:'', name:'Digital : silhouettes + colonnes'},
+      {id:'pg-245', code:'PG-245', file:'PG-245-digital-photo-chapeau-citation-colonnes.html', old:'', name:'Digital : portrait + citation'},
+      {id:'pg-246', code:'PG-246', file:'PG-246-digital-processus-4-etapes-panneau.html', old:'', name:'Digital : processus 4 étapes'},
+      {id:'pg-247', code:'PG-247', file:'PG-247-digital-conseils-3-colonnes-feuilles.html', old:'', name:'Digital : conseils + feuilles'},
+      {id:'pg-248', code:'PG-248', file:'PG-248-digital-ressources-4-photos-liens.html', old:'', name:'Digital : ressources 4 photos'},
+      {id:'pg-249', code:'PG-249', file:'PG-249-digital-faq-5-questions-panneau-noir.html', old:'', name:'Digital : FAQ 5 questions'},
+      {id:'pg-250', code:'PG-250', file:'PG-250-elegant-photo-pleine-page-fragrant.html', old:'', name:'Elegant : photo + titre fragrant'},
+      {id:'pg-251', code:'PG-251', file:'PG-251-elegant-lettrine-C-3-rubriques.html', old:'', name:'Elegant : grande lettre C + rubriques'},
+      {id:'pg-252', code:'PG-252', file:'PG-252-elegant-in-this-issue-portrait.html', old:'', name:'Elegant : in this issue + portrait'},
+      {id:'pg-253', code:'PG-253', file:'PG-253-elegant-she-wears-nouveautes-2-colonnes.html', old:'', name:'Elegant : She wears + 2 colonnes'},
+      {id:'pg-254', code:'PG-254', file:'PG-254-elegant-accessoires-photo-plein-titre.html', old:'', name:'Elegant : accessoires photo plein'},
+      {id:'pg-255', code:'PG-255', file:'PG-255-elegant-style-guide-fond-noir-photo.html', old:'', name:'Elegant : style guide fond noir'},
+      {id:'pg-256', code:'PG-256', file:'PG-256-elegant-texte-2-colonnes-3-photos-bas.html', old:'', name:'Elegant : texte + 3 photos'},
+      {id:'pg-257', code:'PG-257', file:'PG-257-elegant-chapitre-5-photo-pleine-peau.html', old:'', name:'Elegant : chapitre 5 photo'},
+      {id:'pg-258', code:'PG-258', file:'PG-258-elegant-skincare-cosmetic-gros-plan.html', old:'', name:'Elegant : skincare + cosmetic'},
+      {id:'pg-259', code:'PG-259', file:'PG-259-elegant-interview-exclusive-portrait-sibyl.html', old:'', name:'Elegant : interview exclusive'},
+      {id:'pg-260', code:'PG-260', file:'PG-260-elegant-fashion-events-fond-noir-photos.html', old:'', name:'Elegant : fashion events noir'},
+      {id:'pg-261', code:'PG-261', file:'PG-261-elegant-lettrine-A-conversation.html', old:'', name:'Elegant : lettre A + conversation'},
+      {id:'pg-262', code:'PG-262', file:'PG-262-livre-rapport-marque-cadre-gris.html', old:'', name:'Livre : rapport marque cadre gris'},
+      {id:'pg-263', code:'PG-263', file:'PG-263-livre-magazine-whos-that-girl-lettrine.html', old:'', name:'Livre : Whos that girl + lettrine'},
+      {id:'pg-264', code:'PG-264', file:'PG-264-sierra-bienvenue-bandeau-photo-2-colonnes.html', old:'', name:'Sierra : bienvenue + photo bandeau'},
+      {id:'pg-265', code:'PG-265', file:'PG-265-sierra-telechargement-cours-gratuit-bouton.html', old:'', name:'Sierra : télécharger le cours'},
+      {id:'pg-266', code:'PG-266', file:'PG-266-sierra-bandeau-citation-rouge-2-colonnes.html', old:'', name:'Sierra : encadré citation + 2 colonnes'},
+      {id:'pg-267', code:'PG-267', file:'PG-267-sierra-photo-poire-bandeau-rouge-texte.html', old:'', name:'Sierra : photo + bandeau rouge'},
+      {id:'pg-268', code:'PG-268', file:'PG-268-liste-defi-30-jours-arial.html', old:'', name:'Liste : defi 30 jours'},
+    {id:'cv-11', code:'CV-11', file:'CV-11-ebook-couverture-teal.html', name:"Couverture ebook teal"},
+      {id:'cv-12', code:'CV-12', file:'CV-12-ebook-couverture-carre-sauge.html', old:'', name:'Couverture carré sauge'},
+      {id:'cv-13', code:'CV-13', file:'CV-13-ebook-couverture-photo-sombre.html', old:'', name:'Couverture photo sombre + bande sauge'},
+      {id:'cv-14', code:'CV-14', file:'CV-14-ebook-couverture-titre-vertical.html', old:'', name:'Couverture titre vertical'},
+      {id:'cv-15', code:'CV-15', file:'CV-15-workbook-couverture-photo-boite-rose.html', old:'', name:'Workbook : photo + boîte rose'},
+      {id:'cv-16', code:'CV-16', file:'CV-16-workbook-couverture-photo-haut.html', old:'', name:'Workbook : photo en haut'},
+      {id:'cv-17', code:'CV-17', file:'CV-17-workbook-couverture-cadre-vertical.html', old:'', name:'Workbook : cadre + titre coupé'},
+      {id:'cv-18', code:'CV-18', file:'CV-18-workbook-couverture-photo-plein.html', old:'', name:'Workbook : photo plein écran'},
+      {id:'cv-19', code:'CV-19', file:'CV-19-ardoise-couverture-arche-photo.html', old:'', name:'Ardoise : couverture arche'},
+      {id:'cv-20', code:'CV-20', file:'CV-20-ardoise-couverture-photo-bandeau-blanc.html', old:'', name:'Ardoise : couverture photo + bandeau'},
+      {id:'cv-21', code:'CV-21', file:'CV-21-ardoise-couverture-photo-plein-cadre.html', old:'', name:'Ardoise : couverture photo plein + cadre'},
+      {id:'cv-22', code:'CV-22', file:'CV-22-elegant-couverture-degrade-photo-diagonale.html', old:'', name:'Élégant : couverture dégradé + photo diagonale'},
+      {id:'cv-23', code:'CV-23', file:'CV-23-sierra-couverture-photo-centrale.html', old:'', name:'Sierra : couverture photo centrale'},
+      {id:'cv-24', code:'CV-24', file:'CV-24-sierra-couverture-titre-majuscules.html', old:'', name:'Sierra : couverture titre majuscules'},
+      {id:'cv-25', code:'CV-25', file:'CV-25-bundle-couverture-photo-bas.html', old:'', name:'Bundle : couverture photo en bas'},
+      {id:'cv-26', code:'CV-26', file:'CV-26-bundle-couverture-titre-haut-photo.html', old:'', name:'Bundle : couverture titre haut + photo'},
+      {id:'cv-27', code:'CV-27', file:'CV-27-bundle-couverture-photo-droite-italique.html', old:'', name:'Bundle : couverture photo droite'},
+      {id:'cv-28', code:'CV-28', file:'CV-28-business-couverture-photo-bloc-bleu.html', old:'', name:'Business : couverture bloc bleu'},
+      {id:'cv-29', code:'CV-29', file:'CV-29-projet-couverture-boite-grise.html', old:'', name:'Projet : couverture boîte grise'},
+      {id:'cv-30', code:'CV-30', file:'CV-30-projet-couverture-photo-femme.html', old:'', name:'Projet : couverture photo'},
+      {id:'cv-31', code:'CV-31', file:'CV-31-noir-couverture-ebook-photo-diagonale.html', old:'', name:'Noir Bebas : couverture E-BOOK'},
+      {id:'cv-32', code:'CV-32', file:'CV-32-stage-couverture-titre-gras-cercle.html', old:'', name:'Stage : couverture rapport'},
+      {id:'cv-33', code:'CV-33', file:'CV-33-digital-couverture-titre-photo-levres.html', old:'', name:'Digital : couverture titre + photo'},
+      {id:'cv-34', code:'CV-34', file:'CV-34-elegant-couverture-magazine-photo-noir.html', old:'', name:'Elegant : couverture magazine'},
+      {id:'cv-35', code:'CV-35', file:'CV-35-elegant-couverture-dos-sibyl.html', old:'', name:'Elegant : couverture + Sibyl'},
+      {id:'cv-36', code:'CV-36', file:'CV-36-sierra-couverture-photo-large-titre-gauche.html', old:'', name:'Sierra : couverture photo large'},
+    {id:'sm-10', code:'SM-10', file:'SM-10-sommaire-livre.html', name:"Sommaire style livre"},
+      {id:'sm-11', code:'SM-11', file:'SM-11-sommaire-coach-6-sections.html', old:'', name:'Sommaire 6 sections (coach)'},
+      {id:'sm-12', code:'SM-12', file:'SM-12-sommaire-photo-gauche-5-entrees.html', old:'', name:'Sommaire : collage + 5 entrées'},
+      {id:'sm-13', code:'SM-13', file:'SM-13-sommaire-plan-du-cours-6.html', old:'', name:'Plan du cours (6 sections)'},
+      {id:'sm-14', code:'SM-14', file:'SM-14-ardoise-sommaire-liste-photo-plante.html', old:'', name:'Ardoise : sommaire liste + photo'},
+      {id:'sm-15', code:'SM-15', file:'SM-15-ardoise-sommaire-numeros-gras.html', old:'', name:'Ardoise : sommaire 6 numéros'},
+      {id:'sm-16', code:'SM-16', file:'SM-16-ardoise-sommaire-serif-photo-gauche.html', old:'', name:'Ardoise : sommaire chiffres serif'},
+      {id:'sm-17', code:'SM-17', file:'SM-17-elegant-sommaire-photo-titre-2-colonnes.html', old:'', name:'Élégant : sommaire 6 chapitres'},
+      {id:'sm-18', code:'SM-18', file:'SM-18-sierra-sommaire-8-chapitres-2-colonnes.html', old:'', name:'Sierra : sommaire 8 chapitres'},
+      {id:'sm-19', code:'SM-19', file:'SM-19-bundle-sommaire-5-chapitres-photo.html', old:'', name:'Bundle : sommaire 5 chapitres'},
+      {id:'sm-20', code:'SM-20', file:'SM-20-projet-sommaire-11-entrees.html', old:'', name:'Projet : sommaire 11 entrées'},
+      {id:'sm-21', code:'SM-21', file:'SM-21-noir-index-3-entrees-centrees.html', old:'', name:'Noir Bebas : index 3 entrées'},
+      {id:'sm-22', code:'SM-22', file:'SM-22-digital-index-10-entrees-pages.html', old:'', name:'Digital : index 10 entrées'}]},
     {cat:'Citations', items:[
       {id:'quote', code:'CT-01', file:'CT-01-citation.html', old:'editor-quote.html', name:'Citation'}]},
     {cat:'Pages finales', items:[
@@ -213,7 +578,16 @@
     const o = 'joydeck_' + t.old + '@' + p.id, n = 'joydeck_' + t.file + '@' + p.id;
     if (localStorage.getItem(o) !== null && localStorage.getItem(n) === null) localStorage.setItem(n, localStorage.getItem(o));
   } catch(e){} });
-  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(project)); } catch(e){} };
+  /* EMADECK_PROJECTS */
+  const PKEY = 'emadeck_projects', CKEY = 'emadeck_current';
+  const loadAll = () => { try { return JSON.parse(localStorage.getItem(PKEY)) || {}; } catch(e){ return {}; } };
+  if (!project.pid) { let c = null; try { c = localStorage.getItem(CKEY); } catch(e){} project.pid = c || uid(); }
+  const persist = () => { try {
+    project.updated = Date.now();
+    localStorage.setItem(KEY, JSON.stringify(project));
+    const all = loadAll(); if ((project.pages && project.pages.length) || all[project.pid]) { all[project.pid] = project; localStorage.setItem(PKEY, JSON.stringify(all)); } /* EMADECK_DEL */
+    localStorage.setItem(CKEY, project.pid);
+  } catch(e){} };
 
   const $ = id => document.getElementById(id);
   const stateKey = p => 'joydeck_' + TPL[p.tpl].file + '@' + p.id;
@@ -233,7 +607,7 @@
         const card = document.createElement('div');
         card.className = 'tcard';
         card.draggable = true;
-        card.innerHTML = '<div class="thumb"><iframe loading="lazy" tabindex="-1" src="' + t.file + '?slot=__lib&embed=1"></iframe></div>' +
+        card.innerHTML = '<div class="thumb"><img loading="lazy" decoding="async" draggable="false" alt="" src="thumbs/' + t.file.replace(/\.html$/i, '.png') + '" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff" onerror="var f=document.createElement(\'iframe\');f.loading=\'lazy\';f.tabIndex=-1;f.src=\'' + t.file + '?slot=__lib&embed=1\';this.replaceWith(f)"></div>' +
                          '<div class="tn">' + t.code + ' · ' + t.name + '</div><button class="add">+ Ajouter</button>';
         card.querySelector('.add').addEventListener('click', () => addPage(t.id));
         card.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', 'tpl:' + t.id); e.dataTransfer.effectAllowed = 'copy'; });
@@ -369,7 +743,7 @@
     editingId = id;
     const p = project.pages[i];
     $('eTitle').textContent = 'Page ' + (i + 1) + ' / ' + project.pages.length + ' — ' + TPL[p.tpl].code + ' · ' + TPL[p.tpl].name;
-    $('eFrame').src = src(p, 'edit');
+    $('eFrame').contentWindow.location.replace(src(p, 'edit'));
     document.body.classList.add('editing');
   }
   function closeEditor(){
@@ -379,7 +753,7 @@
     setTimeout(() => {
       if (p) p.rev = (p.rev || 0) + 1;
       document.body.classList.remove('editing');
-      $('eFrame').src = 'about:blank';
+      $('eFrame').contentWindow.location.replace('about:blank');
       persist(); renderBook();
       editingId = null;
     }, 150);
@@ -398,11 +772,90 @@
   // ---------- Titre / nouveau projet ----------
   $('title').addEventListener('input', e => { project.title = e.target.value; persist(); });
   $('resetBtn').addEventListener('click', () => {
-    if (!confirm('Démarrer un nouveau projet ? Les pages actuelles seront supprimées.')) return;
-    project.pages.forEach(p => { try { localStorage.removeItem(stateKey(p)); } catch(e){} });
-    project = defaultProject();
-    persist(); renderBook();
+    persist();                       // le projet en cours reste dans "My projects"
+    project = {title: 'Untitled project', pages: [], pid: uid()};
+    persist(); renderBook(); closePanel();
   });
+
+  // ---------- Mes projets ----------
+  const pcss = document.createElement('style');
+  pcss.textContent = `
+  #projPanel{position:fixed;top:68px;right:20px;width:400px;max-width:calc(100vw - 40px);max-height:calc(100vh - 100px);overflow:auto;background:#fff;border:1px solid #dfe5f3;border-radius:16px;box-shadow:0 24px 50px -18px rgba(10,23,69,.45);z-index:50;display:none;padding:14px;font-family:inherit}
+  #projPanel.on{display:block;animation:ppIn .25s cubic-bezier(.2,.8,.2,1)}
+  @keyframes ppIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+  #projPanel h4{margin:2px 4px 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6b7390}
+  .pj{display:flex;align-items:center;gap:12px;padding:9px;border:1px solid #e6eaf5;border-radius:12px;margin-bottom:8px;background:#fff;transition:border-color .2s,box-shadow .2s}
+  .pj:hover{border-color:#1F4FD8;box-shadow:0 10px 20px -14px rgba(31,79,216,.6)}
+  .pj.cur{background:#F3F7FF;border-color:#9DB6F5}
+  .pj .pt{flex:none;width:44px;height:57px;border-radius:5px;background:#eef1f8;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+  .pj .pt img{width:100%;height:100%;object-fit:cover;display:block}
+  .pj .pi{flex:1;min-width:0;cursor:pointer}
+  .pj .pi b{display:block;font-size:14px;color:#0B1B4D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pj .pi small{display:block;margin-top:3px;font-size:12px;color:#6b7390}
+  .pj .tag{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1F4FD8;background:#DCE7FF;border-radius:999px;padding:2px 7px;vertical-align:1px}
+  .pj .pa{display:flex;gap:4px}
+  .pj .pa button{border:1px solid #e0e5f2;background:#fff;border-radius:8px;width:30px;height:30px;color:#33406a;font-size:14px;line-height:1}
+  .pj .pa button:hover{background:#0B1B4D;color:#fff;border-color:#0B1B4D}
+  .pj .pa .x:hover{background:#c0392b;border-color:#c0392b}
+  #projEmpty{padding:18px;text-align:center;color:#6b7390;font-size:13px}`;
+  document.head.appendChild(pcss);
+  const panel = document.createElement('div'); panel.id = 'projPanel'; document.body.appendChild(panel);
+  const ago = t => { const m = Math.round((Date.now() - (t || 0)) / 60000); if (!t) return ''; if (m < 1) return 'just now'; if (m < 60) return m + ' min ago'; const h = Math.round(m / 60); if (h < 24) return h + ' h ago'; const d = Math.round(h / 24); return d + (d > 1 ? ' days ago' : ' day ago'); };
+  const esc = x => String(x).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function closePanel(){ panel.classList.remove('on'); }
+  function openProject(id){
+    const all = loadAll(), q = all[id]; if (!q) return;
+    persist();
+    project = JSON.parse(JSON.stringify(q));
+    project.pages = (project.pages || []).filter(p => TPL[p.tpl]);
+    persist(); renderBook(); closePanel();
+  }
+  function dupProject(id){
+    const q = loadAll()[id]; if (!q) return;
+    persist();
+    const c = JSON.parse(JSON.stringify(q)); c.pid = uid(); c.title = (q.title || 'Project') + ' (copy)';
+    c.pages = (c.pages || []).filter(p => TPL[p.tpl]).map(p => {
+      const np = Object.assign({}, p, {id: uid()});
+      try { const v = localStorage.getItem(stateKey(p)); if (v !== null) localStorage.setItem(stateKey(np), v); } catch(e){}
+      return np;
+    });
+    c.updated = Date.now();
+    const all = loadAll(); all[c.pid] = c; try { localStorage.setItem(PKEY, JSON.stringify(all)); } catch(e){}
+    renderPanel();
+  }
+  function delProject(id){
+    const all = loadAll(), q = all[id]; if (!q) return;
+    if (!confirm('Delete "' + (q.title || 'Untitled') + '"? This cannot be undone.')) return;
+    (q.pages || []).filter(p => TPL[p.tpl]).forEach(p => { try { localStorage.removeItem(stateKey(p)); } catch(e){} });
+    delete all[id]; try { localStorage.setItem(PKEY, JSON.stringify(all)); } catch(e){}
+    if (id === project.pid) {
+      project = {title: 'Untitled project', pages: [], pid: uid()};
+      persist(); renderBook();
+    }
+    renderPanel();
+  }
+  function renderPanel(){
+    persist();
+    const list = Object.values(loadAll()).sort((a, b) => (b.updated || 0) - (a.updated || 0));
+    panel.innerHTML = '<h4>My projects</h4>' + (list.length ? '' : '<div id="projEmpty">No saved project yet.</div>');
+    list.forEach(q => {
+      const first = (q.pages || []).filter(p => TPL[p.tpl])[0], n = (q.pages || []).filter(p => TPL[p.tpl]).length;
+      const row = document.createElement('div'); row.className = 'pj' + (q.pid === project.pid ? ' cur' : '');
+      row.innerHTML = '<div class="pt">' + (first ? '<img alt="" src="thumbs/' + esc(TPL[first.tpl].file.replace(/\.html$/i, '.png')) + '" onerror="this.remove()">' : '') + '</div>' +
+        '<div class="pi"><b>' + esc(q.title || 'Untitled') + (q.pid === project.pid ? '<span class="tag">Open</span>' : '') + '</b><small>' + n + ' page' + (n === 1 ? '' : 's') + ' \u00b7 ' + ago(q.updated) + '</small></div>' +
+        '<div class="pa"><button title="Duplicate" data-a="dup">\u29c9</button><button class="x" title="Delete" data-a="del">\u2715</button></div>';
+      row.querySelector('.pi').addEventListener('click', () => openProject(q.pid));
+      row.querySelector('.pt').addEventListener('click', () => openProject(q.pid));
+      row.querySelector('[data-a=dup]').addEventListener('click', e => { e.stopPropagation(); dupProject(q.pid); });
+      row.querySelector('[data-a=del]').addEventListener('click', e => { e.stopPropagation(); delProject(q.pid); });
+      panel.appendChild(row);
+    });
+  }
+  const pbtn = document.createElement('button'); pbtn.className = 'btn'; pbtn.id = 'projBtn'; pbtn.textContent = 'My projects';
+  $('resetBtn').parentNode.insertBefore(pbtn, $('resetBtn')); $('resetBtn').textContent = 'New project';
+  pbtn.addEventListener('click', e => { e.stopPropagation(); if (panel.classList.contains('on')) closePanel(); else { renderPanel(); panel.classList.add('on'); } });
+  document.addEventListener('click', e => { if (!panel.contains(e.target) && e.target !== pbtn) closePanel(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 
   // ---------- Export PDF de tout l'ebook ----------
   $('exportBtn').addEventListener('click', () => {
@@ -436,5 +889,16 @@
   persist();
 })();
 </script>
+<script src="joydeck-palettes.js?v=1"></script>
+<script src="joydeck-fonts.js?v=1"></script>
+<script src="joydeck-style.js?v=3"></script>
+<script src="joydeck-save.js?v=1"></script>
+<script src="joydeck-signature.js?v=1"></script>
+<script src="joydeck-header.js?v=1"></script>
+<script src="joydeck-numbering.js?v=1"></script>
+<script src="joydeck-library.js?v=1"></script>
+<script src="joydeck-clean.js"></script>
+<script src="joydeck-undo.js"></script>
+<script src="joydeck-select.js"></script>
 </body>
 </html>

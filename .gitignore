@@ -1,0 +1,3 @@
+*.avant-*
+*.bak
+node_modules/
