@@ -178,5 +178,8 @@ details[open] summary::after{transform:rotate(180deg)}
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.05});
   $$('.rv').forEach(function(e){io.observe(e)});
 })();</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="emadeck-auth.js"></script>
+<script src="emadeck-session.js"></script>
 </body>
 </html>
