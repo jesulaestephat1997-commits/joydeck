@@ -195,3 +195,114 @@ add('cv-amy','CV - pink band',{
   html:function(){return A(0,0,816,150,'','background:var(--p)')+A(0,48,816,0,D('text-align:center',NM('SARAH CANDAL','PROFESSIONAL TITLE',{fs:30,ls:.3,w:600,ts:11,tl:.3})))+
    A(56,190,226,0,S('acc','contact')+S('acc','skills')+S('acc','lang'))+A(316,190,446,0,S('acc','profile')+S('acc','exp',{jobs:3})+S('acc','edu'))}});
 
+/* ===== D. Elegant & photo ===== */
+add('cv-bennett','CV - beige label rows & photo',{
+  photo:true,
+  preset:PR(['#2E2B28','#4A4642','#8A7F74','#DDD7CF','#E8E4DE',"'Cormorant Garamond', serif",SANS],[['ph1',586,52,134,160,'rect','#C9C2B8','#A59C90']]),
+  html:function(){return A(60,76,500,0,NM('SARAH CANDAL','PROFESSIONAL TITLE',{fs:36,ls:.24,w:500,ts:10.5,tl:.3}))+A(60,250,700,0,S('lbl','profile')+S('lbl','exp',{jobs:3})+S('lbl','edu')+S('lbl','skills')+S('lbl','contact'))}});
+add('cv-sandra','CV - dated rows & leaf',{
+  photo:true,
+  preset:PR(['#2B2B2B','#4A4A4A','#6E7F68','#DADADA','#EFEFEF',"'Cormorant Garamond', serif",SANS],[['ph1',60,56,130,130,'circle','#C4C4C4','#9A9A9A']]),
+  html:function(){return A(616,0,200,190,LEAF)+A(222,84,400,0,NM('Sarah Candal','FASHION BLOGGER',{fs:42,w:600,ts:11,tl:.3}))+
+   A(60,250,200,0,S('plain','contact')+S('plain','skills')+S('plain','lang'))+A(296,250,464,0,S('rule','edu',{t:'SCHOOL EDUCATION',dated:true})+S('rule','exp',{dated:true,jobs:3}))}});
+add('cv-carla','CV - beige serif & sliders',{
+  preset:PR(['#2F3A2C','#4A5446','#6B7B5E','#DCD6C6','#EBE6DA',"'Libre Baskerville', serif",SANS]),
+  html:function(){return A(60,64,500,0,NM('Sarah<br>Candal','DESIGNER & 3D ARTIST',{fs:46,w:700,lh:1.05,ts:11,tl:.24,mt:12}))+A(540,66,216,0,D('text-align:right;font:500 10px var(--fb);letter-spacing:.2em;color:var(--x)',E('CURRICULUM VITAE')))+
+   A(60,290,696,0,S('rule','profile',{t:'PROFESSIONAL PROFILE'})+D('display:flex;gap:34px',D('flex:1',S('rule','edu'))+D('flex:1.5',S('rule','exp',{jobs:2})))+D('display:flex;gap:34px',D('flex:1',S('rule','dots',{t:'LANGUAGES'}))+D('flex:1.5',S('rule','sw'))))}});
+add('cv-alicia','CV - script name & photo',{
+  photo:true,
+  preset:PR(['#2B2B2B','#444444','#2B2B2B','#E4E4E4','#FFFFFF',"'Allura', cursive","'Libre Baskerville', serif"],[['ph1',630,52,108,108,'circle','#CFCFCF','#A5A5A5']]),
+  html:function(){return A(60,44,540,0,D('font:400 62px/1.05 var(--fh);color:var(--t)',E('Sarah Candal'))+D('margin-top:6px',CR()))+
+   A(60,230,230,0,S('acc','cert',{t:'AWARDS'})+S('acc','skills')+S('acc','lang'))+A(330,230,430,0,S('acc','exp',{jobs:3})+S('acc','edu'))}});
+add('cv-lea','CV - tan header (FR)',{
+  photo:true,
+  preset:PR(['#2E2622','#4A3F39','#B58760','#EDDCCB','#FFFFFF',SANS],[['ph1',58,46,160,160,'circle','#D9B896','#B58760']]),
+  html:function(){return A(0,0,816,252,'','background:var(--a)')+A(250,92,500,0,NM('Sarah Candal','CHARGÉE DE PROJET',{fs:36,c:W,tc:W,ts:12,tl:.26}))+
+   A(50,290,240,0,F('acc','contact')+F('acc','edu')+F('acc','skills')+F('acc','lang')+F('acc','int'))+A(330,290,430,0,F('acc','exp',{jobs:3})+F('acc','cert',{t:'EXPERTISE'}))}});
+add('cv-camara','CV - photo left serif (FR)',{
+  photo:true,
+  preset:PR(['#2A2A2A','#444444','#2A2A2A','#E5E5E5','#FFFFFF',"'Playfair Display', serif",SANS],[['ph1',56,56,130,130,'circle','#CFCFCF','#A5A5A5']]),
+  html:function(){return A(220,84,540,0,NM('Sarah Candal','CHARGÉE DE PROJET',{fs:40,w:700,ts:11,tl:.26}))+
+   A(56,250,226,0,F('plain','contact')+F('plain','skills')+F('plain','lang')+F('plain','int'))+VL(300,250,980)+A(330,250,430,0,F('rule','edu',{t:'DIPLÔMES'})+F('rule','exp',{t:'EXPÉRIENCES PROFESSIONNELLES',jobs:3}))}});
+add('cv-celia','CV - big serif name (FR)',{
+  photo:true,
+  preset:PR(['#2B2622','#4A4039','#8A6F5A','#E7DDD0','#EFE8DD',"'Cormorant Garamond', serif",SANS],[['ph1',56,52,176,176,'circle','#D2C2B0','#B09A84']]),
+  html:function(){return A(264,60,500,0,D('font:500 64px/1 var(--fh);color:var(--t)',E('Sarah')+'<br>'+E('Candal'))+D('font:italic 400 15px var(--fh);color:var(--x);margin-top:12px',E('Chargée de communication')))+
+   A(56,300,240,0,F('rule','contact')+F('rule','skills')+F('rule','lang')+F('rule','int'))+A(334,300,426,0,F('rule','exp',{jobs:3})+F('rule','edu'))}});
+add('cv-andreea','CV - white, photo right',{
+  photo:true,
+  preset:PR(['#2D3748','#4A5568','#2D3748','#E2E8F0','#FFFFFF',SANS],[['ph1',636,44,110,110,'circle','#CBD5E0','#A0AEC0']]),
+  html:function(){return A(56,54,540,0,NM('SARAH CANDAL','MARKETING SPECIALIST',{fs:28,ls:.1,w:700,ts:11})+D('margin-top:14px',CR()))+VL(318,214,990)+
+   A(56,214,238,0,S('acc','profile')+S('acc','skills')+S('acc','edu')+S('acc','cert'))+A(342,214,420,0,S('acc','exp',{jobs:4}))}});
+add('cv-jessica','CV - marble script',{
+  photo:true,
+  preset:PR(['#222222','#3C3C3C','#222222','#DADADA','#E6E6E6',"'Great Vibes', cursive",SANS],[['ph1',50,48,150,180,'rect','#BEBEBE','#999999']]),
+  html:function(){return A(232,70,520,0,D('font:400 58px/1.1 var(--fh);color:var(--t)',E('Sarah Candal'))+D('font:500 11px var(--fb);letter-spacing:.34em;color:var(--x);margin-top:8px',E('VISUAL ARTIST')))+
+   A(50,272,200,0,S('rule','contact')+S('rule','skills',{t:'EXPERTISE'})+S('rule','edu'))+A(290,272,470,0,S('rule','profile')+S('rule','exp',{jobs:3}))}});
+add('cv-anna','CV - framed page (FR)',{
+  photo:true,
+  preset:PR(['#2B2B2B','#444444','#2B2B2B','#E8E8E8','#FFFFFF',"'Playfair Display', serif",SANS],[['ph1',66,66,150,190,'rect','#BEBEBE','#8E8E8E']]),
+  html:function(){return A(26,26,764,1004,'','border:2px solid #2B2B2B;box-sizing:border-box')+A(250,96,500,0,NM('SARAH CANDAL','PROFESSIONAL TITLE',{fs:30,ls:.18,w:500,ts:11,tl:.3}))+
+   A(66,290,210,0,F('rule','contact')+F('rule','skills')+F('rule','lang')+F('rule','int'))+A(316,290,440,0,F('rule','profile')+F('rule','exp',{jobs:3})+F('rule','edu'))}});
+add('cv-catalina','CV - serif photo & leaf',{
+  photo:true,
+  preset:PR(['#2F2F2F','#4A4A4A','#6F7A68','#E4E4DD','#F5F3EE',"'Cormorant Garamond', serif",SANS],[['ph1',60,56,150,150,'circle','#D3D3CB','#A8A89F']]),
+  html:function(){return A(616,0,200,190,LEAF)+A(250,86,380,0,NM('Sarah Candal','FASHION DESIGNER',{fs:44,w:600,ts:11,tl:.3}))+
+   A(60,262,240,0,S('rule','about')+S('rule','contact')+S('rule','lang'))+A(336,262,424,0,S('rule','edu')+S('rule','exp',{jobs:3}))}});
+add('cv-dennis','CV - cream serif caps',{
+  photo:true,
+  preset:PR(['#2B2622','#4A423C','#2B2622','#E3D5C6','#EADFD3',"'Cormorant Garamond', serif",SANS],[['ph1',640,48,100,100,'circle','#C9B8A6','#A8947F']]),
+  html:function(){return A(60,70,560,0,NM('ARMAND BERNARD','PROFESSIONAL TITLE',{fs:36,ls:.22,w:500,ts:11,tl:.3}))+D('position:absolute;left:60px;top:170px;width:696px;border-top:1px solid var(--t)','')+
+   A(60,210,200,0,S('rule','contact')+S('rule','skills')+S('rule','lang'))+A(296,210,464,0,S('rule','profile')+S('rule','exp',{jobs:3})+S('rule','edu'))}});
+
+/* ===== E. Creative & dark ===== */
+add('cv-sania','CV - dark navy & peach card',{
+  photo:true,
+  preset:PR(['#F2E6DA','#D0C8C0','#E6B98F','#2A3140','#161B26',SANS],[['ph1',62,58,168,168,'circle','#C9A88A','#9B7C62']]),
+  html:function(){return A(30,30,756,236,'','background:#EBD9C8;border-radius:26px')+A(262,92,500,0,NM('SARAH CANDAL','GRAPHIC DESIGNER',{fs:34,ls:.04,w:800,c:'#222',tc:'#4A3B30',ts:12}))+
+   A(54,300,236,0,S('plain','contact')+S('plain','edu')+S('plain','bars',{t:'SKILLS'})+S('plain','lang',{bars:true}))+A(332,300,430,0,S('rule','about')+S('rule','exp',{jobs:3})+S('rule','sw'))}});
+add('cv-sarahi','CV - black panel & orange',{
+  photo:true,
+  preset:PR(['#1C1C1C','#3A3A3A','#E8742A','#E2E2E2','#ECECEC',SANS],[['ph1',58,172,214,252,'rect','#555555','#8A8A8A']]),
+  html:function(){return A(30,140,270,880,'','background:#1C1C1C;border-radius:24px')+A(330,48,430,0,NM('Sarah Candal','GRAPHIC DESIGNER',{fs:36,w:800,ts:14,tc:'#E8742A',tl:.1}))+
+   A(56,448,220,0,S('plain','contact',{c:W,hc:'#E8742A'})+S('plain','skills',{c:W,hc:'#E8742A'})+S('plain','lang',{c:W,hc:'#E8742A'}))+
+   A(330,150,430,0,D('background:#1C1C1C;border-radius:18px;padding:16px 18px;margin-bottom:22px',S('plain','about',{c:W,hc:'#E8742A'}).replace('margin-bottom:22px','margin-bottom:0'))+S('acc','exp',{jobs:3,hc:'#E8742A'})+S('acc','sw',{hc:'#E8742A'}))}});
+add('cv-gaia','CV - blue timeline & pills',{
+  photo:true,
+  preset:PR(['#1D2433','#3A4256','#3B4EDB','#E4E8FF','#FFFFFF',"'Outfit', sans-serif"],[['ph1',66,790,170,170,'circle','#B7C0F5','#8795EE']]),
+  html:function(){return A(0,0,300,1056,'','background:#F2F4FF')+
+   A(34,56,232,0,S('acc','contact',{t:'CONTACTS'})+S('acc','edu')+S('acc','skills',{t:'HARD SKILLS',pills:true})+S('acc','skills',{t:'SOFT SKILLS',pills:true,items:['Skill one','Skill two','Skill three']}))+
+   A(340,60,420,0,D('margin-bottom:26px',NM('Sarah Candal','Designer',{fs:40,w:800,c:'var(--a)',ts:18,tc:'var(--t)',tl:0}))+D('position:absolute;left:4px;top:120px;bottom:0;border-left:2px solid var(--a);opacity:.35','')+S('tl','about',{hc:'var(--a)'})+S('tl','exp',{jobs:3,hc:'var(--a)'})+S('tl','edu',{hc:'var(--a)'}))}});
+add('cv-isabella','CV - black block & vertical title',{
+  photo:true,
+  preset:PR(['#161616','#3A3A3A','#E8B230','#EFE4D8','#EAE0D4',SANS],[['ph1',60,58,190,246,'rect','#4A4A4A','#7A7A7A']]),
+  html:function(){return A(30,30,756,300,'','background:#161616;border-radius:20px')+A(282,80,470,0,D('font:800 54px/1 var(--fh);color:#fff',E('SARAH')+'<br>'+E('CANDAL'))+D('font:500 11px var(--fb);letter-spacing:.3em;color:var(--a);margin:10px 0 14px',E('GRAPHIC DESIGNER'))+D('font:italic 400 11px/1.6 var(--fb);color:#ddd',E('&ldquo;Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.&rdquo;')))+
+   D('position:absolute;left:16px;top:400px;writing-mode:vertical-rl;transform:rotate(180deg);font:800 24px var(--fb);letter-spacing:.3em;color:var(--t)',E('RESUME'))+
+   A(76,370,224,0,S('rule','contact')+S('rule','bars',{t:'SKILLS'})+S('rule','lang'))+A(340,370,420,0,S('rule','about')+S('rule','exp',{jobs:2})+S('rule','edu',{one:true}))}});
+add('cv-david','CV - executive black panel',{
+  photo:true,
+  preset:PR(['#161616','#3A3A3A','#161616','#E8E8E8','#FFFFFF',"'Playfair Display', serif",SANS],[['ph1',556,50,240,300,'rect','#555555','#8A8A8A']]),
+  html:function(){return A(536,0,280,1056,'','background:#161616')+A(558,384,232,0,S('plain','contact',{c:W})+S('plain','skills',{c:W,pills:true})+S('plain','lang',{c:W}))+
+   A(56,68,460,0,NM('Armand<br>Bernard','CHIEF EXECUTIVE OFFICER',{fs:56,w:700,lh:1,ts:11,tl:.22,mt:14}))+A(56,280,440,0,S('rule','profile',{t:'EXECUTIVE SUMMARY'})+S('rule','exp',{jobs:3})+S('rule','edu'))}});
+add('cv-maria','CV - giant letter',{
+  photo:true,
+  preset:PR(['#111111','#333333','#111111','#E8E8E8','#FFFFFF',"'Abril Fatface', serif",SANS],[['ph1',330,58,120,120,'circle','#BDBDBD','#8F8F8F']]),
+  html:function(){return A(-20,-110,360,420,D('font:400 560px/1 var(--fh);color:#111;white-space:nowrap','S'))+A(480,70,290,0,NM('Sarah<br>Candal','PROFESSIONAL TITLE',{fs:34,lh:1.05,ts:10.5,tl:.22,mt:10}))+
+   A(54,430,230,0,S('rule','contact')+S('rule','skills')+S('rule','lang'))+A(330,230,430,0,S('rule','about')+S('rule','exp',{jobs:3})+S('rule','edu'))}});
+add('cv-architecture','CV - rotated big word',{
+  photo:true,
+  preset:PR(['#111111','#333333','#111111','#E9E9E9','#FFFFFF',SANS],[['ph1',56,236,200,240,'rect','#CFCFCF','#A0A0A0']]),
+  html:function(){return D('position:absolute;right:16px;top:20px;writing-mode:vertical-rl;font:800 112px/1 var(--fh);color:#111;letter-spacing:-.02em',E('Architecture'))+
+   A(56,54,420,0,D('font:400 14px var(--fb);color:var(--x);margin-bottom:6px',E('hello! I&#39;m'))+NM('ARMAND<br>BERNARD','ARCHITECT',{fs:42,w:800,lh:1,ts:11,tl:.3,mt:10}))+
+   A(56,510,230,0,S('rule','contact')+S('rule','skills')+S('rule','lang'))+A(300,236,330,0,S('rule','about')+S('rule','exp',{jobs:3,b:2})+S('rule','edu',{one:true}))}});
+add('cv-elizabeth','CV - black strip & peach',{
+  photo:true,
+  preset:PR(['#161616','#3A3A3A','#161616','#F1D2B8','#F4D7C0',SANS],[['ph1',40,60,220,280,'rect','#7A6A5E','#A8978A']]),
+  html:function(){return A(0,0,300,1056,'','background:#161616')+A(34,382,234,0,S('plain','contact',{c:W})+S('plain','skills',{c:W})+S('plain','lang',{c:W}))+
+   A(340,68,420,0,D('margin-bottom:26px',NM('Sarah Candal','ART DIRECTOR',{fs:36,w:800,ts:12}))+S('rule','about')+S('rule','exp',{jobs:3})+S('rule','edu'))}});
+add('cv-john-smith','CV - grey bold name & dots',{
+  photo:true,
+  preset:PR(['#161616','#3A3A3A','#161616','#CFCFCF','#E3E3E3',SANS],[['ph1',556,40,204,246,'rect','#2A2A2A','#5A5A5A']]),
+  html:function(){return A(56,60,480,0,D('font:800 56px/1 var(--fh);color:var(--t)',E('ARMAND')+'<br><span style="color:#fff;background:#161616;padding:0 10px">'+E('BERNARD')+'</span>')+D('font:500 12px var(--fb);letter-spacing:.24em;color:var(--x);margin-top:14px',E('GRAPHIC DESIGNER')))+
+   A(56,330,210,0,S('rule','about')+S('rule','edu')+S('rule','contact'))+A(300,330,460,0,S('rule','exp',{jobs:3})+S('rule','dots',{t:'SKILLS'})+S('rule','sw'))}});
+})();

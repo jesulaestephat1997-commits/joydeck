@@ -4,7 +4,9 @@
 var PARTS=[
  ['CVA','Classic & minimal','ebook',['#1E2A3A','#4A6FA5','#CBD9EC','#EAF0F8']],
  ['CVB','Sidebar','page',['#2B2B2B','#E8B800','#F4E8B0','#FBF6DC']],
- ['CVC','Header & creative','page',['#6B4F40','#C98F7A','#EBD3C8','#F7EEE9']]
+ ['CVC','Header & creative','page',['#6B4F40','#C98F7A','#EBD3C8','#F7EEE9']],
+ ['CVD','Elegant & photo','ebook',['#2F3A2C','#8A6F5A','#E7DDD0','#F6F1E9']],
+ ['CVE','Creative & dark','page',['#161B26','#E6B98F','#2A3140','#EBD9C8']]
 ];
 var n=function(k){return k+' page'+(k>1?'s':'')};
 function mount(ctx){
