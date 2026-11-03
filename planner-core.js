@@ -248,8 +248,8 @@ function histUI(){if(EMBED)return;$('undoBtn').disabled=hi<=0;$('redoBtn').disab
 function save(){try{localStorage.setItem(KEY,snap())}catch(e){}}
 function commit(){pushHist();if(EMBED)return;clearTimeout(saveT);saveT=setTimeout(save,350)}
 function restore(i){hi=i;S=JSON.parse(hist[hi]);sels=sels.filter(function(id){return get(id)});renderAll();histUI();clearTimeout(saveT);saveT=setTimeout(save,350)}
-$('saveBtn').addEventListener('click',function(){
-  if(editing)endEdit();if(editB)endBase();
+$('saveBtn').addEventListener('click',function(ev){
+  if(ev.isTrusted){if(editing)endEdit();if(editB)endBase()}
   save();if(!EMBED){var s=$('saveStatus');s.textContent='Saved';setTimeout(function(){s.textContent=''},2000)}
 });
 
