@@ -32,7 +32,7 @@ css.textContent=[
 '.page{width:816px;height:1056px;position:relative;overflow:hidden;background:var(--bgc,#fff);box-shadow:0 12px 40px rgba(0,0,0,.18);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}',
 '.page.bd::after{content:"";position:absolute;inset:24px;border:var(--bd-w,4px) solid var(--bd-c,#111);border-radius:18px;pointer-events:none;z-index:5}',
 '#base{position:absolute;left:0;top:0;width:816px;height:1056px;font-family:var(--fb);color:var(--x);font-size:12px;line-height:1.25;z-index:1}',
-'#free{position:absolute;left:0;top:0;width:816px;height:1056px;z-index:2}',
+'#free{position:absolute;left:0;top:0;width:816px;height:1056px;z-index:2;pointer-events:none}#free .el{pointer-events:auto}',
 '#base *{box-sizing:border-box}',
 '.ed{cursor:text}.ed[contenteditable="true"]{outline:2px solid #1F4FD8;background:rgba(31,79,216,.06);user-select:text;-webkit-user-select:text;cursor:text}',
 '.el{position:absolute;cursor:move}',
