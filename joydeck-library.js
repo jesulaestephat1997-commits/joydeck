@@ -29,7 +29,7 @@
     {id:'mockups',ill:'mock',vb:'0 0 160 120',p:['#0B1B4D','#1F4FD8','#C9D8FA','#E4EEF8']},
     {id:'labels',ill:'label',vb:'0 0 160 110',p:['#0E4F57','#2AA6B0','#BFE3E6','#DFF1EE']},
     {id:'cv',ill:'cv',vb:'0 0 120 160',p:['#1E3A34','#2FB574','#CDEBDD','#E9F5EE']},
-    {id:'wedding',ill:'wed',vb:'0 0 120 160',p:['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE']}
+    {id:'wedding',ill:'wed',vb:'0 0 120 160',p:['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE'],live:true}
   ];
 
   var SPRITE = '<svg width="0" height="0" style="position:absolute" aria-hidden="true">'+
@@ -137,7 +137,8 @@
       if (!cards.length) return;
       var cbCards = cards.filter(function(c){ var t = c.querySelector('.tn'); return t && /^\s*CB-/.test(t.textContent); });
       var agCards = cards.filter(function(c){ var t = c.querySelector('.tn'); return t && /^\s*AG[A-Z]-/.test(t.textContent); });
-      cards = cards.filter(function(c){ return cbCards.indexOf(c) < 0 && agCards.indexOf(c) < 0; });
+      var wdCards = cards.filter(function(c){ var t = c.querySelector('.tn'); return t && /^\s*WD[A-Z]-/.test(t.textContent); });
+      cards = cards.filter(function(c){ return cbCards.indexOf(c) < 0 && agCards.indexOf(c) < 0 && wdCards.indexOf(c) < 0; });
       if (root) root.remove();
       root = el('div','jl-root'); root.innerHTML = SPRITE;
       // regroupe les modeles par code (CV, SM, CH...)
@@ -158,9 +159,9 @@
       PRODUCTS.forEach(function(p, i){
         var t = el('button','jl-tile'+(p.live?'':' soon'),
           '<span class="jl-art" style="'+pal(p.p)+'">'+(p.live?'':'<span class="jl-badge">'+T.soon+'</span>')+ill(p.ill,p.vb)+'</span>'+
-          '<b>'+T.prod[p.id]+'</b><small>'+(p.id==='coloring'?'<span class="cb-count">Illustrations</span>':(p.id==='agenda'?T.tpl(agCards.length):(p.live?T.tpl(total):T.soon)))+'</small>');
+          '<b>'+T.prod[p.id]+'</b><small>'+(p.id==='coloring'?'<span class="cb-count">Illustrations</span>':(p.id==='wedding'?T.tpl(wdCards.length):(p.id==='agenda'?T.tpl(agCards.length):(p.live?T.tpl(total):T.soon))))+'</small>');
         t.type = 'button'; t.style.setProperty('--i', i);
-        t.addEventListener('click', function(){ show(p.id==='coloring' ? 'coloring' : (p.id==='agenda' ? 'agenda' : (p.live ? 'ebook' : 'soon:'+p.id))); });
+        t.addEventListener('click', function(){ show(p.id==='coloring' ? 'coloring' : (p.id==='wedding' ? 'wedding' : (p.id==='agenda' ? 'agenda' : (p.live ? 'ebook' : 'soon:'+p.id)))); });
         tiles.appendChild(t);
       });
       hub.appendChild(tiles); root.appendChild(hub);
@@ -201,6 +202,7 @@
 
       if (window.EmadeckColoring) { try { window.EmadeckColoring.mount({root:root, show:show, el:el, head:head, backBtn:backBtn, pal:pal, ill:ill, CHEV:CHEV, cards:cbCards}); } catch(e){ console.error(e); } }
       if (window.EmadeckPlanner) { try { window.EmadeckPlanner.mount({root:root, show:show, el:el, head:head, backBtn:backBtn, pal:pal, ill:ill, CHEV:CHEV, cards:agCards}); } catch(e){ console.error(e); } }
+      if (window.EmadeckWedding) { try { window.EmadeckWedding.mount({root:root, show:show, el:el, head:head, backBtn:backBtn, pal:pal, ill:ill, CHEV:CHEV, cards:wdCards}); } catch(e){ console.error(e); } }
       aside.insertBefore(root, libList);
       show('hub');
     } finally { setTimeout(function(){ rebuilding = false; }, 50); }
