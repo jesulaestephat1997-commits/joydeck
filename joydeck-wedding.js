@@ -2,7 +2,8 @@
 (function(){
 'use strict';
 var PARTS=[
- ['WDI','Invitations','ebook',['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE']]
+ ['WDI','Invitations','ebook',['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE']],
+ ['WDS','Save the date','page',['#1E3A34','#2FB574','#CDEBDD','#E9F5EE']]
 ];
 var n=function(k){return k+' card'+(k>1?'s':'')};
 function mount(ctx){

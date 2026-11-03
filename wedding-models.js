@@ -52,18 +52,18 @@ add('wed-arch','Wedding invitation - arch',{
     return '<div style="position:absolute;inset:20px;border:1.5px solid var(--a)"></div><div style="position:absolute;inset:29px;border:1px solid var(--a)"></div>'+
      '<div style="position:absolute;left:150px;top:84px;width:516px;height:945px;border:1.5px solid var(--a);border-bottom:0;border-radius:258px 258px 0 0"></div>'+
      wCard('',0,206,0,E('TOGETHER')+'<br>'+E('WITH THEIR FAMILIES'),13,.22)+
-     wCard('',0,282,0,E('OLIVIA'),64,.14,'','')+
+     wCard('',0,282,0,E('SARAH'),64,.14,'','')+
      '<div style="position:absolute;left:230px;width:356px;top:372px;display:flex;align-items:center;gap:14px"><i style="flex:1;border-top:1px solid var(--a)"></i><span style="font:400 46px/1 \'Allura\',cursive;color:var(--a)">'+E('and')+'</span><i style="flex:1;border-top:1px solid var(--a)"></i></div>'+
-     wCard('',0,416,0,E('JAMES'),64,.14)+
+     wCard('',0,416,0,E('BERNARD'),64,.14)+
      wCard('',0,516,0,E('INVITE YOU TO CELEBRATE')+'<br>'+E('THEIR WEDDING'),14,.2)+
      '<div style="position:absolute;left:190px;width:436px;top:570px;display:flex;align-items:center;justify-content:center">'+
-       '<div style="flex:1;text-align:center;border-bottom:1px solid var(--a);padding:12px 0 10px;font:400 14px var(--fh);letter-spacing:.2em;color:var(--t)">'+E('SATURDAY')+'</div>'+
-       '<div style="width:92px;height:62px;border-left:1px solid var(--a);border-right:1px solid var(--a);text-align:center;font:400 54px/62px var(--fh);color:var(--t)">'+E('24')+'</div>'+
-       '<div style="flex:1;text-align:center;border-bottom:1px solid var(--a);padding:12px 0 10px;font:400 14px var(--fh);letter-spacing:.2em;color:var(--t)">'+E('AUGUST 2025')+'</div></div>'+
-     wCard('',0,641,0,E('AT FIVE O’CLOCK IN THE EVENING'),13,.2)+
+       '<div style="flex:1;text-align:center;border-bottom:1px solid var(--a);padding:12px 0 10px;font:400 14px var(--fh);letter-spacing:.2em;color:var(--t)">'+E('SUNDAY')+'</div>'+
+       '<div style="width:92px;height:62px;border-left:1px solid var(--a);border-right:1px solid var(--a);text-align:center;font:400 54px/62px var(--fh);color:var(--t)">'+E('14')+'</div>'+
+       '<div style="flex:1;text-align:center;border-bottom:1px solid var(--a);padding:12px 0 10px;font:400 14px var(--fh);letter-spacing:.2em;color:var(--t)">'+E('FEBRUARY 2027')+'</div></div>'+
+     wCard('',0,641,0,E('AT FOUR O’CLOCK IN THE AFTERNOON'),13,.2)+
      wCard('',0,732,0,E('THE GRANDVILLE ESTATE'),17,.18)+
      wCard('',0,758,0,E('1234 WILLOW CREEK ROAD')+'<br>'+E('NAPA VALLEY, CALIFORNIA'),14,.18,'line-height:1.55')+
      '<div style="position:absolute;left:0;width:816px;top:818px;text-align:center;font:400 30px/1.2 \'Allura\',cursive;color:var(--a)">'+E('reception to follow')+'</div>'+
-     '<div style="position:absolute;left:0;width:816px;top:890px;text-align:center;font:400 34px/1 var(--fh);color:var(--t)"><span style="display:inline-block;transform:translateY(-8px)">'+E('O')+'</span><span style="display:inline-block;width:18px"></span><span style="display:inline-block;transform:translateY(14px)">'+E('J')+'</span></div>';
+     '<div style="position:absolute;left:0;width:816px;top:890px;text-align:center;font:400 34px/1 var(--fh);color:var(--t)"><span style="display:inline-block;transform:translateY(-8px)">'+E('S')+'</span><span style="display:inline-block;width:18px"></span><span style="display:inline-block;transform:translateY(14px)">'+E('B')+'</span></div>';
   }});
 })();
