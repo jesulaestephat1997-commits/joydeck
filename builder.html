@@ -141,6 +141,45 @@
 (function(){
   // ---------- Catalogue des modèles (fichiers dans le même dossier que builder.html) ----------
   const CATALOG = [
+    {cat:'Agenda pages', items:[
+      {id:'ag-c01', code:'AGC-01', file:'AGC-01-cover-block.html', old:'', name:'Cover - color block'},
+      {id:'ag-c02', code:'AGC-02', file:'AGC-02-cover-circle.html', old:'', name:'Cover - circle title'},
+      {id:'ag-c03', code:'AGC-03', file:'AGC-03-cover-minimal.html', old:'', name:'Cover - minimal'},
+      {id:'ag-c04', code:'AGC-04', file:'AGC-04-belongs.html', old:'', name:'This planner belongs to'},
+      {id:'ag-y01', code:'AGY-01', file:'AGY-01-year-glance.html', old:'', name:'Year at a glance (12 calendars)'},
+      {id:'ag-y02', code:'AGY-02', file:'AGY-02-year-overview.html', old:'', name:'Year at a glance (month boxes)'},
+      {id:'ag-y03', code:'AGY-03', file:'AGY-03-important-dates.html', old:'', name:'Important dates'},
+      {id:'ag-y04', code:'AGY-04', file:'AGY-04-birthdays.html', old:'', name:'Birthday calendar'},
+      {id:'ag-y05', code:'AGY-05', file:'AGY-05-yearly-goals.html', old:'', name:'Yearly goals'},
+      {id:'ag-y06', code:'AGY-06', file:'AGY-06-yearly-review.html', old:'', name:'Yearly review'},
+      {id:'ag-y07', code:'AGY-07', file:'AGY-07-vision-board.html', old:'', name:'Vision board'},
+      {id:'ag-m01', code:'AGM-01', file:'AGM-01-month-calendar.html', old:'', name:'Monthly calendar'},
+      {id:'ag-m02', code:'AGM-02', file:'AGM-02-month-plan.html', old:'', name:'Monthly plan'},
+      {id:'ag-m03', code:'AGM-03', file:'AGM-03-month-goals.html', old:'', name:'Monthly goals'},
+      {id:'ag-m04', code:'AGM-04', file:'AGM-04-month-finance.html', old:'', name:'Monthly finance'},
+      {id:'ag-w01', code:'AGW-01', file:'AGW-01-weekly-overview.html', old:'', name:'Weekly overview'},
+      {id:'ag-w02', code:'AGW-02', file:'AGW-02-weekly-list.html', old:'', name:'Weekly planner (list)'},
+      {id:'ag-w03', code:'AGW-03', file:'AGW-03-weekly-timeblock.html', old:'', name:'Weekly time blocking'},
+      {id:'ag-w04', code:'AGW-04', file:'AGW-04-weekly-meals.html', old:'', name:'Weekly meal plan'},
+      {id:'ag-w05', code:'AGW-05', file:'AGW-05-weekly-boxes.html', old:'', name:'Weekly planner (boxes)'},
+      {id:'ag-d01', code:'AGD-01', file:'AGD-01-daily-classic.html', old:'', name:'Daily planner (classic)'},
+      {id:'ag-d02', code:'AGD-02', file:'AGD-02-daily-halfhour.html', old:'', name:'Daily plan (half-hour table)'},
+      {id:'ag-d03', code:'AGD-03', file:'AGD-03-daily-twocol.html', old:'', name:'Daily plan (two columns)'},
+      {id:'ag-d04', code:'AGD-04', file:'AGD-04-daily-routine.html', old:'', name:'Daily routine'},
+      {id:'ag-d05', code:'AGD-05', file:'AGD-05-daily-pastel.html', old:'', name:'Daily schedule (soft)'},
+      {id:'ag-d06', code:'AGD-06', file:'AGD-06-daily-focus.html', old:'', name:'Daily planner (focus + meals)'},
+      {id:'ag-t01', code:'AGT-01', file:'AGT-01-habit-tracker.html', old:'', name:'Habit tracker (31 days)'},
+      {id:'ag-t02', code:'AGT-02', file:'AGT-02-mood-tracker.html', old:'', name:'Mood tracker'},
+      {id:'ag-t03', code:'AGT-03', file:'AGT-03-routine-tracker.html', old:'', name:'Daily routines tracker'},
+      {id:'ag-t04', code:'AGT-04', file:'AGT-04-expense-tracker.html', old:'', name:'Expense tracker'},
+      {id:'ag-t05', code:'AGT-05', file:'AGT-05-weekly-habits.html', old:'', name:'Weekly habit tracker'},
+      {id:'ag-l01', code:'AGL-01', file:'AGL-01-todo-list.html', old:'', name:'To-do list'},
+      {id:'ag-l02', code:'AGL-02', file:'AGL-02-notes-lined.html', old:'', name:'Notes (lined)'},
+      {id:'ag-l03', code:'AGL-03', file:'AGL-03-notes-dotted.html', old:'', name:'Notes (dotted)'},
+      {id:'ag-l04', code:'AGL-04', file:'AGL-04-contact-list.html', old:'', name:'Contact list'},
+      {id:'ag-l05', code:'AGL-05', file:'AGL-05-emergency-contacts.html', old:'', name:'Emergency contacts'},
+      {id:'ag-l06', code:'AGL-06', file:'AGL-06-goals-page.html', old:'', name:'Goals page'},
+      {id:'ag-l07', code:'AGL-07', file:'AGL-07-reflection.html', old:'', name:'Monthly reflection'}]},
     {cat:'Coloring pages', items:[
       {id:'cb-01', code:'CB-01', file:'CB-01-coloring-page.html', old:'', name:'Coloring page'},
       {id:'cb-02', code:'CB-02', file:'CB-02-coloring-page-title.html', old:'', name:'Coloring page + title'},
@@ -910,6 +949,7 @@
 <script src="emadeck-session.js"></script>
 <script src="emadeck-gate.js"></script>
 <script src="joydeck-coloring.js"></script>
+<script src="joydeck-planner.js"></script>
 <script src="joydeck-mobile.js"></script>
 </body>
 </html>
