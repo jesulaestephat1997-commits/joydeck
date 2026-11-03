@@ -96,7 +96,7 @@ var SHELL='<div id="jdTheme" aria-hidden="true"><input type="color" id="cbTitle"
 '<div id="imgCtl" class="btns" style="margin-bottom:10px"><button class="sbtn" id="iFlip" type="button">Flip</button></div>'+
 '<div class="btns"><button class="sbtn" id="oFront" type="button">Bring to front</button><button class="sbtn" id="oBack" type="button">Send to back</button><button class="sbtn" id="oDup" type="button">Duplicate</button><button class="sbtn dng" id="oDel" type="button">Delete</button></div></div>'+
 '<div class="control-group"><label>Illustrations</label><select id="catSel"><option>Loading...</option></select><div id="imgGrid"></div><div class="hint">Click an illustration to add it, or drag it onto the page.</div></div></div>'+
-'<div class="toolbar" id="toolbar"><button id="undoBtn" type="button">&#8630; Undo</button><button id="redoBtn" type="button">&#8631; Redo</button><button id="selAllBtn" type="button">Select all</button><button id="addText" class="addtxt" type="button">Add text</button>'+
+'<div class="toolbar" id="toolbar"><button id="undoBtn" type="button">&#8630; Undo</button><button id="redoBtn" type="button">&#8631; Redo</button><button id="selAllBtn" type="button">Select all</button><button id="addText" class="addtxt" type="button">Add text</button><button id="photoBtn" type="button" hidden>Add photo</button><input type="file" id="photoFile" accept="image/*" hidden>'+
 '<span class="grp" id="calGrp" hidden><select id="calM"></select><input type="number" id="calY" min="1900" max="2200" title="Year"></span>'+
 '<span class="tb-sep"></span><span class="tb-l">Style</span><span class="dw"><button class="ar" id="pL" type="button">&#8249;</button><span class="dots" id="pDots"></span><button class="ar" id="pR" type="button">&#8250;</button></span>'+
 '<select id="tbH" title="Titles font"><option value="">Titles...</option></select><select id="tbB" title="Text font"><option value="">Text...</option></select><button id="tbO" type="button">Original</button><span class="tb-sep"></span>'+
@@ -180,6 +180,7 @@ function build(el){
   if(el.t==='img'){
     var im=document.createElement('img');im.alt='';im.draggable=false;im.src=el.src;
     if(el.flip)im.style.transform='scaleX(-1)';
+    if(el.ph)im.style.mixBlendMode='normal';
     n.appendChild(im);
   } else {
     var t=document.createElement('div');t.className='txt';t.textContent=el.text;n.appendChild(t);styleTxt(n,el);
@@ -401,7 +402,22 @@ $('fReset').addEventListener('click',function(){selText(function(el){el.color=nu
 $('iFlip').addEventListener('click',function(){var v=null;selEls().forEach(function(el){if(el.t!=='img')return;if(v===null)v=!el.flip;el.flip=v;var n=node(el.id);if(n)n.querySelector('img').style.transform=v?'scaleX(-1)':''});selUI();commit()});
 $('oFront').addEventListener('click',function(){order(true)});$('oBack').addEventListener('click',function(){order(false)});
 $('oDup').addEventListener('click',dup);$('oDel').addEventListener('click',del);
-$('addText').addEventListener('click',addText);$('selAllBtn').addEventListener('click',selectAll);
+$('addText').addEventListener('click',addText);
+if(M.photo){$('photoBtn').hidden=false;
+  $('photoBtn').addEventListener('click',function(){$('photoFile').click()});
+  $('photoFile').addEventListener('change',function(){var f=this.files&&this.files[0];this.value='';if(!f)return;
+    var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){
+      var tg=null;sels.forEach(function(i){var e=get(i);if(e&&e.ph)tg=e});if(!tg)tg=S.els.filter(function(e){return e.ph})[0]||null;
+      var circ=tg?tg.ph==='circle':true,ar=tg?tg.w/tg.h:1,sw=im.naturalWidth,sh=im.naturalHeight,cw,ch;
+      if(sw/sh>ar){ch=sh;cw=sh*ar}else{cw=sw;ch=sw/ar}
+      var ow=Math.min(520,Math.round(cw)),oh=Math.round(ow/ar),cv=document.createElement('canvas');cv.width=ow;cv.height=oh;var c=cv.getContext('2d');
+      if(circ){c.beginPath();c.ellipse(ow/2,oh/2,ow/2,oh/2,0,0,7);c.clip()}
+      c.drawImage(im,(sw-cw)/2,(sh-ch)/2,cw,ch,0,0,ow,oh);
+      var url=circ?cv.toDataURL('image/png'):cv.toDataURL('image/jpeg',.88);
+      if(tg){tg.src=url;tg.ph=tg.ph;sels=[tg.id];render();commit()}
+      else{var el={id:uid(),t:'img',src:url,x:Math.round((W-220)/2),y:300,w:220,h:220,flip:false,ph:'circle'};S.els.push(el);sels=[el.id];render();commit()}
+    };im.src=rd.result};rd.readAsDataURL(f)});
+}$('selAllBtn').addEventListener('click',selectAll);
 $('pgBg').addEventListener('input',function(){S.bg=$('pgBg').value;applyPage()});$('pgBg').addEventListener('change',commit);
 $('bdOn').addEventListener('change',function(){S.bd.on=$('bdOn').checked;applyPage();commit()});
 $('bdCol').addEventListener('input',function(){S.bd.c=$('bdCol').value;applyPage()});$('bdCol').addEventListener('change',commit);
