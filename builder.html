@@ -142,6 +142,57 @@
 (function(){
   // ---------- Catalogue des modèles (fichiers dans le même dossier que builder.html) ----------
   const CATALOG = [
+    {cat:'Label pages', items:[
+      {id:'lb-a01', code:'LBA-01', file:'LBA-01-lb-balm-pairs.html', old:'', name:'Label - balm front and back'},
+      {id:'lb-a02', code:'LBA-02', file:'LBA-02-lb-cream-round.html', old:'', name:'Label - cream round corners'},
+      {id:'lb-a03', code:'LBA-03', file:'LBA-03-lb-serum-center.html', old:'', name:'Label - serum centered'},
+      {id:'lb-a04', code:'LBA-04', file:'LBA-04-lb-soap-band.html', old:'', name:'Label - soap band'},
+      {id:'lb-a05', code:'LBA-05', file:'LBA-05-lb-candle-dark.html', old:'', name:'Label - candle dark'},
+      {id:'lb-a06', code:'LBA-06', file:'LBA-06-lb-lip-circles.html', old:'', name:'Label - lip balm circles'},
+      {id:'lb-a07', code:'LBA-07', file:'LBA-07-lb-bottle-tall.html', old:'', name:'Label - tall bottle'},
+      {id:'lb-a08', code:'LBA-08', file:'LBA-08-lb-mask-pattern.html', old:'', name:'Label - pattern pastel'},
+      {id:'lb-a09', code:'LBA-09', file:'LBA-09-lb-oil-badge.html', old:'', name:'Label - oil badge'},
+      {id:'lb-a10', code:'LBA-10', file:'LBA-10-lb-sample-split.html', old:'', name:'Label - sample split'},
+      {id:'lb-b01', code:'LBB-01', file:'LBB-01-lb-jam-circles.html', old:'', name:'Label - jam circles'},
+      {id:'lb-b02', code:'LBB-02', file:'LBB-02-lb-pickle-pattern.html', old:'', name:'Label - pickle green pattern'},
+      {id:'lb-b03', code:'LBB-03', file:'LBB-03-lb-honey-round.html', old:'', name:'Label - honey round'},
+      {id:'lb-b04', code:'LBB-04', file:'LBB-04-lb-tea-band.html', old:'', name:'Label - tea band'},
+      {id:'lb-b05', code:'LBB-05', file:'LBB-05-lb-sauce-tall.html', old:'', name:'Label - sauce bottles'},
+      {id:'lb-b06', code:'LBB-06', file:'LBB-06-lb-spice-small.html', old:'', name:'Label - spice stickers'},
+      {id:'lb-b07', code:'LBB-07', file:'LBB-07-lb-choc-split.html', old:'', name:'Label - chocolate split'},
+      {id:'lb-b08', code:'LBB-08', file:'LBB-08-lb-juice-band.html', old:'', name:'Label - juice band'},
+      {id:'lb-b09', code:'LBB-09', file:'LBB-09-lb-nutrition.html', old:'', name:'Label - nutrition facts'},
+      {id:'lb-b10', code:'LBB-10', file:'LBB-10-lb-coffee-photo.html', old:'', name:'Label - coffee with photo'},
+      {id:'lb-c01', code:'LBC-01', file:'LBC-01-lb-sticker-round.html', old:'', name:'Stickers - round badges'},
+      {id:'lb-c02', code:'LBC-02', file:'LBC-02-lb-sticker-oval.html', old:'', name:'Stickers - ovals'},
+      {id:'lb-c03', code:'LBC-03', file:'LBC-03-lb-sticker-pill.html', old:'', name:'Stickers - pills'},
+      {id:'lb-c04', code:'LBC-04', file:'LBC-04-lb-sticker-arch.html', old:'', name:'Stickers - arches'},
+      {id:'lb-c05', code:'LBC-05', file:'LBC-05-lb-sticker-thanks.html', old:'', name:'Stickers - thank you circles'},
+      {id:'lb-c06', code:'LBC-06', file:'LBC-06-lb-sticker-mini.html', old:'', name:'Stickers - mini pattern'},
+      {id:'lb-c07', code:'LBC-07', file:'LBC-07-lb-ship-labels.html', old:'', name:'Labels - shipping'},
+      {id:'lb-c08', code:'LBC-08', file:'LBC-08-lb-sticker-tag.html', old:'', name:'Stickers - filled tags'},
+      {id:'lb-c09', code:'LBC-09', file:'LBC-09-lb-sticker-hello.html', old:'', name:'Stickers - bright circles'},
+      {id:'lb-c10', code:'LBC-10', file:'LBC-10-lb-sticker-photo.html', old:'', name:'Stickers - with photo'},
+      {id:'lb-d01', code:'LBD-01', file:'LBD-01-lb-wrap-tall.html', old:'', name:'Packaging - bottle wraps'},
+      {id:'lb-d02', code:'LBD-02', file:'LBD-02-lb-box-kraft.html', old:'', name:'Packaging - kraft boxes'},
+      {id:'lb-d03', code:'LBD-03', file:'LBD-03-lb-pharmacy.html', old:'', name:'Packaging - pharmacy'},
+      {id:'lb-d04', code:'LBD-04', file:'LBD-04-lb-premium-dark.html', old:'', name:'Packaging - premium dark'},
+      {id:'lb-d05', code:'LBD-05', file:'LBD-05-lb-kraft-center.html', old:'', name:'Packaging - kraft center'},
+      {id:'lb-d06', code:'LBD-06', file:'LBD-06-lb-pairs-blue.html', old:'', name:'Packaging - front and back blue'},
+      {id:'lb-d07', code:'LBD-07', file:'LBD-07-lb-water-band.html', old:'', name:'Packaging - water bottle'},
+      {id:'lb-d08', code:'LBD-08', file:'LBD-08-lb-shampoo-photo.html', old:'', name:'Packaging - shampoo with photo'},
+      {id:'lb-d09', code:'LBD-09', file:'LBD-09-lb-pairs-tea.html', old:'', name:'Packaging - tea box pairs'},
+      {id:'lb-d10', code:'LBD-10', file:'LBD-10-lb-gift-tag.html', old:'', name:'Packaging - gift tags'},
+      {id:'lb-e01', code:'LBE-01', file:'LBE-01-lb-min-white.html', old:'', name:'Minimal - white sheet'},
+      {id:'lb-e02', code:'LBE-02', file:'LBE-02-lb-min-black.html', old:'', name:'Minimal - black sheet'},
+      {id:'lb-e03', code:'LBE-03', file:'LBE-03-lb-neon-green.html', old:'', name:'Dark - green neon'},
+      {id:'lb-e04', code:'LBE-04', file:'LBE-04-lb-pastel-round.html', old:'', name:'Pastel - round corners'},
+      {id:'lb-e05', code:'LBE-05', file:'LBE-05-lb-retro-red.html', old:'', name:'Retro - red cream'},
+      {id:'lb-e06', code:'LBE-06', file:'LBE-06-lb-serif-cream.html', old:'', name:'Serif - cream'},
+      {id:'lb-e07', code:'LBE-07', file:'LBE-07-lb-mono-lines.html', old:'', name:'Mono - ingredients'},
+      {id:'lb-e08', code:'LBE-08', file:'LBE-08-lb-bright-split.html', old:'', name:'Bright - split'},
+      {id:'lb-e09', code:'LBE-09', file:'LBE-09-lb-blue-band.html', old:'', name:'Blue - band'},
+      {id:'lb-e10', code:'LBE-10', file:'LBE-10-lb-gold-dark.html', old:'', name:'Gold - dark premium'}]},
     {cat:'Quote pages', items:[
       {id:'qt-a01', code:'QTA-01', file:'QTA-01-qt-green-mark.html', old:'', name:'Quote - green with yellow bar'},
       {id:'qt-a02', code:'QTA-02', file:'QTA-02-qt-navy-mark.html', old:'', name:'Quote - navy remarkable'},
@@ -1143,6 +1194,7 @@
 <script src="joydeck-cv.js"></script>
 <script src="joydeck-topbar.js"></script>
 <script src="joydeck-quotes.js"></script>
+<script src="joydeck-labels.js"></script>
 <script src="joydeck-mobile.js"></script>
 </body>
 </html>
