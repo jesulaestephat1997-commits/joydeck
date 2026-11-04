@@ -142,6 +142,57 @@
 (function(){
   // ---------- Catalogue des modèles (fichiers dans le même dossier que builder.html) ----------
   const CATALOG = [
+    {cat:'Quote pages', items:[
+      {id:'qt-a01', code:'QTA-01', file:'QTA-01-qt-green-mark.html', old:'', name:'Quote - green with yellow bar'},
+      {id:'qt-a02', code:'QTA-02', file:'QTA-02-qt-navy-mark.html', old:'', name:'Quote - navy remarkable'},
+      {id:'qt-a03', code:'QTA-03', file:'QTA-03-qt-orange-black.html', old:'', name:'Quote - black and orange'},
+      {id:'qt-a04', code:'QTA-04', file:'QTA-04-qt-yellow-big.html', old:'', name:'Quote - yellow big marks'},
+      {id:'qt-a05', code:'QTA-05', file:'QTA-05-qt-cream-green.html', old:'', name:'Quote - cream and green'},
+      {id:'qt-a06', code:'QTA-06', file:'QTA-06-qt-blue-white.html', old:'', name:'Quote - electric blue'},
+      {id:'qt-a07', code:'QTA-07', file:'QTA-07-qt-red-white.html', old:'', name:'Quote - red bold'},
+      {id:'qt-a08', code:'QTA-08', file:'QTA-08-qt-lilac-center.html', old:'', name:'Quote - lilac centered'},
+      {id:'qt-a09', code:'QTA-09', file:'QTA-09-qt-teal-clean.html', old:'', name:'Quote - teal clean'},
+      {id:'qt-a10', code:'QTA-10', file:'QTA-10-qt-sand-serif.html', old:'', name:'Quote - sand serif'},
+      {id:'qt-b01', code:'QTB-01', file:'QTB-01-qt-bubble-orange.html', old:'', name:'Quote - orange speech bubble'},
+      {id:'qt-b02', code:'QTB-02', file:'QTB-02-qt-bubble-yellow.html', old:'', name:'Quote - yellow bubble on dark'},
+      {id:'qt-b03', code:'QTB-03', file:'QTB-03-qt-bubble-blue.html', old:'', name:'Quote - blue bubble'},
+      {id:'qt-b04', code:'QTB-04', file:'QTB-04-qt-bubble-green.html', old:'', name:'Quote - green bubble'},
+      {id:'qt-b05', code:'QTB-05', file:'QTB-05-qt-card-green.html', old:'', name:'Quote - white card on green'},
+      {id:'qt-b06', code:'QTB-06', file:'QTB-06-qt-card-blue.html', old:'', name:'Quote - white card on blue'},
+      {id:'qt-b07', code:'QTB-07', file:'QTB-07-qt-card-orange.html', old:'', name:'Quote - tiled orange'},
+      {id:'qt-b08', code:'QTB-08', file:'QTB-08-qt-card-dark.html', old:'', name:'Quote - dark card'},
+      {id:'qt-b09', code:'QTB-09', file:'QTB-09-qt-card-cream.html', old:'', name:'Quote - beige soft card'},
+      {id:'qt-b10', code:'QTB-10', file:'QTB-10-qt-card-pink.html', old:'', name:'Quote - pink round card'},
+      {id:'qt-c01', code:'QTC-01', file:'QTC-01-qt-bold-blue.html', old:'', name:'Quote - do more think less'},
+      {id:'qt-c02', code:'QTC-02', file:'QTC-02-qt-bold-lime.html', old:'', name:'Quote - lime highlight'},
+      {id:'qt-c03', code:'QTC-03', file:'QTC-03-qt-bold-black-yellow.html', old:'', name:'Quote - yellow poster'},
+      {id:'qt-c04', code:'QTC-04', file:'QTC-04-qt-bold-money.html', old:'', name:'Quote - blue branding'},
+      {id:'qt-c05', code:'QTC-05', file:'QTC-05-qt-bold-green-glow.html', old:'', name:'Quote - smart not hard'},
+      {id:'qt-c06', code:'QTC-06', file:'QTC-06-qt-bold-cream.html', old:'', name:'Quote - good design cream'},
+      {id:'qt-c07', code:'QTC-07', file:'QTC-07-qt-stack-take.html', old:'', name:'Quote - take it easy'},
+      {id:'qt-c08', code:'QTC-08', file:'QTC-08-qt-stack-brands.html', old:'', name:'Quote - we build brands'},
+      {id:'qt-c09', code:'QTC-09', file:'QTC-09-qt-giant-mark.html', old:'', name:'Quote - giant mark black'},
+      {id:'qt-c10', code:'QTC-10', file:'QTC-10-qt-giant-soft.html', old:'', name:'Quote - giant soft mark'},
+      {id:'qt-d01', code:'QTD-01', file:'QTD-01-qt-photo-circle-green.html', old:'', name:'Quote - round photo green'},
+      {id:'qt-d02', code:'QTD-02', file:'QTD-02-qt-photo-circle-cream.html', old:'', name:'Quote - round photo cream'},
+      {id:'qt-d03', code:'QTD-03', file:'QTD-03-qt-photo-half-dark.html', old:'', name:'Quote - photo top dark'},
+      {id:'qt-d04', code:'QTD-04', file:'QTD-04-qt-photo-half-light.html', old:'', name:'Quote - photo top light'},
+      {id:'qt-d05', code:'QTD-05', file:'QTD-05-qt-photo-right-green.html', old:'', name:'Quote - photo right green'},
+      {id:'qt-d06', code:'QTD-06', file:'QTD-06-qt-photo-right-navy.html', old:'', name:'Quote - photo right navy'},
+      {id:'qt-d07', code:'QTD-07', file:'QTD-07-qt-photo-badge.html', old:'', name:'Quote - photo badge'},
+      {id:'qt-d08', code:'QTD-08', file:'QTD-08-qt-photo-card-white.html', old:'', name:'Quote - photo in white card'},
+      {id:'qt-d09', code:'QTD-09', file:'QTD-09-qt-photo-badge-dark.html', old:'', name:'Quote - photo badge dark'},
+      {id:'qt-d10', code:'QTD-10', file:'QTD-10-qt-photo-top-orange.html', old:'', name:'Quote - round photo orange'},
+      {id:'qt-e01', code:'QTE-01', file:'QTE-01-qt-frame-teal.html', old:'', name:'Quote - teal frame'},
+      {id:'qt-e02', code:'QTE-02', file:'QTE-02-qt-frame-blue.html', old:'', name:'Quote - blue frame'},
+      {id:'qt-e03', code:'QTE-03', file:'QTE-03-qt-frame-sunset.html', old:'', name:'Quote - sunset frame'},
+      {id:'qt-e04', code:'QTE-04', file:'QTE-04-qt-frame-green.html', old:'', name:'Quote - green frame'},
+      {id:'qt-e05', code:'QTE-05', file:'QTE-05-qt-glass-purple.html', old:'', name:'Quote - purple glass'},
+      {id:'qt-e06', code:'QTE-06', file:'QTE-06-qt-glass-blue.html', old:'', name:'Quote - blue glass'},
+      {id:'qt-e07', code:'QTE-07', file:'QTE-07-qt-glass-dark.html', old:'', name:'Quote - dark glass'},
+      {id:'qt-e08', code:'QTE-08', file:'QTE-08-qt-dyk-yellow.html', old:'', name:'Quote - did you know yellow'},
+      {id:'qt-e09', code:'QTE-09', file:'QTE-09-qt-dyk-green.html', old:'', name:'Quote - did you know green'},
+      {id:'qt-e10', code:'QTE-10', file:'QTE-10-qt-dyk-cream.html', old:'', name:'Quote - did you know cream'}]},
     {cat:'CV pages', items:[
       {id:'cv-a01', code:'CVA-01', file:'CVA-01-cv-ats.html', old:'', name:'CV - ATS classic'},
       {id:'cv-a02', code:'CVA-02', file:'CVA-02-cv-minimal-head.html', old:'', name:'CV - minimal header'},
@@ -1031,6 +1082,7 @@
 <script src="joydeck-wedding.js"></script>
 <script src="joydeck-cv.js"></script>
 <script src="joydeck-topbar.js"></script>
+<script src="joydeck-quotes.js"></script>
 <script src="joydeck-mobile.js"></script>
 </body>
 </html>
