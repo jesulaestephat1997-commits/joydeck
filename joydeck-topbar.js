@@ -35,3 +35,10 @@ var n=0,iv=setInterval(function(){
   if((s||n>25)&&mount()){clearInterval(iv)}else if(++n>80){clearInterval(iv)}
 },120);
 })();
+
+/* logo cliquable -> accueil */
+(function(){
+  if(window.__jdLogoHome)return;window.__jdLogoHome=1;
+  var st=document.createElement('style');st.textContent='header.top .logo,.top .logo{cursor:pointer}';document.head.appendChild(st);
+  document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('.logo');if(l&&l.closest('header,.top'))location.href='index.html'});
+})();
