@@ -233,7 +233,7 @@ function selUI(){
   if(EMBED)return;
   var els=selEls();$('selPanel').hidden=!els.length;if(!els.length)return;
   var tx=els.filter(function(e){return e.t==='text'}),im=els.filter(function(e){return e.t==='img'});
-  $('selName').textContent=els.length>1?'Selected: '+els.length+' items':(els[0].t==='img'?'Selected: illustration':'Selected: text');
+  $('selName').textContent=els.length>1?'Selected: '+els.length+' items':(els[0].t==='img'?'Selected: image':'Selected: text');
   $('txtCtl').hidden=!tx.length;$('imgCtl').hidden=!im.length;
   if(tx.length){var el=tx[tx.length-1];
     $('fRole').value=el.role||'title';$('fFont').value=el.font||'';$('fSize').value=el.size;$('fColor').value=effColor(el);
@@ -403,6 +403,7 @@ $('iFlip').addEventListener('click',function(){var v=null;selEls().forEach(funct
 $('oFront').addEventListener('click',function(){order(true)});$('oBack').addEventListener('click',function(){order(false)});
 $('oDup').addEventListener('click',dup);$('oDel').addEventListener('click',del);
 $('addText').addEventListener('click',addText);
+if(!M.illus){var ig=$('catSel').parentNode;ig.style.display='none';var sb=document.querySelector('.sidebar .sub');if(sb)sb.textContent='Click any text on the page to edit it. Add your own text'+(M.photo?' or photo':'')+' on top.'}
 if(M.photo){$('photoBtn').hidden=false;
   $('photoBtn').addEventListener('click',function(){$('photoFile').click()});
   $('photoFile').addEventListener('change',function(){var f=this.files&&this.files[0];this.value='';if(!f)return;
