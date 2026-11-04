@@ -163,4 +163,5 @@ reg('qt-glass-dark','Quote - dark glass','glass',{bg:'#0A0A0F',fg:'#FFFFFF',ac:'
 reg('qt-dyk-yellow','Quote - did you know yellow','dyk',{bg:'#FFD21F',fg:'#111111',ac:'#111111',p:'#F2C418',box:'#111111',bt:'#FFFFFF',f:'mo',ft:'line'});
 reg('qt-dyk-green','Quote - did you know green','dyk',{bg:'#0F5B38',fg:'#FFFFFF',ac:'#B8F04D',p:'#17754B',box:'#FFFFFF',bt:'#1A1A1A',f:'ou',ft:'brand',h:'DID YOU<br>'+HL('KNOW?')});
 reg('qt-dyk-cream','Quote - did you know cream','dyk',{bg:'#EFEAE0',fg:'#1A1A1A',ac:'#FF6A1A',p:'#E0D9C8',box:'#FFFFFF',bt:'#333',f:'br',ft:'line',dec:'dots'});
+window.QTK={A_:A_,reg:reg,A:A,D:D,E:E,HL:HL,HB:HB,MK:MK,AU:AU,FT:FT,BG:BG,DEC:DEC,ph:ph,U:U,F:F,NAME:NAME,add:add,TH:TH};
 })();

@@ -1,12 +1,15 @@
 import re, glob, os
-src = open('quotes-models.js', encoding='utf-8').read()
-ids = re.findall(r"^reg\('(qt-[a-z0-9-]+)','([^']+)'", src, flags=re.M)
-CATS = ['QTA', 'QTB', 'QTC', 'QTD', 'QTE']
-TABLE = [(CATS[k // 10], m, n) for k, (m, n) in enumerate(ids)]
+src = open('quotes-models.js', encoding='utf-8').read() + '\n' + open('quotes-models2.js', encoding='utf-8').read()
+ids = re.findall(r"^(?:reg|reg2|PBG)\('(qt-[a-z0-9-]+)','([^']+)'", src, flags=re.M)
+CATS = ['QTA', 'QTB', 'QTC', 'QTD', 'QTE', 'QTF', 'QTG', 'QTH', 'QTI', 'QTJ']
+SIZES = [10, 10, 10, 10, 10, 12, 12, 12, 12, 12]
+BOUND = [sum(SIZES[:i + 1]) for i in range(len(SIZES))]
+assert len(ids) == BOUND[-1], len(ids)
+TABLE = [(CATS[sum(1 for x in BOUND if k >= x)], m, n) for k, (m, n) in enumerate(ids)]
 SHELL = open('AGC-01-cover-block.html', encoding='utf-8').read()
-SHELL = SHELL.replace('cover-block', '__MODEL__').replace('<script src="planner-models.js"></script>', '<script src="quotes-models.js"></script>')
+SHELL = SHELL.replace('cover-block', '__MODEL__').replace('<script src="planner-models.js"></script>', '<script src="quotes-models.js"></script>\n<script src="quotes-models2.js"></script>')
 SHELL = re.sub(r'<title>.*?</title>', '<title>__TITLE__</title>', SHELL)
-for f in glob.glob('QT[A-E]-*.html'):
+for f in glob.glob('QT[A-J]-*.html'):
     os.remove(f)
 rows = []; cnt = {}
 for pre, mid, name in TABLE:

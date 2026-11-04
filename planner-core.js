@@ -184,7 +184,7 @@ function build(el){
   if(el.t==='img'){
     var im=document.createElement('img');im.alt='';im.draggable=false;im.src=el.src;
     if(el.flip)im.style.transform='scaleX(-1)';
-    if(el.ph)im.style.mixBlendMode='normal';
+    if(el.ph||el.nb)im.style.mixBlendMode='normal';
     n.appendChild(im);
   } else {
     var t=document.createElement('div');t.className='txt';t.textContent=el.text;n.appendChild(t);styleTxt(n,el);

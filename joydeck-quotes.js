@@ -6,7 +6,12 @@ var PARTS=[
  ['QTB','Cards & bubbles','page',['#B5400C','#FF6A1A','#FFD0B5','#FFF0E6']],
  ['QTC','Typographic','page',['#1237B8','#C8F31D','#C9D2EE','#EEF0F4']],
  ['QTD','Photo quotes','ebook',['#0D5C3A','#B8F04D','#CBE4D6','#EAF3EE']],
- ['QTE','Dark & gradient','page',['#2A0F6B','#C45BFF','#D9CEF5','#EDE7F8']]
+ ['QTE','Dark & gradient','page',['#2A0F6B','#C45BFF','#D9CEF5','#EDE7F8']],
+ ['QTF','Photo background','ebook',['#111111','#E4FF2C','#8C8C8C','#EEEEEE']],
+ ['QTG','Photo spaces','ebook',['#0B1C3D','#FFD84A','#C8D3EC','#EAF0FF']],
+ ['QTH','Dark green & neon','page',['#04140C','#39FF88','#0B3A22','#E3F4EA']],
+ ['QTI','Light & minimal','page',['#2A2A2A','#B5651D','#E2DCC8','#F7F3EA']],
+ ['QTJ','Bold graphic','page',['#D6242B','#FFD21F','#F5B6B9','#FFF3D6']]
 ];
 var n=function(k){return k+' page'+(k>1?'s':'')};
 function mount(ctx){
