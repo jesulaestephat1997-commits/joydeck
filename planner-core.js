@@ -27,8 +27,11 @@ var css=document.createElement('style');
 css.textContent=[
 '*{box-sizing:border-box}[hidden]{display:none!important}',
 'body{margin:0;background:#EDEBE6;font-family:Inter,sans-serif;color:#1A1A1A}',
-'.preview-area{margin-left:300px;padding:92px 40px 40px;display:flex;justify-content:center}',
-'.sw{position:relative;flex:none}.stage{width:816px;height:1056px;transform-origin:0 0}',
+'.preview-area{margin-left:300px;padding:92px 40px 40px;display:flex;justify-content:flex-start}',
+'.sw{position:relative;flex:none;margin:0 auto}.stage{width:816px;height:1056px;transform-origin:0 0}',
+'#jdZoom{position:fixed;right:26px;bottom:20px;z-index:50;display:flex;align-items:center;gap:2px;background:#fff;border:1px solid #E4E2DD;border-radius:10px;padding:3px;box-shadow:0 6px 18px rgba(0,0,0,.12)}',
+'#jdZoom button{min-width:28px;height:28px;border:0;background:transparent;border-radius:7px;font:600 13px Inter,sans-serif;color:#1A1A1A;cursor:pointer;padding:0 8px}#jdZoom button:hover{background:#F2F0EB}',
+'#jdZoom span{min-width:46px;text-align:center;font:600 12px Inter,sans-serif;color:#555}@media print{#jdZoom{display:none}}',
 '.page{width:816px;height:1056px;position:relative;overflow:hidden;background:var(--bgc,#fff);box-shadow:0 12px 40px rgba(0,0,0,.18);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}',
 '.page.bd::after{content:"";position:absolute;inset:24px;border:var(--bd-w,4px) solid var(--bd-c,#111);border-radius:18px;pointer-events:none;z-index:5}',
 '#base{position:absolute;left:0;top:0;width:816px;height:1056px;font-family:var(--fb);color:var(--x);font-size:12px;line-height:1.25;z-index:1}',
@@ -144,6 +147,7 @@ function layout(){
   document.querySelector('.preview-area').style.paddingTop=(h+24)+'px';
   var s=Math.min(1,(innerWidth-300-80)/W,(innerHeight-h-24-30)/H);
   if(!(s>0.2))s=0.2;
+  if(typeof zoom==='number')s=zoom;curS=s;var zp=document.getElementById('zPct');if(zp)zp.textContent=Math.round(s*100)+'%';
   sw.style.width=(W*s)+'px';sw.style.height=(H*s)+'px';stage.style.transform='scale('+s+')';
 }
 function get(id){for(var i=0;i<S.els.length;i++)if(S.els[i].id===id)return S.els[i];return null}
@@ -403,6 +407,26 @@ $('iFlip').addEventListener('click',function(){var v=null;selEls().forEach(funct
 $('oFront').addEventListener('click',function(){order(true)});$('oBack').addEventListener('click',function(){order(false)});
 $('oDup').addEventListener('click',dup);$('oDel').addEventListener('click',del);
 $('addText').addEventListener('click',addText);
+var zoom=null,curS=1,ZSTEPS=[.25,.35,.5,.6,.75,.9,1,1.25,1.5,2,2.5,3];
+function setZoom(ns,cx,cy){
+  var r=pageEl.getBoundingClientRect(),k=sc();
+  if(cx==null){cx=innerWidth/2+150;cy=innerHeight/2}
+  var px=(cx-r.left)/k,py=(cy-r.top)/k;
+  zoom=ns;layout();
+  if(ns==null){window.scrollTo(0,0);return}
+  var r2=pageEl.getBoundingClientRect(),k2=sc();
+  window.scrollBy(r2.left+px*k2-cx,r2.top+py*k2-cy);
+}
+if(!EMBED){
+  var zb=document.createElement('div');zb.id='jdZoom';
+  zb.innerHTML='<button type="button" id="zOut" title="Zoom out">&minus;</button><span id="zPct"></span><button type="button" id="zIn" title="Zoom in">+</button><button type="button" id="zFit" title="Fit to screen">Fit</button>';
+  document.body.appendChild(zb);
+  document.getElementById('zIn').addEventListener('click',function(){var n=null;for(var i=0;i<ZSTEPS.length;i++)if(ZSTEPS[i]>curS*1.01){n=ZSTEPS[i];break}setZoom(n==null?3:n)});
+  document.getElementById('zOut').addEventListener('click',function(){var n=null;for(var i=ZSTEPS.length-1;i>=0;i--)if(ZSTEPS[i]<curS*0.99){n=ZSTEPS[i];break}setZoom(n==null?.25:n)});
+  document.getElementById('zFit').addEventListener('click',function(){setZoom(null)});
+  document.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(Math.max(.25,Math.min(4,curS*Math.exp(-e.deltaY*0.0025))),e.clientX,e.clientY)},{passive:false});
+  layout();
+}
 if(!M.illus){var ig=$('catSel').parentNode;ig.style.display='none';var sb=document.querySelector('.sidebar .sub');if(sb)sb.textContent='Click any text on the page to edit it. Add your own text'+(M.photo?' or photo':'')+' on top.'}
 if(M.photo){$('photoBtn').hidden=false;
   $('photoBtn').addEventListener('click',function(){$('photoFile').click()});

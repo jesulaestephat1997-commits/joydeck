@@ -7,6 +7,7 @@ var css=[
  '#jdHome:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5)}',
  '#jdHome svg{width:16px;height:16px}',
  '@media(min-width:821px){',
+ 'html,body{overflow:hidden!important}',
  'body header.top{height:56px!important;padding:0 20px!important;gap:10px!important}',
  'body header.top .logo{font-size:21px!important}',
  'body header.top #title{font-size:14px!important;padding:6px 10px!important;border-radius:8px!important}',
