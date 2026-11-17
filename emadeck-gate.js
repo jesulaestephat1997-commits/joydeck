@@ -32,7 +32,7 @@
       return sb.from('profiles').select('role,plan_status').eq('id', s.user.id).maybeSingle().then(function(q){
         if (q.error) return fail();
         var p = q.data;
-        if (p && (OK_ROLES.indexOf(p.role) > -1 || OK_PLAN.indexOf(p.plan_status) > -1)) allow(); else paywall();
+        if (p && (OK_ROLES.indexOf(p.role) > -1 || OK_PLAN.indexOf(p.plan_status) > -1)) allow(); else if (/[?&]paid=1/.test(location.search) && (window.__jdTry = (window.__jdTry||0)+1) <= 15) { setTimeout(run, 2500); } else paywall();
       });
     }).catch(fail);
   }
