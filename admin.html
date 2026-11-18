@@ -6,32 +6,57 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Emadeck Admin</title>
 <style>
-:root{--ink:#16203d;--mut:#6b7390;--line:#e3e8f4;--bg:#f4f6fb;--blue:#2b4bff;--navy:#0f1a4a}
+:root{--ink:#111a36;--mut:#68728f;--line:#e6eaf4;--bg:#f5f7fc;--blue:#2b4bff;--green:#1f9d55;--amber:#d98e04;--red:#d64545;--vio:#6b5bd6}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{background:linear-gradient(120deg,#0f1a4a,#1c2f8f);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:20}
-header b{font-size:19px;letter-spacing:-.2px}
-header span{opacity:.7;font-size:13px}
-header a,header button{margin-left:auto;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 14px;font:600 13px inherit;text-decoration:none;cursor:pointer}
-header a+button{margin-left:8px}
-main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
-h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:26px 2px 10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
-.card small{display:block;color:var(--mut);font-size:12px;margin-bottom:6px}
-.card b{font-size:26px;letter-spacing:-.5px}
-.note{background:#fff7e6;border:1px solid #f3dca8;color:#7a5a10;border-radius:12px;padding:12px 14px;font-size:13px;margin-top:12px}
-.chart{display:flex;align-items:flex-end;gap:3px;height:110px;margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 12px 8px}
-.chart i{flex:1;background:var(--blue);border-radius:4px 4px 0 0;min-height:2px;opacity:.85}
-.chart i:hover{opacity:1}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+header{background:linear-gradient(120deg,#0f1a4a,#1c2f8f);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20}
+header b{font-size:19px;letter-spacing:-.3px}
+header span{opacity:.65;font-size:13px;padding-left:12px;border-left:1px solid rgba(255,255,255,.25)}
+header .sp{flex:1}
+header a,header button{color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:8px 14px;font:600 13px inherit;text-decoration:none;cursor:pointer}
+header a:hover,header button:hover{background:rgba(255,255,255,.2)}
+main{max-width:1120px;margin:0 auto;padding:10px 18px 70px}
+.sh{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:30px 0 12px}
+h2{margin:0;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:0 1px 2px rgba(16,24,56,.04)}
+.card small{display:block;color:var(--mut);font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.card b{display:block;font-size:27px;font-weight:700;letter-spacing:-.6px;font-variant-numeric:tabular-nums;line-height:1.1}
+.card .sub{margin-top:7px;font-size:12.5px;color:var(--mut)}
+.card.fix{background:linear-gradient(180deg,#fff,#f7f9ff)}
+.dl{font-style:normal;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.dl.up{background:#e1f5ea;color:#157a40}.dl.dn{background:#fde6e6;color:#b53030}.dl.eq{background:#eceff7;color:#68728f}
+.dist{margin-top:12px}
+.bar{display:flex;height:10px;border-radius:999px;overflow:hidden;background:#eceff7}
+.bar i{display:block;height:100%}
+.leg{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--mut)}
+.leg span{display:inline-flex;align-items:center;gap:7px}
+.leg u{width:9px;height:9px;border-radius:50%;display:inline-block;text-decoration:none}
+.leg b{color:var(--ink);font-weight:700}
+.ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:#e8ecf7;border-radius:12px;padding:3px}
+.seg button{border:0;background:transparent;padding:7px 14px;border-radius:9px;font:600 13px inherit;color:var(--mut);cursor:pointer}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,24,56,.12)}
+.cus{display:flex;gap:8px;align-items:center;color:var(--mut);font-size:13px}
+.cus input{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 10px;font:inherit;background:#fff;color:var(--ink)}
+.cus button{height:36px;border:0;border-radius:10px;background:var(--ink);color:#fff;font:600 13px inherit;padding:0 14px;cursor:pointer}
+.chartc{margin-top:12px;position:relative}
+.chartc h3{margin:0 0 4px;font-size:14px;font-weight:700}
+.chartc p{margin:0 0 6px;color:var(--mut);font-size:12.5px}
+.cw{position:relative}
+.cw svg{width:100%;height:auto;display:block;overflow:visible}
+.tip{position:absolute;top:0;pointer-events:none;background:var(--ink);color:#fff;font-size:12.5px;padding:7px 11px;border-radius:9px;white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .12s}
+.note{background:#fff7e6;border:1px solid #f3dca8;color:#7a5a10;border-radius:12px;padding:12px 14px;font-size:13px}
 .tools{display:flex;gap:10px;flex-wrap:wrap}
 .tools input,.tools select{height:42px;border:1px solid var(--line);border-radius:12px;padding:0 14px;font-size:15px;background:#fff;color:var(--ink)}
 .tools input{flex:1;min-width:180px}
-.list{background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:12px;overflow:hidden}
-.row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:#fff;padding:13px 16px;font:inherit;color:inherit;cursor:pointer}
+.list{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:12px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,56,.04)}
+.row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:#fff;padding:13px 18px;font:inherit;color:inherit;cursor:pointer}
 .row:last-child{border-bottom:0}
 .row:hover{background:#f8f9fe}
-.row.h{cursor:default;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);background:#fafbfe}
+.row.h{cursor:default;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);background:#fafbfe;font-weight:700}
 .row .e{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row .e small{display:block;color:var(--mut);font-weight:400}
 .bd{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;background:#eceff7;color:#4a5373}
@@ -50,20 +75,22 @@ h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)
 .acts button,.acts select{height:42px;border-radius:12px;border:1px solid var(--line);background:#fff;font:600 14px inherit;padding:0 14px;cursor:pointer;color:var(--ink)}
 .acts button.p{background:var(--blue);border-color:var(--blue);color:#fff}
 .acts button.d{color:#a11d1d;border-color:#f1c6c6}
-.acts button:disabled{opacity:.4;cursor:not-allowed}
+.acts button:disabled,.acts select:disabled{opacity:.4;cursor:not-allowed}
 .close{margin-top:18px;width:100%;height:44px;border:0;border-radius:12px;background:#eef1fa;font:600 15px inherit;cursor:pointer}
 .msg{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:60;display:none;max-width:calc(100vw - 32px)}
 .msg.on{display:block}
 .state{text-align:center;padding:60px 20px;color:var(--mut)}
+@media(max-width:900px){.g4,.g5{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){
   .row{grid-template-columns:1fr auto}
   .row .c3,.row .c4,.row .c5{display:none}
   .row.h{display:none}
+  .card b{font-size:23px}
 }
 </style>
 </head>
 <body>
-<header><b>Emadeck</b><span>Admin</span><a href="builder.html">Builder</a><button id="rf" type="button">Refresh</button></header>
+<header><b>Emadeck</b><span>Admin</span><div class="sp"></div><a href="builder.html">Builder</a><button id="rf" type="button">Refresh</button></header>
 <main id="app"><div class="state" id="st">Loading...</div></main>
 
 <div class="mask" id="mask"><div class="box" id="box"></div></div>
@@ -72,11 +99,16 @@ h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)
 <script>
 var API = 'https://emadeck-api.onrender.com';
 var DATA = null, Q = '', F = 'all', msgT;
+var P = {k: '30', from: null, to: null};
+try { var sv = JSON.parse(localStorage.getItem('jdAdminP') || 'null'); if (sv && sv.k) P = sv; } catch(e){}
 
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function money(v){ return '$' + (Number(v) || 0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
 function fd(s){ if (!s) return '-'; var d = new Date(s); return isNaN(d) ? '-' : d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}); }
+function fs(d){ return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short'}); }
 function say(t){ var m = document.getElementById('msg'); m.textContent = t; m.classList.add('on'); clearTimeout(msgT); msgT = setTimeout(function(){ m.classList.remove('on'); }, 3200); }
+function dkey(d){ return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+function saveP(){ try { localStorage.setItem('jdAdminP', JSON.stringify(P)); } catch(e){} }
 
 function token(){
   try {
@@ -90,16 +122,14 @@ function token(){
   } catch(e){}
   return null;
 }
-
 function call(path, method, body){
   var t = token();
   if (!t) return Promise.reject({code: 401});
   return fetch(API + path, {method: method || 'GET', headers: {'Authorization': 'Bearer ' + t, 'Content-Type': 'application/json'}, body: body ? JSON.stringify(body) : undefined})
     .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if (!r.ok) throw {code: r.status, data: j}; return j; }); });
 }
-
 function load(){
-  document.getElementById('st') ? 0 : (document.getElementById('app').innerHTML = '<div class="state" id="st">Loading...</div>');
+  if (!DATA) document.getElementById('app').innerHTML = '<div class="state" id="st">Loading...</div>';
   var slow = setTimeout(function(){ var s = document.getElementById('st'); if (s) s.textContent = 'Waking up the server, this can take up to a minute...'; }, 4000);
   call('/admin/overview').then(function(j){ clearTimeout(slow); DATA = j; render(); })
   .catch(function(e){
@@ -111,31 +141,122 @@ function load(){
   });
 }
 
-function card(l, v){ return '<div class="card"><small>' + l + '</small><b>' + v + '</b></div>'; }
+function card(l, v, sub, cls){ return '<div class="card ' + (cls || '') + '"><small>' + l + '</small><b>' + v + '</b>' + (sub ? '<div class="sub">' + sub + '</div>' : '') + '</div>'; }
 
 function render(){
-  var s = DATA.stats, r = DATA.revenue, h = '';
-  h += '<h2>Members</h2><div class="grid">' +
-    card('Registered', s.total) + card('Active subscribers', s.active) + card('Monthly plans', s.monthly) + card('Yearly plans', s.yearly) +
-    card('Expired', s.expired) + card('Blocked', s.blocked) + card('Paused', s.paused) + card('New (7 days)', s.new7) + card('New (30 days)', s.new30) + card('Est. monthly recurring', money(s.mrr)) + '</div>';
-  h += '<h2>Revenue collected</h2>';
-  if (r){
-    h += '<div class="grid">' + card('Today', money(r.today)) + card('Last 7 days', money(r.d7)) + card('Last 30 days', money(r.d30)) +
-      card('This month', money(r.month)) + card('This year', money(r.year)) + card('All time', money(r.all)) + '</div>';
-    var max = Math.max.apply(null, r.daily.map(function(x){ return x.v; }).concat([1]));
-    h += '<div class="chart">' + r.daily.map(function(x){ return '<i title="' + x.d + ' : ' + money(x.v) + '" style="height:' + Math.max(2, Math.round(x.v / max * 100)) + '%"></i>'; }).join('') + '</div>';
-    if (r.months && r.months.length) h += '<div class="grid" style="margin-top:12px">' + r.months.map(function(m){ return card(m.m, money(m.v)); }).join('') + '</div>';
-  } else {
-    h += '<div class="note">Revenue is not available yet. ' + esc(DATA.revenue_note || '') + '</div>';
-  }
-  h += '<h2>People</h2><div class="tools"><input id="q" placeholder="Search by email or name" value="' + esc(Q) + '">' +
+  var s = DATA.stats;
+  var none = Math.max(0, s.total - s.active - s.expired - s.blocked - s.paused);
+  var conv = s.total ? Math.round(s.active / s.total * 100) : 0;
+  var seg = [['Active', s.active, 'var(--green)'], ['Expired', s.expired, 'var(--amber)'], ['No plan', none, '#c3c9dc'], ['Paused', s.paused, 'var(--vio)'], ['Blocked', s.blocked, 'var(--red)']];
+  var h = '<div class="sh"><h2>Members</h2></div><div class="grid g4">' +
+    card('Registered', s.total, s.new7 + ' new in the last 7 days') +
+    card('Active subscribers', s.active, s.monthly + ' monthly &middot; ' + s.yearly + ' yearly') +
+    card('Monthly recurring (est.)', money(s.mrr), 'Based on active plans') +
+    card('Conversion', conv + '%', 'Active subscribers / registered') + '</div>' +
+    '<div class="card dist"><div class="bar">' + seg.map(function(x){ return x[1] ? '<i style="width:' + (x[1] / Math.max(1, s.total) * 100) + '%;background:' + x[2] + '"></i>' : ''; }).join('') + '</div>' +
+    '<div class="leg">' + seg.map(function(x){ return '<span><u style="background:' + x[2] + '"></u>' + x[0] + ' <b>' + x[1] + '</b></span>'; }).join('') + '</div></div>';
+  h += '<div class="sh"><h2>Revenue</h2><div class="ctl" id="ctl"></div></div><div id="rv"></div>';
+  h += '<div class="sh"><h2>People</h2></div><div class="tools"><input id="q" placeholder="Search by email or name" value="' + esc(Q) + '">' +
     '<select id="f"><option value="all">All</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">No plan</option><option value="blocked">Blocked</option><option value="paused">Paused</option><option value="admin">Admins</option></select></div>' +
     '<div class="list" id="lst"></div>';
   document.getElementById('app').innerHTML = h;
   document.getElementById('f').value = F;
   document.getElementById('q').addEventListener('input', function(e){ Q = e.target.value; list(); });
   document.getElementById('f').addEventListener('change', function(e){ F = e.target.value; list(); });
+  renderRev();
   list();
+}
+
+function range(){
+  var to = new Date(); to.setHours(0,0,0,0);
+  var from;
+  if (P.k === 'custom' && P.from && P.to){ from = new Date(P.from + 'T00:00:00'); to = new Date(P.to + 'T00:00:00'); }
+  else { var n = parseInt(P.k, 10) || 30; from = new Date(to); from.setDate(from.getDate() - (n - 1)); }
+  return {from: from, to: to};
+}
+function daysOf(from, to){ var a = [], d = new Date(from); while (d <= to){ a.push(new Date(d)); d.setDate(d.getDate() + 1); } return a; }
+function niceMax(m){ if (m <= 0) return 10; var e = Math.pow(10, Math.floor(Math.log(m) / Math.LN10)), f = m / e; var n = f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10; return n * e; }
+function axis(v){ return '$' + (v >= 1000 ? (v / 1000).toFixed(v % 1000 ? 1 : 0) + 'k' : (Math.round(v * 100) / 100)); }
+
+function renderRev(){
+  var ctl = document.getElementById('ctl'), rv = document.getElementById('rv');
+  var opts = [['7','7 days'],['30','30 days'],['90','90 days'],['custom','Custom']];
+  var c = '<div class="seg">' + opts.map(function(o){ return '<button type="button" data-k="' + o[0] + '" class="' + (P.k === o[0] ? 'on' : '') + '">' + o[1] + '</button>'; }).join('') + '</div>';
+  var rg = range();
+  if (P.k === 'custom') c += '<div class="cus"><input type="date" id="df" value="' + dkey(rg.from) + '" max="' + dkey(new Date()) + '"><span>to</span><input type="date" id="dt" value="' + dkey(rg.to) + '" max="' + dkey(new Date()) + '"><button type="button" id="dg">Apply</button></div>';
+  ctl.innerHTML = c;
+  [].forEach.call(ctl.querySelectorAll('.seg button'), function(b){ b.addEventListener('click', function(){ P.k = b.getAttribute('data-k'); saveP(); renderRev(); }); });
+  var dg = document.getElementById('dg');
+  if (dg) dg.addEventListener('click', function(){
+    var a = document.getElementById('df').value, b = document.getElementById('dt').value;
+    if (!a || !b || a > b){ say('Pick a valid date range'); return; }
+    if ((new Date(b) - new Date(a)) / 86400000 > 366){ say('Maximum range is one year'); return; }
+    P.from = a; P.to = b; saveP(); renderRev();
+  });
+
+  var R = DATA.revenue;
+  if (!R || !R.list){ rv.innerHTML = '<div class="note">Revenue is not available yet. ' + esc(DATA.revenue_note || 'The server update is still deploying, refresh in a minute.') + '</div>'; return; }
+
+  var rev = {}, cnt = {};
+  R.list.forEach(function(o){ var k = dkey(new Date(o.t)); rev[k] = (rev[k] || 0) + o.v; cnt[k] = (cnt[k] || 0) + 1; });
+  var ds = daysOf(rg.from, rg.to), n = ds.length;
+  var vals = ds.map(function(d){ return rev[dkey(d)] || 0; });
+  var total = vals.reduce(function(a, b){ return a + b; }, 0);
+  var orders = ds.reduce(function(a, d){ return a + (cnt[dkey(d)] || 0); }, 0);
+  var pf = new Date(rg.from); pf.setDate(pf.getDate() - n);
+  var pt = new Date(rg.from); pt.setDate(pt.getDate() - 1);
+  var prev = daysOf(pf, pt).reduce(function(a, d){ return a + (rev[dkey(d)] || 0); }, 0);
+  var dl = '';
+  if (prev > 0){ var p = (total - prev) / prev * 100; dl = '<em class="dl ' + (p > 0 ? 'up' : p < 0 ? 'dn' : 'eq') + '">' + (p > 0 ? '+' : '') + Math.round(p) + '%</em>'; }
+  var t0 = new Date(rg.from), t1 = new Date(rg.to); t1.setDate(t1.getDate() + 1);
+  var nm = DATA.users.filter(function(u){ var d = new Date(u.created_at); return d >= t0 && d < t1; }).length;
+
+  var h = '<div class="grid g5">' +
+    card('Today', money(R.today), 'Fixed', 'fix') +
+    card('Revenue', money(total) + dl, fs(rg.from) + ' - ' + fs(rg.to)) +
+    card('Orders', orders, orders ? 'Avg ' + money(total / orders) : 'No order in this period') +
+    card('New members', nm, 'Joined in this period') +
+    card('All time', money(R.all), R.orders + ' orders') + '</div>';
+
+  var W = 1000, H = 250, L = 56, Rr = 14, T = 14, B = 30, iw = W - L - Rr, ih = H - T - B;
+  var top = niceMax(Math.max.apply(null, vals.concat([0])));
+  var step = n > 1 ? iw / (n - 1) : 0;
+  var pts = vals.map(function(v, i){ return [L + (n > 1 ? i * step : iw / 2), T + ih - (v / top) * ih]; });
+  var line = 'M' + pts.map(function(q){ return q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join(' L');
+  var area = line + ' L' + pts[n - 1][0].toFixed(1) + ' ' + (T + ih) + ' L' + pts[0][0].toFixed(1) + ' ' + (T + ih) + ' Z';
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" id="cv"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b4bff" stop-opacity=".22"/><stop offset="1" stop-color="#2b4bff" stop-opacity="0"/></linearGradient></defs>';
+  for (var i = 0; i <= 4; i++){
+    var y = T + ih * i / 4;
+    svg += '<line x1="' + L + '" x2="' + (W - Rr) + '" y1="' + y + '" y2="' + y + '" stroke="' + (i === 4 ? '#c9d0e4' : '#edf0f8') + '"/>' +
+      '<text x="' + (L - 10) + '" y="' + (y + 4) + '" text-anchor="end" font-size="12" fill="#8a93ad">' + axis(top * (1 - i / 4)) + '</text>';
+  }
+  var nl = Math.min(6, n), seen = {};
+  for (var k = 0; k < nl; k++){
+    var ix = nl === 1 ? 0 : Math.round(k * (n - 1) / (nl - 1));
+    if (seen[ix]) continue; seen[ix] = 1;
+    svg += '<text x="' + pts[ix][0].toFixed(1) + '" y="' + (H - 8) + '" text-anchor="' + (ix === 0 ? 'start' : ix === n - 1 ? 'end' : 'middle') + '" font-size="12" fill="#8a93ad">' + fs(ds[ix]) + '</text>';
+  }
+  svg += '<path d="' + area + '" fill="url(#ga)"/><path d="' + line + '" fill="none" stroke="#2b4bff" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>' +
+    '<line id="gl" y1="' + T + '" y2="' + (T + ih) + '" stroke="#2b4bff" stroke-opacity=".35" style="display:none"/><circle id="gd" r="5" fill="#fff" stroke="#2b4bff" stroke-width="2.4" style="display:none"/></svg>';
+
+  h += '<div class="card chartc"><h3>Daily revenue</h3><p>' + fs(rg.from) + ' - ' + fs(rg.to) + ' &middot; ' + n + ' day' + (n > 1 ? 's' : '') + '</p><div class="cw" id="cw">' + svg + '<div class="tip" id="tip"></div></div></div>';
+  rv.innerHTML = h;
+
+  var cw = document.getElementById('cw'), tip = document.getElementById('tip'), gl = document.getElementById('gl'), gd = document.getElementById('gd');
+  function hide(){ tip.style.opacity = 0; gl.style.display = 'none'; gd.style.display = 'none'; }
+  cw.addEventListener('mousemove', function(e){
+    var r = cw.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width * W;
+    var i = n > 1 ? Math.round((x - L) / step) : 0;
+    i = Math.max(0, Math.min(n - 1, i));
+    gl.setAttribute('x1', pts[i][0]); gl.setAttribute('x2', pts[i][0]); gl.style.display = '';
+    gd.setAttribute('cx', pts[i][0]); gd.setAttribute('cy', pts[i][1]); gd.style.display = '';
+    tip.textContent = fs(ds[i]) + ' : ' + money(vals[i]);
+    tip.style.left = (pts[i][0] / W * r.width) + 'px';
+    tip.style.top = (pts[i][1] / H * r.height) + 'px';
+    tip.style.opacity = 1;
+  });
+  cw.addEventListener('mouseleave', hide);
 }
 
 function list(){
