@@ -64,7 +64,17 @@
     var anchor = document.getElementById('projBtn') || document.getElementById('resetBtn'); if (!anchor) return false;
     var b = document.createElement('button'); b.className = 'btn'; b.id = 'jdSaveBtn'; b.type = 'button';
     b.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h8l2.5 2.5v8.5a1 1 0 0 1-1 1h-9.5a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1z"/><path d="M5 2.5v3.5h5V2.5M5 14V9.5h6V14"/></svg><span>Save</span>';
-    b.addEventListener('click', save);
+    b.addEventListener('click', function(){
+      if (!document.querySelector('#strip .pcard')){
+        toast.lastChild.textContent = 'Add a page to your book first';
+        toast.classList.add('on'); clearTimeout(toastT);
+        toastT = setTimeout(function(){ toast.classList.remove('on'); }, 2800);
+        return;
+      }
+      toast.lastChild.textContent = 'Saved to My projects';
+      save();
+    });
+    setInterval(function(){ b.style.opacity = document.querySelector('#strip .pcard') ? '' : '.5'; }, 600);
     anchor.parentNode.insertBefore(b, anchor);
     status = document.createElement('span'); status.id = 'jdSaved'; status.innerHTML = '<i></i><span>Saved</span>';
     var count = document.getElementById('count'); if (count && count.parentNode) count.parentNode.insertBefore(status, count.nextSibling);
