@@ -12,3 +12,17 @@
   s.textContent = css;
   document.head.appendChild(s);
 })();
+
+(function(){
+  document.addEventListener('click', function(e){
+    var p = document.getElementById('projPanel');
+    if (!p || !p.contains(e.target)) return;
+    if (!e.target.closest('.pi, .pt')) return;
+    setTimeout(function(){
+      var sh = document.getElementById('jdmShade');
+      if (sh) sh.click();
+      p.classList.remove('on');
+      window.scrollTo(0, 0);
+    }, 120);
+  }, true);
+})();
