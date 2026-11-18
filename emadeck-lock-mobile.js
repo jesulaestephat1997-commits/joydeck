@@ -12,3 +12,10 @@
   s.textContent = css;
   if (!s.parentNode) document.head.appendChild(s);
 })();
+
+(function(){
+  var s = document.createElement('style');
+  s.id = 'jdmLockStyle2';
+  s.textContent = '@media(max-width:820px){#lib::after{display:none!important;height:0!important;content:none!important}body:not(.editing) main{padding-bottom:0!important}}';
+  document.head.appendChild(s);
+})();
