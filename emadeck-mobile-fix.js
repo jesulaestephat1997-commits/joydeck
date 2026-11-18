@@ -20,6 +20,7 @@
       '#jdmPanel button{display:flex!important;align-items:center;justify-content:flex-start;gap:10px;width:100%!important;height:50px!important;min-height:50px!important;flex:none!important;order:3;margin:0!important;padding:0 16px!important;border:1px solid #E4E9F5!important;border-radius:12px!important;background:#F6F8FE!important;color:#141B34!important;font:700 15px ' + F + '!important;white-space:nowrap!important;text-align:left}' +
       '#jdmPanel #exportBtn{order:0;justify-content:center;background:#1F4FD8!important;border-color:#1F4FD8!important;color:#fff!important}' +
       '#jdmPanel #jdManage{order:8}' +
+      '#jdmPanel button svg{width:20px!important;height:20px!important;min-width:20px;flex:none}' +
       '#jdmPanel #jdLogout{order:9;margin-top:6px!important;background:#fff!important;color:#B42318!important}' +
       'body.editing{overflow:hidden}' +
       'body.editing #editor{position:fixed!important;left:0!important;right:0!important;top:58px!important;bottom:0!important;height:auto!important;width:auto!important;z-index:40;overflow:auto!important;background:#fff;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}' +
