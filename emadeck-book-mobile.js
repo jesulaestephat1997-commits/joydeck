@@ -6,6 +6,7 @@
   css.textContent = [
     '@media(max-width:820px){',
     'html,body,button,.pcard,#strip{touch-action:manipulation}',
+    'input,select,textarea{font-size:16px!important}',
     '#jdmTog{display:none!important}',
     '#jds{display:none!important}',
     'body.jdm-tools #jds{display:flex!important;flex-wrap:wrap;position:fixed!important;left:10px!important;right:10px!important;bottom:calc(84px + env(safe-area-inset-bottom))!important;max-height:46dvh;overflow-y:auto;overscroll-behavior:contain;z-index:60;margin:0!important;padding:0 14px 14px!important;background:#fff!important;border:1px solid #E4E9F5!important;border-radius:20px!important;box-shadow:0 22px 48px -18px rgba(11,27,77,.5)}',
