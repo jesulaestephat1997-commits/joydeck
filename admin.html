@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Emadeck Admin</title>
+<style>
+:root{--ink:#16203d;--mut:#6b7390;--line:#e3e8f4;--bg:#f4f6fb;--blue:#2b4bff;--navy:#0f1a4a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#0f1a4a,#1c2f8f);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:20}
+header b{font-size:19px;letter-spacing:-.2px}
+header span{opacity:.7;font-size:13px}
+header a,header button{margin-left:auto;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 14px;font:600 13px inherit;text-decoration:none;cursor:pointer}
+header a+button{margin-left:8px}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:26px 2px 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.card small{display:block;color:var(--mut);font-size:12px;margin-bottom:6px}
+.card b{font-size:26px;letter-spacing:-.5px}
+.note{background:#fff7e6;border:1px solid #f3dca8;color:#7a5a10;border-radius:12px;padding:12px 14px;font-size:13px;margin-top:12px}
+.chart{display:flex;align-items:flex-end;gap:3px;height:110px;margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 12px 8px}
+.chart i{flex:1;background:var(--blue);border-radius:4px 4px 0 0;min-height:2px;opacity:.85}
+.chart i:hover{opacity:1}
+.tools{display:flex;gap:10px;flex-wrap:wrap}
+.tools input,.tools select{height:42px;border:1px solid var(--line);border-radius:12px;padding:0 14px;font-size:15px;background:#fff;color:var(--ink)}
+.tools input{flex:1;min-width:180px}
+.list{background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:12px;overflow:hidden}
+.row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:#fff;padding:13px 16px;font:inherit;color:inherit;cursor:pointer}
+.row:last-child{border-bottom:0}
+.row:hover{background:#f8f9fe}
+.row.h{cursor:default;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);background:#fafbfe}
+.row .e{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .e small{display:block;color:var(--mut);font-weight:400}
+.bd{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;background:#eceff7;color:#4a5373}
+.bd.active{background:#dff5e7;color:#13703a}.bd.expired{background:#fdf0d5;color:#8a5a00}
+.bd.blocked{background:#fde1e1;color:#a11d1d}.bd.paused{background:#e3e8f8;color:#3a4a9a}
+.bd.admin{background:#16203d;color:#fff}.bd.editor{background:#e6defa;color:#4b2fa0}
+.mask{position:fixed;inset:0;background:rgba(15,20,40,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.mask.on{display:flex}
+.box{background:#fff;border-radius:20px;max-width:480px;width:100%;max-height:92vh;overflow:auto;padding:22px}
+.box h3{margin:0 0 2px;font-size:18px;word-break:break-all}
+.box p{margin:0 0 14px;color:var(--mut);font-size:13px}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 10px;font-size:14px;margin-bottom:16px}
+.kv span{color:var(--mut)}
+.box h4{margin:16px 0 8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts button,.acts select{height:42px;border-radius:12px;border:1px solid var(--line);background:#fff;font:600 14px inherit;padding:0 14px;cursor:pointer;color:var(--ink)}
+.acts button.p{background:var(--blue);border-color:var(--blue);color:#fff}
+.acts button.d{color:#a11d1d;border-color:#f1c6c6}
+.acts button:disabled{opacity:.4;cursor:not-allowed}
+.close{margin-top:18px;width:100%;height:44px;border:0;border-radius:12px;background:#eef1fa;font:600 15px inherit;cursor:pointer}
+.msg{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:60;display:none;max-width:calc(100vw - 32px)}
+.msg.on{display:block}
+.state{text-align:center;padding:60px 20px;color:var(--mut)}
+@media(max-width:720px){
+  .row{grid-template-columns:1fr auto}
+  .row .c3,.row .c4,.row .c5{display:none}
+  .row.h{display:none}
+}
+</style>
+</head>
+<body>
+<header><b>Emadeck</b><span>Admin</span><a href="builder.html">Builder</a><button id="rf" type="button">Refresh</button></header>
+<main id="app"><div class="state" id="st">Loading...</div></main>
+
+<div class="mask" id="mask"><div class="box" id="box"></div></div>
+<div class="msg" id="msg"></div>
+
+<script>
+var API = 'https://emadeck-api.onrender.com';
+var DATA = null, Q = '', F = 'all', msgT;
+
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function money(v){ return '$' + (Number(v) || 0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function fd(s){ if (!s) return '-'; var d = new Date(s); return isNaN(d) ? '-' : d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}); }
+function say(t){ var m = document.getElementById('msg'); m.textContent = t; m.classList.add('on'); clearTimeout(msgT); msgT = setTimeout(function(){ m.classList.remove('on'); }, 3200); }
+
+function token(){
+  try {
+    for (var i = 0; i < localStorage.length; i++){
+      var k = localStorage.key(i);
+      if (/^sb-.*-auth-token$/.test(k)){
+        var j = JSON.parse(localStorage.getItem(k)), s = j.currentSession || j;
+        if (s && s.access_token) return s.access_token;
+      }
+    }
+  } catch(e){}
+  return null;
+}
+
+function call(path, method, body){
+  var t = token();
+  if (!t) return Promise.reject({code: 401});
+  return fetch(API + path, {method: method || 'GET', headers: {'Authorization': 'Bearer ' + t, 'Content-Type': 'application/json'}, body: body ? JSON.stringify(body) : undefined})
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if (!r.ok) throw {code: r.status, data: j}; return j; }); });
+}
+
+function load(){
+  document.getElementById('st') ? 0 : (document.getElementById('app').innerHTML = '<div class="state" id="st">Loading...</div>');
+  var slow = setTimeout(function(){ var s = document.getElementById('st'); if (s) s.textContent = 'Waking up the server, this can take up to a minute...'; }, 4000);
+  call('/admin/overview').then(function(j){ clearTimeout(slow); DATA = j; render(); })
+  .catch(function(e){
+    clearTimeout(slow);
+    var m = 'Could not load the data.';
+    if (e.code === 401) m = 'You are not signed in or your session expired. Open the builder, sign in, then come back here.';
+    if (e.code === 403) m = 'This account is not an admin.';
+    document.getElementById('app').innerHTML = '<div class="state">' + esc(m) + '</div>';
+  });
+}
+
+function card(l, v){ return '<div class="card"><small>' + l + '</small><b>' + v + '</b></div>'; }
+
+function render(){
+  var s = DATA.stats, r = DATA.revenue, h = '';
+  h += '<h2>Members</h2><div class="grid">' +
+    card('Registered', s.total) + card('Active subscribers', s.active) + card('Monthly plans', s.monthly) + card('Yearly plans', s.yearly) +
+    card('Expired', s.expired) + card('Blocked', s.blocked) + card('Paused', s.paused) + card('New (7 days)', s.new7) + card('New (30 days)', s.new30) + card('Est. monthly recurring', money(s.mrr)) + '</div>';
+  h += '<h2>Revenue collected</h2>';
+  if (r){
+    h += '<div class="grid">' + card('Today', money(r.today)) + card('Last 7 days', money(r.d7)) + card('Last 30 days', money(r.d30)) +
+      card('This month', money(r.month)) + card('This year', money(r.year)) + card('All time', money(r.all)) + '</div>';
+    var max = Math.max.apply(null, r.daily.map(function(x){ return x.v; }).concat([1]));
+    h += '<div class="chart">' + r.daily.map(function(x){ return '<i title="' + x.d + ' : ' + money(x.v) + '" style="height:' + Math.max(2, Math.round(x.v / max * 100)) + '%"></i>'; }).join('') + '</div>';
+    if (r.months && r.months.length) h += '<div class="grid" style="margin-top:12px">' + r.months.map(function(m){ return card(m.m, money(m.v)); }).join('') + '</div>';
+  } else {
+    h += '<div class="note">Revenue is not available yet. ' + esc(DATA.revenue_note || '') + '</div>';
+  }
+  h += '<h2>People</h2><div class="tools"><input id="q" placeholder="Search by email or name" value="' + esc(Q) + '">' +
+    '<select id="f"><option value="all">All</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">No plan</option><option value="blocked">Blocked</option><option value="paused">Paused</option><option value="admin">Admins</option></select></div>' +
+    '<div class="list" id="lst"></div>';
+  document.getElementById('app').innerHTML = h;
+  document.getElementById('f').value = F;
+  document.getElementById('q').addEventListener('input', function(e){ Q = e.target.value; list(); });
+  document.getElementById('f').addEventListener('change', function(e){ F = e.target.value; list(); });
+  list();
+}
+
+function list(){
+  var q = Q.trim().toLowerCase();
+  var us = DATA.users.filter(function(u){
+    if (F === 'admin' && u.role !== 'admin') return false;
+    if (F !== 'all' && F !== 'admin' && u.status !== F) return false;
+    return !q || (u.email || '').toLowerCase().indexOf(q) > -1 || (u.full_name || '').toLowerCase().indexOf(q) > -1;
+  });
+  var h = '<div class="row h"><div>Member</div><div>Status</div><div class="c3">Plan</div><div class="c4">Expires</div><div class="c5">Joined</div></div>';
+  if (!us.length) h += '<div class="state">No one matches.</div>';
+  us.forEach(function(u){
+    var plan = u.status === 'active' || u.status === 'expired' ? (u.plan_interval === 'year' ? 'Yearly' : u.plan_interval === 'month' ? 'Monthly' : 'Plan') : '-';
+    h += '<button class="row" data-id="' + esc(u.id) + '"><div class="e">' + esc(u.email) + '<small>' + esc(u.full_name || 'No name') + '</small></div>' +
+      '<div><span class="bd ' + u.status + '">' + u.status + '</span>' + (u.role !== 'user' ? ' <span class="bd ' + esc(u.role) + '">' + esc(u.role) + '</span>' : '') + '</div>' +
+      '<div class="c3">' + plan + '</div><div class="c4">' + fd(u.plan_expires_at) + '</div><div class="c5">' + fd(u.created_at) + '</div></button>';
+  });
+  var el = document.getElementById('lst'); el.innerHTML = h;
+  [].forEach.call(el.querySelectorAll('.row[data-id]'), function(b){ b.addEventListener('click', function(){ openUser(b.getAttribute('data-id')); }); });
+}
+
+function openUser(id){
+  var u = DATA.users.filter(function(x){ return x.id === id; })[0]; if (!u) return;
+  var self = DATA.me.id === u.id;
+  var h = '<h3>' + esc(u.email) + '</h3><p>' + esc(u.full_name || 'No name') + '</p>' +
+    '<div class="kv"><span>Status</span><div><span class="bd ' + u.status + '">' + u.status + '</span></div>' +
+    '<span>Role</span><div>' + esc(u.role) + '</div><span>Plan</span><div>' + (u.plan_interval === 'year' ? 'Yearly' : u.plan_interval === 'month' ? 'Monthly' : '-') + '</div>' +
+    '<span>Expires</span><div>' + fd(u.plan_expires_at) + '</div><span>Joined</span><div>' + fd(u.created_at) + '</div></div>' +
+    '<h4>Plan</h4><div class="acts"><button class="p" data-a="activate" data-v="month">Activate monthly</button><button class="p" data-a="activate" data-v="year">Activate yearly</button>' +
+    '<button class="d" data-a="deactivate"' + (self ? ' disabled' : '') + '>Remove plan</button></div>' +
+    '<h4>Access</h4><div class="acts">' +
+    (u.blocked ? '<button data-a="unblock">Unblock</button>' : '<button class="d" data-a="block"' + (self ? ' disabled' : '') + '>Block</button>') +
+    (u.paused ? '<button data-a="unpause">Resume account</button>' : '<button data-a="pause"' + (self ? ' disabled' : '') + '>Pause account</button>') + '</div>' +
+    '<h4>Role</h4><div class="acts"><select id="rl"' + (self ? ' disabled' : '') + '><option value="user">User</option><option value="editor">Editor</option><option value="admin">Admin</option></select>' +
+    '<button data-a="set_role"' + (self ? ' disabled' : '') + '>Save role</button></div>' +
+    '<button class="close" id="cl">Close</button>';
+  var box = document.getElementById('box'); box.innerHTML = h;
+  document.getElementById('rl').value = u.role;
+  document.getElementById('mask').classList.add('on');
+  document.getElementById('cl').addEventListener('click', closeBox);
+  [].forEach.call(box.querySelectorAll('[data-a]'), function(b){
+    b.addEventListener('click', function(){
+      var a = b.getAttribute('data-a'), v = b.getAttribute('data-v');
+      if (a === 'set_role') v = document.getElementById('rl').value;
+      if ((a === 'block' || a === 'deactivate' || (a === 'set_role' && v !== 'admin' && u.role === 'admin')) && !confirm('Confirm this action for ' + u.email + ' ?')) return;
+      if (a === 'set_role' && v === 'admin' && !confirm('Give admin rights to ' + u.email + ' ?')) return;
+      call('/admin/user', 'POST', {id: u.id, action: a, value: v}).then(function(){ say('Done'); closeBox(); load(); })
+        .catch(function(e){ say((e.data && (e.data.error + (e.data.detail ? ' : ' + e.data.detail : ''))) || 'Action failed'); });
+    });
+  });
+}
+function closeBox(){ document.getElementById('mask').classList.remove('on'); }
+document.getElementById('mask').addEventListener('click', function(e){ if (e.target.id === 'mask') closeBox(); });
+document.getElementById('rf').addEventListener('click', load);
+load();
+</script>
+</body>
+</html>
