@@ -1,6 +1,6 @@
 /* Emadeck - acces au builder : reserve aux comptes avec un role (admin, tester, member) ou un abonnement actif. */
 (function(){
-  var OK_ROLES = ['admin', 'tester', 'member'], OK_PLAN = ['active', 'trialing'];
+  var OK_ROLES = ['admin', 'editor', 'tester', 'member'], OK_PLAN = ['active', 'trialing'];
   var ov = document.createElement('div'); ov.id = 'jdGate';
   var st = document.createElement('style');
   st.textContent = '#jdGate{position:fixed;inset:0;z-index:2147483000;background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;font:400 16px/1.6 "Plus Jakarta Sans",system-ui,sans-serif;color:#141B34}' +
@@ -22,6 +22,10 @@
     show('<h1>We could not check your access</h1><p>Please check your connection and try again.</p><button class="b" type="button" id="jdGRe">Try again</button>');
     document.getElementById('jdGRe').addEventListener('click', function(){ location.reload(); });
   }
+  function locked(blocked){
+    show('<h1>' + (blocked ? 'Account blocked' : 'Account paused') + '</h1><p>' + (blocked ? 'Your account has been blocked.' : 'Your account is currently paused.') + ' Contact support@emadeck.com for help.</p><button class="b" type="button" id="jdGOut">Log out</button>');
+    document.getElementById('jdGOut').addEventListener('click', out);
+  }
   function allow(){ if (ov.parentNode) ov.parentNode.removeChild(ov); }
   function run(){
     loading();
@@ -29,9 +33,11 @@
     sb.auth.getSession().then(function(r){
       var s = r.data && r.data.session;
       if (!s){ location.replace('login.html'); return; }
-      return sb.from('profiles').select('role,plan_status').eq('id', s.user.id).maybeSingle().then(function(q){
+      return sb.from('profiles').select('role,plan_status,blocked,paused').eq('id', s.user.id).maybeSingle().then(function(q){
         if (q.error) return fail();
         var p = q.data;
+        if (p && p.blocked) return locked(true);
+        if (p && p.paused) return locked(false);
         if (p && (OK_ROLES.indexOf(p.role) > -1 || OK_PLAN.indexOf(p.plan_status) > -1)) allow(); else if (/[?&]paid=1/.test(location.search) && (window.__jdTry = (window.__jdTry||0)+1) <= 15) { setTimeout(run, 2500); } else paywall();
       });
     }).catch(fail);

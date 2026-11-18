@@ -169,7 +169,7 @@ function openUser(id){
     '<h4>Access</h4><div class="acts">' +
     (u.blocked ? '<button data-a="unblock">Unblock</button>' : '<button class="d" data-a="block"' + (self ? ' disabled' : '') + '>Block</button>') +
     (u.paused ? '<button data-a="unpause">Resume account</button>' : '<button data-a="pause"' + (self ? ' disabled' : '') + '>Pause account</button>') + '</div>' +
-    '<h4>Role</h4><div class="acts"><select id="rl"' + (self ? ' disabled' : '') + '><option value="user">User</option><option value="editor">Editor</option><option value="admin">Admin</option></select>' +
+    '<h4>Role</h4><div class="acts"><select id="rl"' + (self ? ' disabled' : '') + '><option value="user">User</option><option value="editor">Editor</option><option value="tester">Tester</option><option value="member">Member</option><option value="admin">Admin</option></select>' +
     '<button data-a="set_role"' + (self ? ' disabled' : '') + '>Save role</button></div>' +
     '<button class="close" id="cl">Close</button>';
   var box = document.getElementById('box'); box.innerHTML = h;
