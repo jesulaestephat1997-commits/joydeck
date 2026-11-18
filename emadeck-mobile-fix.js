@@ -29,6 +29,8 @@
       'body.editing #editor .ebar .ibtn{flex:none;width:36px;height:36px}' +
       'body.editing #editor .ebar #eTitle{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}' +
       'body.editing #editor iframe{width:1180px!important;height:calc(100dvh - 58px - 52px)!important}' +
+      'body.editing #editor{overflow:hidden!important}' +
+      'body.editing #editor iframe{width:100%!important}' +
     '}';
   document.head.appendChild(css);
 
