@@ -119,12 +119,12 @@ function fill(v,c,ctx,modelCard){
   v.appendChild(ctx.backBtn('Coloring pages','coloring'));
   ctx.head(v,c.code,c.name,c.count+' illustration'+(c.count>1?'s':'')+' \u00b7 Drag one into your book, or press Add.');
   var all=el('button','cb-all','Add all '+c.count+' as pages');all.type='button';
-  all.addEventListener('click',function(){if(confirm('Add '+c.count+' pages to your book?'))addAll(c,all)});
+  all.addEventListener('click',function(){if(window.EMADECK_LIMITS&&window.EMADECK_LIMITS.active){window.EMADECK_LIMITS.say('Included with the full plan','Adding a whole category is available with the full plan, which starts automatically when your trial ends.');return;}if(confirm('Add '+c.count+' pages to your book?'))addAll(c,all)});
   v.appendChild(all);
   var g=el('div','tgrid');
   c.files.forEach(function(f,i){
     var full='library/full/'+c.folder+'/'+f;
-    var card=el('div','tcard');card.draggable=true;card.style.setProperty('--i',Math.min(i,12));
+    var card=el('div','tcard');card.draggable=true;card.style.setProperty('--i',Math.min(i,12));card.setAttribute('data-img',c.code+':'+i);
     card.innerHTML='<div class="thumb"><img loading="lazy" decoding="async" draggable="false" alt="" src="library/thumb/'+c.folder+'/'+f+'" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;background:#fff"></div><div class="tn">'+f.replace('.webp','')+'</div><button class="add" type="button">+ Add</button>';
     card.addEventListener('dragstart',function(e){pending=full;e.dataTransfer.setData('text/plain','tpl:'+TPL);e.dataTransfer.effectAllowed='copy'});
     card.addEventListener('dragend',function(){setTimeout(function(){pending=null},400)});

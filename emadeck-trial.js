@@ -60,7 +60,7 @@
     [].forEach.call(document.querySelectorAll('.tcard'),function(c){
       if(c.getAttribute('data-jdl'))return;
       c.setAttribute('data-jdl','1');
-      if(locked(codeOf(c))){
+      if(cardLocked(c)){
         c.classList.add('jd-locked');
         var b=c.querySelector('.add');if(b)b.textContent='Locked';
       }
@@ -73,12 +73,12 @@
     if(!L.active)return;
     var b=e.target.closest&&e.target.closest('.tcard .add');if(!b)return;
     var c=b.closest('.tcard');
-    if(c&&locked(codeOf(c))){e.preventDefault();e.stopImmediatePropagation();say('Included with the full plan',MSG_FULL);}
+    if(c&&cardLocked(c)){e.preventDefault();e.stopImmediatePropagation();say('Included with the full plan',MSG_FULL);}
   },true);
   document.addEventListener('dragstart',function(e){
     if(!L.active)return;
     var c=e.target.closest&&e.target.closest('.tcard');
-    if(c&&locked(codeOf(c))){e.preventDefault();e.stopPropagation();}
+    if(c&&cardLocked(c)){e.preventDefault();e.stopPropagation();}
   },true);
 
   if(/[?&]trialtest=1/.test(location.search)){
@@ -139,4 +139,51 @@
     [].forEach.call(document.querySelectorAll('#strip .thumb iframe,#printRoot iframe'),hook);
   }
   setInterval(wmAll,1000);
+
+  /* ---- images de coloriage : 10 gratuites (les 10 premieres de 001a) ---- */
+  function imgFree(src){
+    var m=(src||'').match(/library\/(?:thumb|full)\/[^\/]+\/(\d{3}[a-z])-(\d{4})\./);
+    if(!m)return true;
+    return m[1]==='001a'&&parseInt(m[2],10)<=10;
+  }
+  function imgLocked(code,idx){return !(code==='001a'&&idx<10)}
+  L.imgLocked=imgLocked;
+  function cardLocked(c){
+    var di=c.getAttribute('data-img');
+    if(di){var a=di.split(':');return imgLocked(a[0],parseInt(a[1],10));}
+    return locked(codeOf(c));
+  }
+  var IMG_MSG='This illustration is available with the full plan, which starts automatically when your trial ends.';
+  function editorHook(){
+    if(!L.active)return;
+    [].forEach.call(document.querySelectorAll('iframe'),function(f){
+      if(f.closest('#strip')||f.closest('#printRoot'))return;
+      try{
+        var d=f.contentDocument;if(!d||!d.body)return;
+        if(!d.__jdl){
+          d.__jdl=1;
+          var pick=function(e){
+            var t=e.target;if(!t)return null;
+            var im=t.tagName==='IMG'?t:(t.querySelectorAll&&t.querySelectorAll('img').length===1?t.querySelector('img'):null);
+            var src=im?(im.getAttribute('src')||''):'';
+            return im&&/library\/(thumb|full)\//.test(src)&&!imgFree(src)?im:null;
+          };
+          d.addEventListener('click',function(e){
+            if(!L.active)return;
+            if(pick(e)){e.preventDefault();e.stopImmediatePropagation();L.say('Included with the full plan',IMG_MSG);}
+          },true);
+          d.addEventListener('dragstart',function(e){
+            if(!L.active)return;
+            if(pick(e)){e.preventDefault();e.stopPropagation();}
+          },true);
+        }
+        [].forEach.call(d.querySelectorAll('img[src*="library/thumb/"]'),function(im){
+          if(im.getAttribute('data-jdl'))return;
+          im.setAttribute('data-jdl','1');
+          if(!imgFree(im.getAttribute('src')))im.style.opacity='.35';
+        });
+      }catch(e){}
+    });
+  }
+  setInterval(editorHook,1000);
 })();
