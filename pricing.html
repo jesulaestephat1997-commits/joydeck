@@ -164,7 +164,7 @@ h1 em{font-style:normal;color:var(--blue)}
       <div class="save">You save $10.00 every month</div>
       <p class="bill">Billed monthly.</p>
       <ul class="feat"></ul>
-      <a class="btn sec lg" href="#" data-plan="monthly">Start 3-day free trial</a><p class="trialnote">3 days free, then $29.99 per month. Cancel anytime.</p>
+      <a class="btn sec lg" href="#" data-plan="monthly">Start 3-day free trial</a><p class="trialnote">3 days free, then $19.99 per month. Cancel anytime.</p>
     </article>
     <article class="plan best rv" id="annual">
       <span class="tag">Best value</span>
@@ -173,7 +173,7 @@ h1 em{font-style:normal;color:var(--blue)}
       <div class="save">Only $6.58 per month. Save 67% compared to monthly.</div>
       <p class="bill">Billed once a year.</p>
       <ul class="feat"></ul>
-      <a class="btn lg" href="#" data-plan="yearly">Start 3-day free trial</a><p class="trialnote">3 days free, then $149 per year. Cancel anytime.</p>
+      <a class="btn lg" href="#" data-plan="yearly">Start 3-day free trial</a><p class="trialnote">3 days free, then $79 per year. Cancel anytime.</p>
     </article>
   </div>
   <p class="fine">Prices in US dollars. Launch offer prices are available for a limited time.</p>
@@ -206,7 +206,7 @@ h1 em{font-style:normal;color:var(--blue)}
   var CK='<svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></svg>';
   var FEAT=['All product types: ebooks, planners, coloring pages, quotes, labels, CVs and cards','Every template in the library','One-click colors and fonts for your whole book','Automatic page numbers and signature on every page','Unlimited projects, saved in My projects','Print-ready PDF export'];
   $$('ul.feat').forEach(function(u){u.innerHTML=FEAT.map(function(f){return '<li>'+CK+'<span>'+f+'</span></li>'}).join('')});
-  var ROWS=[['Made for digital products','Yes','General purpose','One product type'],['Ready-made, designed pages','Yes','Blank page or generic templates','Yes'],['Restyle the whole book in one click','Yes','Depends on the tool','Edit page by page'],['Automatic page numbers','Yes','Depends on the tool','Manual'],['Signature on every page','Yes','Manual','Manual'],['All your projects in one place','Yes','Yes','Files to organize yourself'],['Design skills needed','None','Some','Some'],['Pricing','$29.99/month or $149/year','Subscription, price varies','One-time, per pack']];
+  var ROWS=[['Made for digital products','Yes','General purpose','One product type'],['Ready-made, designed pages','Yes','Blank page or generic templates','Yes'],['Restyle the whole book in one click','Yes','Depends on the tool','Edit page by page'],['Automatic page numbers','Yes','Depends on the tool','Manual'],['Signature on every page','Yes','Manual','Manual'],['All your projects in one place','Yes','Yes','Files to organize yourself'],['Design skills needed','None','Some','Some'],['Pricing','$19.99/month or $79/year','Subscription, price varies','One-time, per pack']];
   document.getElementById('cmpBody').innerHTML=ROWS.map(function(r){return '<tr><th scope="row">'+r[0]+'</th><td class="us">'+(r[1]==='Yes'?'<span class="y">'+CK+'Yes</span>':r[1])+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join('');
   var nav=document.getElementById('nav'),bg=document.getElementById('burger');
   bg.addEventListener('click',function(){var o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
