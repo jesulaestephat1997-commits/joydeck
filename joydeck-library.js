@@ -26,7 +26,6 @@
     {id:'coloring',ill:'color',vb:'0 0 120 160',p:['#2D3047','#F5B301','#FCE3A0','#FFF3CF'],live:true},
     {id:'quotes',ill:'quote',vb:'0 0 120 120',p:['#3C2A6B','#B79CF0','#E4D8F8','#EDE7F8'],live:true},
     {id:'agenda',ill:'plan',vb:'0 0 120 160',p:['#7A2E1D','#E58F65','#F6D9C8','#FBE6DC'],live:true},
-    {id:'mockups',ill:'mock',vb:'0 0 160 120',p:['#0B1B4D','#1F4FD8','#C9D8FA','#E4EEF8']},
     {id:'labels',ill:'label',vb:'0 0 160 110',p:['#0E4F57','#2AA6B0','#BFE3E6','#DFF1EE'],live:true},
     {id:'cv',ill:'cv',vb:'0 0 120 160',p:['#1E3A34','#2FB574','#CDEBDD','#E9F5EE'],live:true},
     {id:'wedding',ill:'wed',vb:'0 0 120 160',p:['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE'],live:true}
