@@ -98,4 +98,45 @@
       }).catch(function(){});
     },250);
   }
+
+  /* ---- filigrane repete (ecran d'edition, miniatures, export) ---- */
+  function tile(d){
+    var inner=d.createElement('div');
+    inner.setAttribute('style','position:absolute;left:-60%;top:-60%;width:220%;height:220%;display:flex;flex-wrap:wrap;align-content:flex-start;transform:rotate(-25deg)');
+    var sp='<span style="flex:0 0 340px;height:150px;display:flex;align-items:center;justify-content:center;font:700 26px Arial,Helvetica,sans-serif;letter-spacing:2px;color:rgba(120,120,120,.30);white-space:nowrap">EMADECK FREE TRIAL</span>',h='';
+    for(var k=0;k<250;k++)h+=sp;
+    inner.innerHTML=h;
+    return inner;
+  }
+  function wmDoc(d){
+    try{
+      if(!L.active||!d||!d.body||d.getElementById('jdWm'))return;
+      var w=d.createElement('div');w.id='jdWm';
+      w.setAttribute('style','position:fixed;left:0;top:0;width:100%;height:100%;z-index:2147483647;pointer-events:none;overflow:hidden');
+      w.appendChild(tile(d));
+      d.body.appendChild(w);
+    }catch(e){}
+  }
+  L.mark=function(f){wmDoc(f.contentDocument)};
+  function wmTop(){
+    if(!L.active||document.getElementById('jdWmTop'))return;
+    var s=document.createElement('style');
+    s.textContent='#jdWmTop{display:none;position:fixed;left:0;top:0;width:100%;height:100%;z-index:8000;pointer-events:none;overflow:hidden}body.editing #jdWmTop{display:block}@media print{#jdWmTop{display:none!important}}';
+    document.head.appendChild(s);
+    var w=document.createElement('div');w.id='jdWmTop';
+    w.appendChild(tile(document));
+    document.body.appendChild(w);
+  }
+  function hook(f){
+    if(f.getAttribute('data-jdw'))return;
+    f.setAttribute('data-jdw','1');
+    f.addEventListener('load',function(){wmDoc(f.contentDocument)});
+    try{var d=f.contentDocument;if(d&&d.readyState==='complete'&&d.body&&d.body.children.length)wmDoc(d);}catch(e){}
+  }
+  function wmAll(){
+    if(!L.active)return;
+    wmTop();
+    [].forEach.call(document.querySelectorAll('#strip .thumb iframe,#printRoot iframe'),hook);
+  }
+  setInterval(wmAll,1000);
 })();
