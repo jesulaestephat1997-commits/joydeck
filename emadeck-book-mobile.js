@@ -4,7 +4,7 @@
   var FONT = '"Plus Jakarta Sans",system-ui,sans-serif';
   var css = document.createElement('style');
   css.textContent = [
-    '@media(max-width:820px){',
+    '@media screen and (max-width:820px){',
     'html,body,button,.pcard,#strip{touch-action:manipulation}',
     'input,select,textarea{font-size:16px!important}',
     '#jdmTog{display:none!important}',

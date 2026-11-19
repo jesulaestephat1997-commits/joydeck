@@ -4,7 +4,7 @@
   var css = document.createElement('style');
   css.textContent =
     '#jdmMenuBtn,#jdmPanel,#jdmShade{display:none}' +
-    '@media(max-width:820px){' +
+    '@media screen and (max-width:820px){' +
       'html,body{overflow-x:hidden}' +
       'header.top{flex-wrap:nowrap!important;height:58px!important;min-height:58px!important;padding:0 12px!important;gap:10px!important;align-items:center!important;box-sizing:border-box;max-width:100vw}' +
       'header.top .logo{order:0;flex:none;font-size:21px!important}' +

@@ -1,5 +1,5 @@
 (function(){
-  var css = '@media(max-width:820px){' +
+  var css = '@media screen and (max-width:820px){' +
     'html,body{height:100%!important;overscroll-behavior:none!important}' +
     'body:not(.editing){position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;overflow:hidden!important}' +
     'body:not(.editing) header.top{position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:50!important}' +
@@ -16,6 +16,6 @@
 (function(){
   var s = document.createElement('style');
   s.id = 'jdmLockStyle2';
-  s.textContent = '@media(max-width:820px){#lib::after{display:none!important;height:0!important;content:none!important}body:not(.editing) main{padding-bottom:0!important}}';
+  s.textContent = '@media screen and (max-width:820px){#lib::after{display:none!important;height:0!important;content:none!important}body:not(.editing) main{padding-bottom:0!important}}';
   document.head.appendChild(s);
 })();

@@ -1,5 +1,5 @@
 (function(){
-  var css = '@media(max-width:820px){' +
+  var css = '@media screen and (max-width:820px){' +
     '#projPanel{z-index:3000!important;position:fixed!important;top:70px!important;left:12px!important;right:12px!important;width:auto!important;max-width:none!important;max-height:calc(100vh - 96px)!important;max-height:calc(100dvh - 96px)!important;overflow:auto!important;-webkit-overflow-scrolling:touch;border-radius:18px!important;padding:14px!important}' +
     '#projPanel.on{display:block!important}' +
     '#projPanel h4{font-size:13px!important}' +

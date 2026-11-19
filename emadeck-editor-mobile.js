@@ -11,7 +11,7 @@
     '.jdm-act:disabled{opacity:.35}',
     '.jdm-act svg{width:20px;height:20px}',
     '.jdm-save{flex:none;height:40px;padding:0 16px;border:0;border-radius:12px;background:#1F4FD8;color:#fff;font:700 14px ' + FONT + '}',
-    '@media(max-width:820px){',
+    '@media screen and (max-width:820px){',
     'html.jdm-lock{overflow:hidden!important;height:100%!important}',
     'body.editing{position:fixed!important;left:0!important;right:0!important;top:0!important;bottom:0!important;width:100%!important;overflow:hidden!important}',
     'body.editing header.top{display:none!important}',

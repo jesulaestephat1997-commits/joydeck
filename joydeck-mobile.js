@@ -1,7 +1,7 @@
 /* Emadeck - version telephone du builder (ecrans de moins de 820 px). Ne change rien sur ordinateur. */
 (function(){
   var css = document.createElement('style');
-  css.textContent = '@media(max-width:820px){' +
+  css.textContent = '@media screen and (max-width:820px){' +
     'html,body{height:auto;min-height:100%}' +
     '#app{height:100dvh;padding-bottom:0}' +
     'header.top::before{display:none!important}' +
