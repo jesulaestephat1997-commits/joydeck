@@ -26,8 +26,8 @@
     show('<h1>' + (blocked ? 'Account blocked' : 'Account paused') + '</h1><p>' + (blocked ? 'Your account has been blocked.' : 'Your account is currently paused.') + ' Contact support@emadeck.com for help.</p><button class="b" type="button" id="jdGOut">Log out</button>');
     document.getElementById('jdGOut').addEventListener('click', out);
   }
-  function allow(){ if (ov.parentNode) ov.parentNode.removeChild(ov); }
-  function run(){
+  function allow(){ var h = document.getElementById('jdGateHide'); if (h) h.remove(); if (ov.parentNode) ov.parentNode.removeChild(ov); }
+  function run(){ window.__jdGateRan = true;
     loading();
     var sb = window.emadeckSB; if (!sb) return fail();
     sb.auth.getSession().then(function(r){
