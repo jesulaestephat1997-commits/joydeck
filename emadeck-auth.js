@@ -19,7 +19,7 @@
     signUp: function(d){
       return sb.auth.signUp({
         email: d.email, password: d.pass,
-        options: { data: { first_name: d.first, last_name: d.last, phone: d.phoneCode + ' ' + d.phone, country: d.country } }
+        options: { data: { first_name: d.first, last_name: d.last, country: d.country } }
       }).then(function(r){
         if (r.error) throw new Error(msg(r.error));
         var u = r.data && r.data.user;

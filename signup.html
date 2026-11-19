@@ -135,7 +135,6 @@ form{display:grid;gap:18px}
         <div class="f" id="fLast"><label for="last">Last name <i>*</i></label><input class="in" id="last" type="text" autocomplete="family-name" placeholder="Last name"><div class="msg"></div></div>
       </div>
       <div class="f" id="fEmail"><label for="email">Email <i>*</i></label><input class="in" id="email" type="email" autocomplete="email" placeholder="Email address"><div class="msg"></div></div>
-      <div class="f" id="fPhone"><div class="lb">Phone number <i>*</i></div><div class="phone"><div id="cc"></div><input class="in" id="phone" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="Phone number" aria-label="Phone number"></div><div class="msg"></div></div>
       <div class="f" id="fCountry"><div class="lb">Country <i>*</i></div><div id="country"></div><div class="msg"></div></div>
       <div class="f" id="fPass"><label for="pass">Password <i>*</i></label><div class="pw"><input class="in" id="pass" type="password" autocomplete="new-password" placeholder="Password"><button type="button" aria-label="Show or hide password">Show</button></div><div class="hint">At least 8 characters.</div><div class="msg"></div></div>
       <div class="f" id="fPass2"><label for="pass2">Confirm password <i>*</i></label><div class="pw"><input class="in" id="pass2" type="password" autocomplete="new-password" placeholder="Confirm password"><button type="button" aria-label="Show or hide password">Show</button></div><div class="msg"></div></div>
@@ -189,10 +188,8 @@ form{display:grid;gap:18px}
   function good(f){f.classList.remove('bad')}
   var pc,co,userPickedCode=false;
   if(mode==='signup'){
-    pc=combo($('#cc'),{items:C,ph:'Code',search:'Search country or code',show:function(it){return '+'+it.d}});
     co=combo($('#country'),{items:C,ph:'Select your country',search:'Search country',show:function(it){return it.n}});
-    pc.addEventListener('change',function(){userPickedCode=true;good($('#fPhone'))});
-    co.addEventListener('change',function(){good($('#fCountry'));if(!userPickedCode)pc.set(co.get())});
+    co.addEventListener('change',function(){good($('#fCountry'));});
   }
   $$('.pw button').forEach(function(b){b.addEventListener('click',function(){var i=b.previousElementSibling;var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show'})});
   $$('.in').forEach(function(i){i.addEventListener('input',function(){good(i.closest('.f'))})});
@@ -206,8 +203,6 @@ form{display:grid;gap:18px}
       chk(v('first'),'fFirst','Please enter your first name.');
       chk(v('last'),'fLast','Please enter your last name.');
       chk(EM.test(v('email')),'fEmail','Please enter a valid email address.');
-      var digits=v('phone').replace(/[\s\-().]/g,'');
-      chk(pc.get()&&/^\d{5,14}$/.test(digits),'fPhone',pc.get()?'Please enter a valid phone number.':'Please choose your country code and enter your number.');
       chk(co.get(),'fCountry','Please select your country.');
       chk(v('pass').length>=8,'fPass','Use at least 8 characters.');
       chk(v('pass2')&&v('pass2')===$('#pass').value.trim(),'fPass2','The passwords do not match.');
@@ -218,7 +213,7 @@ form{display:grid;gap:18px}
     }
     if(first){var f=$('#'+first),t=$('input,button',f);if(t)t.focus();return}
     var data={};$$('input',F).forEach(function(i){if(i.id&&i.type!=='checkbox')data[i.id]=i.value.trim()});
-    if(mode==='signup'){data.phoneCode='+'+pc.get().d;data.country=co.get().n;delete data.pass2}
+    if(mode==='signup'){data.country=co.get().n;delete data.pass2}
     busy=true;var b=$('.btn',F);b.disabled=true;b.textContent=mode==='signup'?'Creating your account...':'Signing in...';
     var A=window.EMADECK_AUTH||{signUp:function(){return Promise.resolve()},signIn:function(){return Promise.resolve()}};
     (mode==='signup'?A.signUp(data):A.signIn(data)).then(function(){
