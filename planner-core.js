@@ -449,7 +449,16 @@ $('bdCol').addEventListener('input',function(){S.bd.c=$('bdCol').value;applyPage
 $('bdW').addEventListener('change',function(){S.bd.w=Math.max(1,Math.min(20,+$('bdW').value||4));applyPage();commit()});
 $('undoBtn').addEventListener('click',function(){if(hi>0)restore(hi-1)});
 $('redoBtn').addEventListener('click',function(){if(hi<hist.length-1)restore(hi+1)});
-$('exportPdfBtn').addEventListener('click',function(){select(null);window.print()});
+(function(){
+  var btn=$('exportPdfBtn'), pb=null;
+  try{ if(window.parent&&window.parent!==window) pb=window.parent.document.getElementById('exportBtn'); }catch(e){}
+  if(pb) btn.textContent='Download full book';
+  btn.addEventListener('click',function(){
+    select(null);
+    if(pb){ var sb=$('saveBtn'); if(sb) sb.click(); setTimeout(function(){ pb.click(); },500); }
+    else window.print();
+  });
+})();
 window.addEventListener('resize',layout);
 
 /* month / year */
