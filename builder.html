@@ -98,7 +98,7 @@
   #pv .pvbtn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px}
   #pv .pvbtn:hover{background:rgba(255,255,255,.18)}
   #pv .pvbtn:disabled{opacity:.35;cursor:default}
-  #pvStage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;perspective:4500px;overflow:hidden;position:relative;user-select:none;-webkit-user-select:none;cursor:pointer}
+  #pvStage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;perspective:9000px;overflow:hidden;position:relative;user-select:none;-webkit-user-select:none;cursor:pointer}
   .pvbook{position:relative;width:calc(var(--fw)*2);height:var(--fh);transform-style:preserve-3d;transition:transform .9s cubic-bezier(.4,.1,.2,1)}
   .pvleaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.25,1)}
   .pvleaf.flip{transform:rotateY(-180deg)}
@@ -1253,7 +1253,7 @@
     function shift(){
       if (!book) return;
       let x = 0;
-      if (cur === 0) x = -25; else if (cur === maxS && n % 2 === 0) x = 25;
+      
       book.style.transform = 'translateX(' + x + '%)';
     }
     function place(){
