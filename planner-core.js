@@ -190,6 +190,7 @@ function build(el){
     var t=document.createElement('div');t.className='txt';t.textContent=el.text;n.appendChild(t);styleTxt(n,el);
   }
   var h=document.createElement('div');h.className='resize-handle';n.appendChild(h);
+  if(el.t==='text'){var mv=document.createElement('div');mv.className='mv-handle';n.appendChild(mv)}
   if(sels.indexOf(el.id)>=0)n.classList.add('sel');
   return n;
 }
@@ -339,6 +340,8 @@ pageEl.addEventListener('pointerdown',function(e){
   var id=n.dataset.id;
   if(e.shiftKey||e.ctrlKey||e.metaKey){select(id,true);e.preventDefault();return}
   var handle=!!e.target.closest('.resize-handle');
+  var mvh=!!e.target.closest('.mv-handle');
+  if(!handle&&!mvh&&sels.length===1&&sels[0]===id&&get(id).t==='text'){startEdit(id,false);return}
   if(sels.indexOf(id)<0)select(id);
   var el=get(id);
   drag={mode:(handle&&sels.length===1)?'resize':'move',sx:e.clientX,sy:e.clientY,ew:el.w,eh:el.h,moved:false,id:id,items:sels.map(function(i){var x=get(i);return {id:i,ex:x.x,ey:x.y}})};
