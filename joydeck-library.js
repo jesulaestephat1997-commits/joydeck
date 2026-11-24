@@ -19,7 +19,7 @@
   var T = TX[LANG] || TX.en;
   var ORDER = ['BL','CV','SM','CH','PG','CT','FN'];
   var PART_ILL = {BL:'page',CV:'ebook',SM:'toc',CH:'chap',PG:'page',CT:'quote',FN:'end',OTHER:'page'};
-  var PART_PAL = {CV:['#0B1B4D','#1F4FD8','#C9D8FA','#E3ECFF'],SM:['#5B3A1E','#E0A85A','#F3DDB4','#FFF0D6'],CH:['#7A2E1D','#E58F65','#F6D9C8','#FBE6DC'],
+  var PART_PAL = {BL:['#1F2A44','#7C8AA5','#D5DBEA','#F1F3F8'],CV:['#0B1B4D','#1F4FD8','#C9D8FA','#E3ECFF'],SM:['#5B3A1E','#E0A85A','#F3DDB4','#FFF0D6'],CH:['#7A2E1D','#E58F65','#F6D9C8','#FBE6DC'],
                   PG:['#0E4F57','#2AA6B0','#BFE3E6','#DFF1EE'],CT:['#3C2A6B','#B79CF0','#E4D8F8','#EDE7F8'],FN:['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE'],OTHER:['#0B1B4D','#1F4FD8','#C9D8FA','#E3ECFF']};
   var PRODUCTS = [
     {id:'ebook',ill:'ebook',vb:'0 0 120 160',p:['#0B1B4D','#1F4FD8','#C9D8FA','#E3ECFF'],live:true},
