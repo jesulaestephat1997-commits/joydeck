@@ -437,7 +437,7 @@ pageEl.addEventListener('pointermove',function(e){
 function endDrag(){if(!drag)return;var m=drag.moved;drag=null;if(m)commit()}
 pageEl.addEventListener('pointerup',endDrag);
 pageEl.addEventListener('pointercancel',endDrag);
-pageEl.addEventListener('dblclick',function(e){var n=e.target.closest('.el');if(n&&get(n.dataset.id).t==='text')startEdit(n.dataset.id,false)});
+pageEl.addEventListener('dblclick',function(e){var T=document.elementFromPoint(e.clientX,e.clientY)||e.target;var n=T.closest('.el');if(n&&get(n.dataset.id).t==='text')startEdit(n.dataset.id,false)});
 pageEl.addEventListener('paste',function(e){
   if(!editing)return;e.preventDefault();
   var t=(e.clipboardData||window.clipboardData).getData('text/plain');

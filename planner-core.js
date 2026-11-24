@@ -361,9 +361,10 @@ pageEl.addEventListener('click',function(e){
   var ed=e.target.closest('.ed');if(ed&&ed!==editB)startBase(ed);
 });
 pageEl.addEventListener('dblclick',function(e){
-  var n=e.target.closest('.el');
+  var T=document.elementFromPoint(e.clientX,e.clientY)||e.target;
+  var n=T.closest('.el');
   if(n){if(get(n.dataset.id).t==='text')startEdit(n.dataset.id,false);return}
-  var ed=e.target.closest('.ed');if(ed)startBase(ed);
+  var ed=T.closest('.ed');if(ed)startBase(ed);
 });
 pageEl.addEventListener('paste',function(e){
   if(!editing&&!editB)return;e.preventDefault();
