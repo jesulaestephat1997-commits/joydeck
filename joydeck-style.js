@@ -54,7 +54,7 @@
       });
     } catch(err){}
   }
-  let theme = load(TK, {pal:null, fh:null, fb:null});
+  let theme = load(TK, {pal:null, fh:null, fb:null, bg:null});
   const PG = 'jdstyle_pages'; let delta = {};
   const scopeSlots = () => { try { return window.__jdsScope ? window.__jdsScope() : []; } catch(e){ return []; } };
   const tgt = () => scopeSlots().length ? delta : theme;
@@ -89,12 +89,31 @@
   const isSlot = id => /slot|photo|image|illu|picture|img|cadre|frame/i.test(id);
 
   // ---------- application sur une page (iframe) ----------
+  function uniBg(d, c){
+    try {
+      let st = d.getElementById('jdBgO');
+      d.querySelectorAll('.jd-pgbg').forEach(x => x.classList.remove('jd-pgbg'));
+      if (!c) { if (st) st.remove(); return; }
+      if (!st) { st = d.createElement('style'); st.id = 'jdBgO'; d.head.appendChild(st); }
+      st.textContent = '.jd-pgbg{background-color:' + c + '!important}';
+      const cs = x => d.defaultView.getComputedStyle(x).backgroundColor;
+      const solid = x => { const c = cs(x); return c && c !== 'transparent' && !/,\s*0\)$/.test(c); };
+      const big = Array.from(d.body.querySelectorAll('*')).filter(x => { const r = x.getBoundingClientRect(); return r.width >= 780 && r.height >= 1000; });
+      const cand = [d.documentElement, d.body].concat(big);
+      let n = 0;
+      cand.forEach(x => { if (solid(x)) { x.classList.add('jd-pgbg'); n++; } });
+      if (!n) (big[0] || d.body).classList.add('jd-pgbg');
+    } catch(e){}
+  }
   function apply(f){
     try {
       const d = f.contentDocument, w = f.contentWindow; if (!d || !w) return;
       const src = f.dataset.jdcur || f.getAttribute('src') || ''; const m = src.match(/[?&]slot=([^&]+)/); if (!m || m[1] === '__lib') return;
       const slot = m[1];
       const ins = Array.from(d.querySelectorAll('input[type="color"]')).filter(e => e.id);
+      const PT0 = load(PG, {})[slot] || theme;
+      const BGI = d.querySelector('input[name="pgBg"]') ? null : (['c_bg', 'cbBg', 'cBg', 'colorBg', 'colorPage'].map(i => ins.find(e => e.id === i)).filter(Boolean)[0] || null);
+      if (!BGI) uniBg(d, PT0.bg);
       if (!ins.length) return;
       const sel = ['fontHeading', 'fontBody'].map(i => d.getElementById(i)).filter(Boolean);
       const all = load(OK, {});
@@ -107,6 +126,7 @@
         let v = !P ? base : (isSlot(e.id) && grey(base) ? P.accent2 : mapColor(base, R));
         if (v && e.value.toLowerCase() !== v.toLowerCase()) { e.value = v; fire(e, 'input'); fire(e, 'change'); }
       });
+      if (BGI && PT.bg && BGI.value.toLowerCase() !== PT.bg.toLowerCase()) { BGI.value = PT.bg; fire(BGI, 'input'); fire(BGI, 'change'); }
       [['fontHeading', PT.fh], ['fontBody', PT.fb]].forEach(a => {
         const e = d.getElementById(a[0]); if (!e) return;
         const v = a[1] || o['#' + a[0]]; if (!v) return;
@@ -138,6 +158,7 @@
   #jds .d.on{box-shadow:0 0 0 2px #2f6b4f}
   #jds select{border:1px solid #d9d4c9;border-radius:8px;padding:6px 8px;background:#fff;font:inherit;max-width:170px}
   #jds .o{border:1px solid #d9d4c9;border-radius:8px;background:#fff;padding:6px 10px;cursor:pointer;font:inherit}
+  #jds .bgl{display:flex;align-items:center;gap:6px}#jds .bgl input{width:30px;height:30px;padding:0;border:1px solid #d9d4c9;border-radius:8px;background:#fff;cursor:pointer}
   #jds .st{margin-left:auto;color:#2f6b4f;font-size:12px}`;
   document.head.appendChild(css);
   const bar = document.createElement('div'); bar.id = 'jds';
@@ -145,12 +166,12 @@
     '<select id="jdsPair" title="Association de typos"><option value="">Association…</option></select>' +
     '<select id="jdsH" title="Typo des titres"><option value="">Titres…</option></select>' +
     '<select id="jdsB" title="Typo du texte"><option value="">Texte…</option></select>' +
-    '<button class="o" id="jdsO">Original</button><span class="st" id="jdsSt"></span>';
+    '<label class="bgl" title="Background color of the pages">Page color <input type="color" id="jdsBg" value="#ffffff"></label><button class="o" id="jdsBgX" title="Remove the page color">Reset</button><button class="o" id="jdsO">Original</button><span class="st" id="jdsSt"></span>';
   let stT; const status = t => { const s = $('jdsSt'); s.textContent = t; clearTimeout(stT); stT = setTimeout(() => { s.textContent = ''; }, 3000); };
   function fillSel(id, list){ const s = $(id); list.forEach(a => { const o = document.createElement('option'); o.value = a[0]; o.textContent = a[1]; if (a[2]) o.style.fontFamily = a[2]; s.appendChild(o); }); }
   function refresh(){
     $('jdsDots').querySelectorAll('.d').forEach(b => b.classList.toggle('on', b.dataset.id === theme.pal));
-    $('jdsH').value = theme.fh || ''; $('jdsB').value = theme.fb || '';
+    $('jdsH').value = theme.fh || ''; $('jdsB').value = theme.fb || ''; if ($('jdsBg')) $('jdsBg').value = theme.bg || '#ffffff';
     const p = PAIRS.find(a => F(a[1]) === theme.fh && F(a[2]) === theme.fb); $('jdsPair').value = p ? p[0] : '';
   }
   function commit(msg){
@@ -173,7 +194,10 @@
     $('jdsPair').addEventListener('change', e => { const p = PAIRS.find(a => a[0] === e.target.value); if (!p) return; tgt().fh = F(p[1]); tgt().fb = F(p[2]); commit(); });
     $('jdsH').addEventListener('change', e => { tgt().fh = e.target.value || null; commit(); });
     $('jdsB').addEventListener('change', e => { tgt().fb = e.target.value || null; commit(); });
-    $('jdsO').addEventListener('click', () => { if (scopeSlots().length) delta = {pal:null, fh:null, fb:null}; else theme = {pal:null, fh:null, fb:null}; commit('Couleurs et typos d\'origine'); });
+    $('jdsO').addEventListener('click', () => { if (scopeSlots().length) delta = {pal:null, fh:null, fb:null, bg:null}; else theme = {pal:null, fh:null, fb:null, bg:null}; commit('Couleurs et typos d\'origine'); });
+    let bgT;
+    $('jdsBg').addEventListener('input', e => { tgt().bg = e.target.value; clearTimeout(bgT); bgT = setTimeout(() => commit('Page color applied'), 250); });
+    $('jdsBgX').addEventListener('click', () => { tgt().bg = null; commit('Page color removed'); });
     const dots = $('jdsDots');
     $('jdsL').addEventListener('click', () => { dots.scrollLeft -= 150; });
     $('jdsR').addEventListener('click', () => { dots.scrollLeft += 150; });
