@@ -90,10 +90,35 @@
   #busy{display:none;position:fixed;inset:0;background:rgba(31,42,36,.55);z-index:99;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700}
   #busy.on{display:flex}
 
+  #pv{display:none;position:fixed;inset:0;z-index:10000;background:radial-gradient(ellipse at center,#26324f 0%,#121a2e 72%);color:#fff;flex-direction:column}
+  #pv.on{display:flex}
+  #pv .pvbar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.12)}
+  #pv .pvbar b{font-size:15px;white-space:nowrap}
+  #pv .pvinfo{flex:1;text-align:center;font-size:13px;color:rgba(255,255,255,.75)}
+  #pv .pvbtn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px}
+  #pv .pvbtn:hover{background:rgba(255,255,255,.18)}
+  #pv .pvbtn:disabled{opacity:.35;cursor:default}
+  #pvStage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;perspective:4500px;overflow:hidden;position:relative;user-select:none;-webkit-user-select:none;cursor:pointer}
+  .pvbook{position:relative;width:calc(var(--fw)*2);height:var(--fh);transform-style:preserve-3d;transition:transform .9s cubic-bezier(.4,.1,.2,1)}
+  .pvleaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.25,1)}
+  .pvleaf.flip{transform:rotateY(-180deg)}
+  .pvnoanim .pvbook,.pvnoanim .pvleaf{transition:none!important}
+  .pvface{position:absolute;inset:0;background:#fff;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 12px 34px rgba(0,0,0,.4)}
+  .pvface.back{transform:rotateY(180deg)}
+  .pvface::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,rgba(0,0,0,.22),rgba(0,0,0,0) 9%)}
+  .pvface.back::after{background:linear-gradient(to left,rgba(0,0,0,.22),rgba(0,0,0,0) 9%)}
+  .pvpg{position:absolute;left:0;top:0;width:816px;height:1056px;transform-origin:0 0;transform:scale(var(--k))}
+  .pvpg iframe{width:816px;height:1056px;border:0;display:block;pointer-events:none;background:#fff}
+  .pvsw{position:relative;width:var(--fw);height:var(--fh)}
+  .pvsingle{position:absolute;inset:0;transition:transform .55s ease,opacity .55s ease;opacity:0;transform:translateX(110%)}
+  .pvsingle.cur{opacity:1;transform:none}
+  .pvsingle.before{transform:translateX(-110%)}
+  .pvhint{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:12px;color:rgba(255,255,255,.55);pointer-events:none}
+
   @media print{
     @page{size:8.5in 11in;margin:0}
     html,body{height:auto;background:#fff}
-    #app,#busy{display:none!important}
+    #app,#busy,#pv{display:none!important}
     #printRoot{position:static;left:auto;width:8.5in}
     #printRoot iframe{width:8.5in;height:11in;page-break-after:always;break-after:page}
     #printRoot iframe:last-child{page-break-after:auto;break-after:auto}
@@ -109,6 +134,7 @@
     <input id="title" value="Mon ebook" aria-label="Titre du projet">
     <span class="count" id="count"></span>
     <span class="spacer"></span>
+    <button class="btn" id="previewBtn">Aperçu</button>
     <button class="btn" id="resetBtn">Nouveau projet</button>
     <button class="btn primary" id="exportBtn">Exporter l'ebook en PDF</button>
   </header>
@@ -139,6 +165,16 @@
 
 <div id="printRoot"></div>
 <div id="busy">Préparation du PDF…</div>
+<div id="pv" aria-hidden="true">
+  <div class="pvbar">
+    <b id="pvTitle">Aperçu</b>
+    <span class="pvinfo" id="pvInfo"></span>
+    <button class="pvbtn" id="pvPrev">Précédent</button>
+    <button class="pvbtn" id="pvNext">Suivant</button>
+    <button class="pvbtn" id="pvClose">Fermer</button>
+  </div>
+  <div id="pvStage"></div>
+</div>
 
 <script>
 (function(){
@@ -1181,6 +1217,142 @@
   });
   window.addEventListener('afterprint', () => { $('printRoot').innerHTML = ''; });
 
+  // ---------- Aperçu : le livre qui tourne ----------
+  (function(){
+    const pv = $('pv'), stage = $('pvStage'), info = $('pvInfo'), bPrev = $('pvPrev'), bNext = $('pvNext');
+    const W = 816, H = 1056, TURN = 900;
+    let mode = 'spread', n = 0, cur = 0, maxS = 0, leaves = [], singles = [], pgEls = [], lastGo = 0, book = null, L = 0;
+    function mkFace(i){
+      const d = document.createElement('div'); d.className = 'pvface';
+      if (i < n){
+        const w = document.createElement('div'); w.className = 'pvpg'; d.appendChild(w); pgEls[i] = w;
+      }
+      return d;
+    }
+    function ensure(i){
+      const w = pgEls[i]; if (!w || w.firstChild) return;
+      const f = document.createElement('iframe'); f.setAttribute('tabindex', '-1'); f.src = src(project.pages[i]); w.appendChild(f);
+    }
+    function load(){
+      const c = mode === 'spread' ? [2*cur - 3, 2*cur - 2, 2*cur - 1, 2*cur, 2*cur + 1, 2*cur + 2] : [cur - 1, cur, cur + 1];
+      c.forEach(i => { if (i >= 0 && i < n) ensure(i); });
+    }
+    function fit(){
+      const aw = stage.clientWidth - 48, ah = stage.clientHeight - 56;
+      let k = Math.min(ah / H, aw / (mode === 'spread' ? 2 * W : W));
+      k = Math.max(k, 0.12);
+      pv.style.setProperty('--k', k); pv.style.setProperty('--fw', (W * k) + 'px'); pv.style.setProperty('--fh', (H * k) + 'px');
+    }
+    function zFor(j, flipped){ return flipped ? j + 1 : L - j; }
+    function label(){
+      if (mode === 'single') return 'Page ' + (cur + 1) + ' sur ' + n;
+      if (cur === 0) return 'Page 1 sur ' + n;
+      const l = 2*cur, r = 2*cur + 1;
+      return r <= n ? 'Pages ' + l + ' et ' + r + ' sur ' + n : 'Page ' + l + ' sur ' + n;
+    }
+    function shift(){
+      if (!book) return;
+      let x = 0;
+      if (cur === 0) x = -25; else if (cur === maxS && n % 2 === 0) x = 25;
+      book.style.transform = 'translateX(' + x + '%)';
+    }
+    function place(){
+      if (mode === 'spread'){
+        leaves.forEach((lf, j) => { const fl = j < cur; lf.classList.toggle('flip', fl); lf.style.zIndex = zFor(j, fl); });
+        shift();
+      } else {
+        singles.forEach((d, i) => { d.classList.toggle('cur', i === cur); d.classList.toggle('before', i < cur); });
+      }
+      info.textContent = label();
+      bPrev.disabled = cur <= 0; bNext.disabled = cur >= maxS;
+      load();
+    }
+    function build(){
+      stage.innerHTML = ''; pgEls = []; leaves = []; singles = []; book = null;
+      n = project.pages.length;
+      mode = window.innerWidth < 900 ? 'single' : 'spread';
+      pv.classList.add('pvnoanim');
+      fit();
+      if (mode === 'spread'){
+        maxS = Math.floor(n / 2); L = Math.ceil(n / 2);
+        book = document.createElement('div'); book.className = 'pvbook'; stage.appendChild(book);
+        for (let j = 0; j < L; j++){
+          const lf = document.createElement('div'); lf.className = 'pvleaf';
+          const fr = mkFace(2*j), bk = mkFace(2*j + 1); bk.classList.add('back');
+          if (2*j + 1 >= n) bk.style.visibility = 'hidden';
+          lf.append(fr, bk); book.appendChild(lf); leaves.push(lf);
+        }
+      } else {
+        maxS = n - 1;
+        const sw = document.createElement('div'); sw.className = 'pvsw'; stage.appendChild(sw);
+        for (let i = 0; i < n; i++){ const d = document.createElement('div'); d.className = 'pvsingle'; d.appendChild(mkFace(i)); sw.appendChild(d); singles.push(d); }
+      }
+      const hint = document.createElement('div'); hint.className = 'pvhint'; hint.textContent = 'Clique sur le bord du livre ou utilise les flèches du clavier pour tourner les pages · Échap pour fermer';
+      stage.appendChild(hint);
+      cur = Math.min(cur, maxS);
+      place();
+      requestAnimationFrame(() => requestAnimationFrame(() => pv.classList.remove('pvnoanim')));
+    }
+    function go(d){
+      const t = Math.max(0, Math.min(maxS, cur + d));
+      if (t === cur) return;
+      const now = Date.now(); if (Math.abs(d) === 1 && now - lastGo < 380) return; lastGo = now;
+      if (mode === 'spread' && Math.abs(d) === 1){
+        if (d > 0){
+          const j = cur, lf = leaves[j]; lf.style.zIndex = 1000; cur = t; lf.classList.add('flip');
+          setTimeout(() => { lf.style.zIndex = zFor(j, true); }, TURN);
+        } else {
+          const j = cur - 1, lf = leaves[j]; lf.style.zIndex = 1000; cur = t; lf.classList.remove('flip');
+          setTimeout(() => { lf.style.zIndex = zFor(j, false); }, TURN);
+        }
+        shift(); info.textContent = label(); bPrev.disabled = cur <= 0; bNext.disabled = cur >= maxS; load();
+      } else {
+        if (Math.abs(d) > 1){ pv.classList.add('pvnoanim'); }
+        cur = t; place();
+        if (Math.abs(d) > 1) requestAnimationFrame(() => requestAnimationFrame(() => pv.classList.remove('pvnoanim')));
+      }
+    }
+    function open(){
+      if (!project.pages.length){ alert('Ajoute au moins une page.'); return; }
+      $('pvTitle').textContent = project.title || 'Aperçu';
+      cur = 0; pv.classList.add('on'); pv.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+      build();
+    }
+    function close(){
+      pv.classList.remove('on'); pv.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; stage.innerHTML = '';
+    }
+    $('previewBtn').addEventListener('click', open);
+    $('pvClose').addEventListener('click', close);
+    bPrev.addEventListener('click', () => go(-1));
+    bNext.addEventListener('click', () => go(1));
+    let sx = null, moved = false;
+    stage.addEventListener('pointerdown', e => { sx = e.clientX; moved = false; });
+    stage.addEventListener('pointerup', e => {
+      if (sx === null) return;
+      const dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 50){ go(dx < 0 ? 1 : -1); return; }
+      const r = stage.getBoundingClientRect(), x = e.clientX - r.left;
+      if (mode === 'spread') go(x < r.width / 2 ? -1 : 1);
+      else go(x < r.width / 3 ? -1 : 1);
+    });
+    document.addEventListener('keydown', e => {
+      if (!pv.classList.contains('on')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(1); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(-1); }
+      else if (e.key === 'Home') go(-cur);
+      else if (e.key === 'End') go(maxS - cur);
+    });
+    let rt = null;
+    window.addEventListener('resize', () => {
+      if (!pv.classList.contains('on')) return;
+      clearTimeout(rt); rt = setTimeout(() => {
+        const m = window.innerWidth < 900 ? 'single' : 'spread';
+        if (m !== mode){ cur = 0; build(); } else { pv.classList.add('pvnoanim'); fit(); requestAnimationFrame(() => requestAnimationFrame(() => pv.classList.remove('pvnoanim'))); }
+      }, 150);
+    });
+  })();
+
   // ---------- Init ----------
   buildLibrary();
   renderBook();
@@ -1212,7 +1384,7 @@
 <script src="emadeck-device-tip.js?v=1"></script>
 <script src="emadeck-gate.js?v=3"></script>
 <script src="emadeck-cloud.js?v=1"></script>
-<script src="emadeck-trial.js?v=3"></script>
+<script src="emadeck-trial.js?v=4"></script>
 <script src="joydeck-coloring.js?v=9"></script>
 <script src="joydeck-planner.js"></script>
 <script src="joydeck-wedding.js"></script>

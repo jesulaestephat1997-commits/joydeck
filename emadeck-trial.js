@@ -136,7 +136,7 @@
   function wmAll(){
     if(!L.active)return;
     wmTop();
-    [].forEach.call(document.querySelectorAll('#strip .thumb iframe,#printRoot iframe'),hook);
+    [].forEach.call(document.querySelectorAll('#strip .thumb iframe,#printRoot iframe,#pv iframe'),hook);
   }
   setInterval(wmAll,1000);
 
