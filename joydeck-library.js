@@ -9,16 +9,16 @@
         soonMsg:'We are preparing these templates. They will appear here very soon.',add:'+ Add',tpl:function(n){return n+' template'+(n>1?'s':'')},part:function(n){return n+' part'+(n>1?'s':'')},
         hintDrag:'Drag a template into your book, or press Add.',
         prod:{ebook:'Ebook',coloring:'Coloring pages',quotes:'Quotes',agenda:'Agenda',mockups:'Mockups',labels:'Labels',cv:'Curriculum vitae',wedding:'Wedding cards'},
-        parts:{CV:'Covers',SM:'Table of contents',CH:'Chapters',PG:'Content pages',CT:'Quote pages',FN:'Closing pages',OTHER:'More pages'}},
+        parts:{BL:'Blank pages',CV:'Covers',SM:'Table of contents',CH:'Chapters',PG:'Content pages',CT:'Quote pages',FN:'Closing pages',OTHER:'More pages'}},
     fr:{lib:'Bibliotheque',ask:'Que veux-tu creer ?',sub:'Choisis un produit, ouvre une partie, puis glisse les modeles dans ton livre.',all:'Tous les produits',soon:'Bientot',
         soonMsg:'Nous preparons ces modeles. Ils apparaitront ici tres bientot.',add:'+ Ajouter',tpl:function(n){return n+' modele'+(n>1?'s':'')},part:function(n){return n+' partie'+(n>1?'s':'')},
         hintDrag:'Glisse un modele dans ton livre, ou clique sur Ajouter.',
         prod:{ebook:'Ebook',coloring:'Pages a colorier',quotes:'Citations',agenda:'Agenda',mockups:'Mockups',labels:'Etiquettes',cv:'Curriculum vitae',wedding:'Cartes de mariage'},
-        parts:{CV:'Couvertures',SM:'Tables des matieres',CH:'Chapitres',PG:'Pages de contenu',CT:'Pages de citation',FN:'Pages de fin',OTHER:'Autres pages'}}
+        parts:{BL:'Pages blanches',CV:'Couvertures',SM:'Tables des matieres',CH:'Chapitres',PG:'Pages de contenu',CT:'Pages de citation',FN:'Pages de fin',OTHER:'Autres pages'}}
   };
   var T = TX[LANG] || TX.en;
-  var ORDER = ['CV','SM','CH','PG','CT','FN'];
-  var PART_ILL = {CV:'ebook',SM:'toc',CH:'chap',PG:'page',CT:'quote',FN:'end',OTHER:'page'};
+  var ORDER = ['BL','CV','SM','CH','PG','CT','FN'];
+  var PART_ILL = {BL:'page',CV:'ebook',SM:'toc',CH:'chap',PG:'page',CT:'quote',FN:'end',OTHER:'page'};
   var PART_PAL = {CV:['#0B1B4D','#1F4FD8','#C9D8FA','#E3ECFF'],SM:['#5B3A1E','#E0A85A','#F3DDB4','#FFF0D6'],CH:['#7A2E1D','#E58F65','#F6D9C8','#FBE6DC'],
                   PG:['#0E4F57','#2AA6B0','#BFE3E6','#DFF1EE'],CT:['#3C2A6B','#B79CF0','#E4D8F8','#EDE7F8'],FN:['#7D1F3F','#E0678C','#F6C7D5','#FDE8EE'],OTHER:['#0B1B4D','#1F4FD8','#C9D8FA','#E3ECFF']};
   var PRODUCTS = [
