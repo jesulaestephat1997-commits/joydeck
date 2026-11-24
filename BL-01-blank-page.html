@@ -14,7 +14,7 @@
   }
   if(embed){
     document.documentElement.className+=' embed';
-    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
+    document.write('<style>html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;display:block!important}.sidebar,.toolbar,.change-btn,.name-bg-eye,.resize-handle,.mv-handle,.tip-eye,.overflow-badge{display:none!important}.preview-area{margin:0!important;padding:0!important;display:block!important}.page{zoom:1!important;margin:0!important;box-shadow:none!important;outline:none!important;width:816px!important;height:1056px!important}</style>');
   } else if(slot){
     var t=null;
     var go=function(){clearTimeout(t);t=setTimeout(function(){var b=document.getElementById('saveBtn');if(b)b.click();},700);};
@@ -45,7 +45,7 @@ body{margin:0;background:#EDEBE6;font-family:'Inter',sans-serif;color:#1A1A1A}
 .txt[contenteditable="true"]{cursor:text;outline:2px solid #1F4FD8;user-select:text;-webkit-user-select:text}
 .el.sel{outline:2px solid #1F4FD8;outline-offset:1px}
 .resize-handle{position:absolute;right:-8px;bottom:-8px;width:16px;height:16px;background:#fff;border:2px solid #1F4FD8;border-radius:4px;cursor:nwse-resize;display:none}
-.el.sel .resize-handle{display:block}
+.el.sel .resize-handle{display:block}.mv-handle{position:absolute;left:-11px;top:-11px;width:20px;height:20px;background:#1F4FD8;border:2px solid #fff;border-radius:5px;cursor:move;display:none;box-sizing:border-box}.el.sel .mv-handle{display:block}.page.multi .mv-handle,.txt[contenteditable=true]~.mv-handle{display:none!important}
 .page.multi .resize-handle{display:none!important}
 #jdTheme{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
 
@@ -100,7 +100,7 @@ html.embed .stage{transform:none!important}
   .sw{width:auto!important;height:auto!important}
   .stage{transform:none!important}
   .page{width:8.5in!important;height:11in!important;box-shadow:none!important;margin:0!important}
-  .el.sel{outline:none!important}.resize-handle{display:none!important}
+  .el.sel{outline:none!important}.resize-handle,.mv-handle{display:none!important}
   @page{size:8.5in 11in;margin:0}
 }
 </style>
@@ -443,7 +443,7 @@ pageEl.addEventListener('pointermove',function(e){
 function endDrag(){if(!drag)return;var m=drag.moved;drag=null;if(m)commit()}
 pageEl.addEventListener('pointerup',endDrag);
 pageEl.addEventListener('pointercancel',endDrag);
-pageEl.addEventListener('dblclick',function(e){var T=document.elementFromPoint(e.clientX,e.clientY)||e.target;var n=T.closest('.el');if(n&&get(n.dataset.id).t==='text')startEdit(n.dataset.id,false)});
+pageEl.addEventListener('dblclick',function(e){if(editing)return;var T=document.elementFromPoint(e.clientX,e.clientY)||e.target;var n=T.closest('.el');if(n&&get(n.dataset.id).t==='text')startEdit(n.dataset.id,false)});
 pageEl.addEventListener('paste',function(e){
   if(!editing)return;e.preventDefault();
   var t=(e.clipboardData||window.clipboardData).getData('text/plain');
